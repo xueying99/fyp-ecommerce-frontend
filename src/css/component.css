@@ -1,0 +1,23 @@
+img {
+    width: 250px;
+    height: 250px;
+}
+p {
+    color: #000;
+    text-align: center;
+    font-size: 18px;
+    padding-top: 5px;
+}
+.product-div {
+    display: flex;
+    flex-direction: row;
+}
+.container {
+    max-width: 1450px;
+}
+.component-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 15px 0;
+}
