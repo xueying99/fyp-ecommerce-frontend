@@ -113,7 +113,7 @@ class App extends Component {
                 {/* <UserHeader /> */}
                 <Nav.Link className='nav-link fa fa-search' aria-hidden="true" href="/products"></Nav.Link>
                 <Nav.Link className='nav-home' href="/login">Login</Nav.Link>
-                <Nav.Link className='nav-home' href="/signup">Sign Up</Nav.Link>
+                <Nav.Link className='nav-home' href="/register">Sign Up</Nav.Link>
               </Nav>
             )}
           </Navbar.Collapse>
