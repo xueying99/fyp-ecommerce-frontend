@@ -71,7 +71,8 @@ export default class Tutorial extends Component {
             published: status
         };
 
-        TutorialDataService.update(this.state.currentTutorial.id, data)
+        TutorialDataService
+            .update(this.state.currentTutorial.id, data)
             .then(response => {
                 this.setState(prevState => ({
                     currentTutorial: {

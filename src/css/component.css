@@ -7,13 +7,77 @@ p {
     text-align: center;
     font-size: 18px;
     padding-top: 5px;
+    margin: 5px !important;
 }
-.product-div {
+.product-view {
     display: flex;
     flex-direction: row;
 }
+.product-div {
+    position: relative;
+    display: block;
+    padding: 15px 25px;
+    background-color: #fff;
+    margin: 15px 25px;
+    border: 1px solid rgba(0,0,0,.125);
+}
+.product-detail {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 750px;
+    padding: 15px 25px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    justify-content: space-around;
+}
+.product-info {
+    flex-direction: row;
+    padding: 5px 15px;
+    margin: auto;
+    width: 45%;
+}
+.sizebtn {
+    border-radius: 50%;
+    line-height: 22px;
+    font-size: 17px;
+    border: 2px solid #8A2BE2;
+    background-color: #E6E6FA;
+    margin: auto 3px;
+    width: 30px;
+    height: 30px;
+}
+.sizebtn:hover {
+    color: #fff;
+    background-color: #8A2BE2;
+    border: 1px solid #E6E6FA;
+}
+.cartbtn {
+    border-radius: 20px;
+    background-color: #DDA0DD;
+    border: 1px solid  #DDA0DD;
+    text-align: center;
+    padding: 5px 10px;
+    width: 220px;
+    height: auto;
+    margin: auto;
+}
+.product-detail .cartbtn {
+    font-size: 18px;
+    margin: 20px auto;
+    float: right;
+    width: 170px;
+}
+.cartbtn:hover {
+    background-color: #FF00FF;
+    border: 1px solid #FF00FF;
+}
 .container {
     max-width: 1450px;
+    margin-top: 30px;
+    margin-bottom: 5px;
+    padding-top: 30px;
+    padding-bottom: 40px;
 }
 .component-div {
     display: flex;
@@ -21,3 +85,101 @@ p {
     justify-content: space-evenly;
     padding: 15px 0;
 }
+
+/*Promotion Page*/
+.promo-view {
+    display: flex;
+    flex-direction: column;
+}
+.promo-div {
+    position: relative;
+    display: block;
+    padding: 2px;
+    background-color: #fff;
+    margin: 15px auto;
+    border: 1px solid rgba(0,0,0,.125);
+}
+.promo-div img {
+    width: 1165px; 
+    height: 400px;
+}
+h4 {
+    text-align: center;
+}
+/*Promotion Page*/
+
+.form-group {
+    width: 330px;
+}
+input[type=radio] {
+    width: 15px;
+}
+.radiobtn {
+    margin: auto;
+}
+.signupbtn {
+    margin: 20px auto auto;
+    width: 100%;
+}
+.addressCol {
+    width: 100%;
+}
+.registerform {
+    max-width: 750px !important;
+}
+.loginform {
+    margin: 20px auto auto;
+}
+
+/*Profile Page*/
+.profile-header {
+    margin: auto 150px;
+}
+.profile-view {
+    margin: auto 150px;
+    display: flex;
+}
+.profile-table {
+    flex-direction: column;
+    width: 75%;
+}
+.profile-btn {
+    flex-direction: column;
+    width: 25%;
+    justify-content: center;
+}
+.profile-btn-div {
+    text-align: center;
+    flex-direction: column;
+    margin: 40px 0;
+}
+.profile-button {
+    flex-direction: row;
+    margin: 30px auto;
+    width: 150px;
+    padding: 5px 10px;
+    border: 1px black solid;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px auto;
+}
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 15px 25px;
+}
+th {
+    width: 25%;
+    text-align: center;
+}
+tr {
+    width: 75%;
+}  
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+/*Profile Page*/

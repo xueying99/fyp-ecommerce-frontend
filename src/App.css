@@ -43,15 +43,19 @@ label {
 }
 
 .card-container.card {
-  max-width: 350px !important;
+  max-width: 750px !important;
+  padding: 40px 40px;
+}
+
+.card-containers.card {
+  max-width: 400px !important;
   padding: 40px 40px;
 }
 
 .card {
   background-color: #f7f7f7;
   padding: 20px 25px 30px;
-  margin: 0 auto 25px;
-  margin-top: 50px;
+  margin: 50px auto 50px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;

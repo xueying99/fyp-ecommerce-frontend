@@ -3,6 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
+import "../css/component.css";
 
 import AuthService from "../services/auth.service";
 
@@ -46,6 +47,26 @@ const vpassword = value => {
   }
 };
 
+const contact = value => {
+  if (value.length < 10 || value.length > 11) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Please provide a valid contact number.
+      </div>
+    );
+  }
+};
+
+const dob = value => {
+  if (value == null) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Date of Birth is required.
+      </div>
+    );
+  }
+};
+
 export default class Register extends Component {
   constructor(props) {
     super(props);
@@ -53,11 +74,23 @@ export default class Register extends Component {
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeGender = this.onChangeGender.bind(this);
+    this.onChangeDOB = this.onChangeDOB.bind(this);
+    this.onChangeAddress = this.onChangeAddress.bind(this);
+    this.onChangeState = this.onChangeState.bind(this);
+    this.onChangePoscode = this.onChangePoscode.bind(this);
+    this.onChangeContact = this.onChangeContact.bind(this);
 
     this.state = {
       username: "",
       email: "",
       password: "",
+      contact: "",
+      gender: "",
+      dob: "",
+      address: "",
+      state: "",
+      poscode: "",
       successful: false,
       message: ""
     };
@@ -81,6 +114,42 @@ export default class Register extends Component {
     });
   }
 
+  onChangeGender(e) {
+    this.setState({
+      gender: e.target.value
+    });
+  }
+
+  onChangeDOB(e) {
+    this.setState({
+      dob: e.target.value
+    });
+  }
+  
+  onChangeAddress(e) {
+    this.setState({
+      address: e.target.value
+    });
+  }
+
+  onChangeState(e) {
+    this.setState({
+      state: e.target.value
+    });
+  }
+
+  onChangePoscode(e) {
+    this.setState({
+      poscode: e.target.value
+    });
+  }
+
+  onChangeContact(e) {
+    this.setState({
+      contact: e.target.value
+    });
+  }
+
   handleRegister(e) {
     e.preventDefault();
 
@@ -95,7 +164,13 @@ export default class Register extends Component {
       AuthService.register(
         this.state.username,
         this.state.email,
-        this.state.password
+        this.state.password,
+        this.state.gender,
+        this.state.dob,
+        this.state.address,
+        this.state.state,
+        this.state.poscode,
+        this.state.contact
       ).then(
         response => {
           this.setState({
@@ -123,59 +198,169 @@ export default class Register extends Component {
   render() {
     return (
       <div className="col-md-12">
-        <div className="card card-container">
-          <img
+        <h4>Create An Account</h4>
+        <div className="card card-container registerform">
+          
+          {/* <img
             src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
             alt="profile-img"
             className="profile-img-card"
-          />
+          /> */}
 
           <Form
             onSubmit={this.handleRegister}
             ref={c => {
               this.form = c;
-            }}
-          >
+            }} >
             {!this.state.successful && (
               <div>
-                <div className="form-group">
-                  <label htmlFor="username">Username</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="username"
-                    value={this.state.username}
-                    onChange={this.onChangeUsername}
-                    validations={[required, vusername]}
-                  />
+                <div className='row'>
+                  <div className="form-group">
+                    <label htmlFor="username">Username</label>
+                    <Input
+                      type="text"
+                      className="form-control"
+                      name="username"
+                      value={this.state.username}
+                      onChange={this.onChangeUsername}
+                      validations={[required, vusername]}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <Input
+                      type="password"
+                      className="form-control"
+                      name="password"
+                      value={this.state.password}
+                      onChange={this.onChangePassword}
+                      validations={[required, vpassword]}
+                    />
+                  </div>
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.onChangeEmail}
-                    validations={[required, email]}
-                  />
+                <div className='row'>
+                  <div className="form-group">
+                    <label htmlFor="email">Email</label>
+                    <Input
+                      type="text"
+                      className="form-control"
+                      name="email"
+                      value={this.state.email}
+                      onChange={this.onChangeEmail}
+                      validations={[required, email]}
+                    />
+                  </div>   
+
+                  <div className="form-group">
+                    <label htmlFor="contact">Contact Number</label>
+                    <Input
+                      type="tel"
+                      className="form-control"
+                      name="contact"
+                      value={this.state.contact}
+                      onChange={this.onChangeContact}
+                      validations={[required, contact]}
+                    />
+                  </div>        
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <Input
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChangePassword}
-                    validations={[required, vpassword]}
-                  />
+                <div className='row'>
+                  <div className="form-group">
+                    <label htmlFor="gender">Gender</label>
+                    <div className='row'>
+                      <Input
+                        type="radio"
+                        className="form-control"
+                        id="male"
+                        name="gender"
+                        value="male"
+                        onChange={this.onChangeGender}
+                        validations={[required]}
+                      />
+                      <label for="male" className="radiobtn">Male</label>
+                      <Input
+                        type="radio"
+                        className="form-control"
+                        id="female"
+                        name="gender"
+                        value="female"
+                        onChange={this.onChangeGender}
+                        validations={[required]}
+                      />
+                      <label for="female" className="radiobtn">Female</label>
+                    </div>
+                  </div>   
+
+                  <div className="form-group">
+                    <label htmlFor="dob">Date of Birth</label>
+                    <Input
+                      type="date"
+                      className="form-control"
+                      name="dob"
+                      value={this.state.dob}
+                      onChange={this.onChangeDOB}
+                      validations={[required, dob]}
+                    />
+                  </div>        
                 </div>
 
-                <div className="form-group">
-                  <button className="btn btn-primary btn-block">Sign Up</button>
+                <div className='row'>
+                  <div className="form-group addressCol">
+                    <label htmlFor="address">Address</label>
+                    <Input
+                      type="text"
+                      className="form-control"
+                      name="address"
+                      value={this.state.address}
+                      onChange={this.onChangeAddress}
+                      validations={[required]}
+                    />
+                  </div>          
+                </div>
+
+                <div className='row'>
+                  <div className="form-group">
+                    <label htmlFor="poscode">Poscode</label>
+                    <Input
+                      type="text"
+                      className="form-control"
+                      name="poscode"
+                      value={this.state.poscode}
+                      onChange={this.onChangePoscode}
+                      validations={[required]}
+                    />
+                  </div>  
+
+                  <div className="form-group">
+                    <label htmlFor="state">State</label>
+                    <select
+                      list="state"
+                      className="form-control"
+                      name="state"
+                      value={this.state.state}
+                      onChange={this.onChangeState}
+                      validations={[required]} >
+                      <option value="johor">Johor</option>
+                      <option value="kedah">Kedah</option>
+                      <option value="kelantan">Kelantan</option>
+                      <option value="melaka">Melaka</option>
+                      <option value="negerisembilan">Negeri Sembilan</option>
+                      <option value="pahang">Pahang</option>
+                      <option value="penang">Penang</option>
+                      <option value="perak">Perak</option>
+                      <option value="perlis">Perlis</option>
+                      <option value="sabah">Sabah</option>
+                      <option value="sarawak">Sarawak</option>
+                      <option value="selangor">Selangor</option>
+                      <option value="terengganu">Terengganu</option>                      
+                    </select>
+                  </div>        
+                </div>
+
+                <div className="form-group signupbtn">
+                  <button className="btn btn-primary btn-block">SIGN UP</button>
                 </div>
               </div>
             )}
@@ -194,12 +379,12 @@ export default class Register extends Component {
                 </div>
               </div>
             )}
+
             <CheckButton
               style={{ display: "none" }}
               ref={c => {
                 this.checkBtn = c;
-              }}
-            />
+              }} />
           </Form>
         </div>
       </div>

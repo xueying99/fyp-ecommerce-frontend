@@ -7,7 +7,7 @@ export default function() {
         <div>
 
         <div className='footer-section'>
-            <div className="footer-top gradient-bg bg-dark py-3">
+            <div className="footer-top gradient-bg bg-dark">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-3 col-12 mt-2 mb-4">
@@ -60,7 +60,7 @@ export default function() {
             </div>
 
             <div class="footer-bottom py-3">
-                <div class="container">
+                <div>
                     <div class="row text-center justify-content-center">
                         <div class="col-md-6 col-lg-5">
                             <p class="copyright-text pb-0 mb-0">Copyrights © 2021. All rights reserved by FORTRY</p>

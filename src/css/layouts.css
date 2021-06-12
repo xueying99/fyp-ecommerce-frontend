@@ -7,7 +7,7 @@
     margin: 10px 5px 80px 5px;
 }
 .mainHeader {
-    margin: 30px 30px;
+    margin: 0 30px;
 }
 .mainContainer {
     margin: 20px 10px 60px 10px;
@@ -114,4 +114,17 @@ p {
 .form-text {
     margin-left: 15px;
     margin-bottom: 40px;
+}
+.home-nav {
+    margin-left: auto;
+}
+.navbar .navbar-nav {
+    padding: 0 0.25em;
+    height: 34px;
+}
+.navbar .navbar-nav:not(:last-child) {
+    border-right: 2px solid rgba(255,255,255,.5);
+}
+.navbar-collapse .nav-link {
+    line-height: 17px;
 }

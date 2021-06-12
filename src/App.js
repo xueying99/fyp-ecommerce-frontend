@@ -11,21 +11,23 @@ import './css/layouts.css';
 import './App.css';
 
 import UserHeader from './layouts/user-header';
+import AdminHeader from './layouts/admin-header';
 import Footer from './layouts/footer';    
 import Tutorial from "./components/tutorial.component";
 import AddTutorial from "./components/add-tutorial.component";
 import TutorialsList from "./components/tutorials-list.component";
 import MainPage from "./products/main-page";
 // import Login from './users/login';
-import SignUp from './users/signup';
+// import SignUp from './users/signup';
 import SearchPage from './products/products';
 import Women from './components/women.component';
 import Men from './components/men.component';
+import Promotion from './components/promotion.component';
 
 import AuthService from "./services/auth.service";
 import Login from "./components/login.component";
 import Register from "./components/register.component";
-import Home from "./components/home.component";
+// import Home from "./components/home.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
@@ -74,9 +76,9 @@ class App extends Component {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className=" mr-auto">
-              <Nav.Link className='nav-home-btn' href="/home">HOME</Nav.Link>
-              <UserHeader />
+            <Nav className="">
+              <Nav.Link className='nav-btn' href="/home">HOME</Nav.Link>
+              {/* <UserHeader /> */}
             </Nav> 
             
             {showModeratorBoard && (
@@ -88,11 +90,9 @@ class App extends Component {
             )}
 
             {showAdminBoard && (
-              <li className="nav-item">
-                <Link to={"/admin"} className="nav-link">
-                  Admin Board
-                </Link>
-              </li>
+              <Nav>
+                <AdminHeader />
+              </Nav>
             )}
             
             {currentUser && (
@@ -105,12 +105,10 @@ class App extends Component {
                 <Nav.Link className='nav-link fa fa-search' aria-hidden="true" href="/products"></Nav.Link>
                 <Nav.Link className='nav-link fa fa-shopping-cart' aria-hidden="true" href="#cart"></Nav.Link>
                 <Nav.Link className='nav-link fa fa-user-circle-o' aria-hidden="true" href="/profile"></Nav.Link>
-                {/* {currentUser.username} */}
                 <Nav.Link href="/login" onClick={this.logOut}>Log Out</Nav.Link>
               </Nav>
             ) : (
-              <Nav>
-                {/* <UserHeader /> */}
+              <Nav className="home-nav">
                 <Nav.Link className='nav-link fa fa-search' aria-hidden="true" href="/products"></Nav.Link>
                 <Nav.Link className='nav-home' href="/login">Login</Nav.Link>
                 <Nav.Link className='nav-home' href="/register">Sign Up</Nav.Link>
@@ -122,11 +120,11 @@ class App extends Component {
         <Switch>
           <Route exact path={["/", "/home"]} component={MainPage} />  
           {/* <Route exact path="/login" component={Login} /> */}
-          <Route exact path="/signup" component={SignUp} />
+          {/* <Route exact path="/signup" component={SignUp} /> */}
           <Route exact path="/products" component={SearchPage} />
           <Route exact path="/women" component={Women} />
           <Route exact path="/men" component={Men} />
-
+          <Route exact path="/promo" component={Promotion} />
 
           <Route exact path="/tutorials" component={TutorialsList} />
           <Route exact path="/add" component={AddTutorial} />

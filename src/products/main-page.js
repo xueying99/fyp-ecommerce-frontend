@@ -82,9 +82,9 @@ export default class MainPage extends Component {
         const { searchProduct, products, currentProduct, currentIndex } = this.state;
 
         const slideImages = [
-            '/images/promotional-analysis.jpg',
-            '/images/banner-3.png',
-            '/images/banner-2.png'
+            '/images/promo/banner01.png',
+            '/images/promo/banner02.png',
+            '/images/promo/banner03.png'
         ];
           
         const properties = {
@@ -94,7 +94,6 @@ export default class MainPage extends Component {
             indicators: true,
             arrows: true,
             onChange: (oldIndex, newIndex) => {
-            //   console.log(`slide transition from ${oldIndex} to ${newIndex}`);
             }
         }
 
@@ -132,11 +131,11 @@ export default class MainPage extends Component {
                         </div>
                         <div className='category'>
                             <img src='./images/sale-icon-2.jpg' alt='Sale icon' />
-                            <Link to="/add"><p>SALES</p></Link>
+                            <Link to="/promo"><p>OFFER & EVENTS</p></Link>
                         </div>
                         <div className='category'>
                             <img src='./images/fitting-room.jpg' alt='Virtual Fitting Room icon' />
-                            <Link to="/tutorials/:id"><p>VIRTUAL FITTING ROOM SERVICE</p></Link>
+                            <Link to="/tutorials"><p>VIRTUAL FITTING ROOM SERVICE</p></Link>
                         </div>
                     </div>
                 </div>
