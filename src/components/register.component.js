@@ -3,7 +3,10 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
-import "../css/component.css";
+// import "../css/component.css";
+import "../css/style.css";
+import "../css/bootstrap.min.css";
+import "../css/index.css";
 
 import AuthService from "../services/auth.service";
 
@@ -48,7 +51,7 @@ const vpassword = value => {
 };
 
 const contact = value => {
-  if (value.length < 10 || value.length > 11) {
+  if (value.length < 5 || value.length > 11) {
     return (
       <div className="alert alert-danger" role="alert">
         Please provide a valid contact number.
@@ -85,12 +88,12 @@ export default class Register extends Component {
       username: "",
       email: "",
       password: "",
-      contact: "",
       gender: "",
       dob: "",
+      contact: "",
       address: "",
-      state: "",
       poscode: "",
+      state: "",
       successful: false,
       message: ""
     };
@@ -167,10 +170,10 @@ export default class Register extends Component {
         this.state.password,
         this.state.gender,
         this.state.dob,
+        this.state.contact,
         this.state.address,
-        this.state.state,
         this.state.poscode,
-        this.state.contact
+        this.state.state
       ).then(
         response => {
           this.setState({
@@ -197,28 +200,42 @@ export default class Register extends Component {
 
   render() {
     return (
-      <div className="col-md-12">
-        <h4>Create An Account</h4>
-        <div className="card card-container registerform">
-          
-          {/* <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
-            className="profile-img-card"
-          /> */}
+      <div className='row align-items-center justify-content-center gray-light-bg mr-0'>
+        <div className="col-12 col-md-7 col-lg-6 col-xl-6 d-none d-lg-block h-auto">
+          <div className="bg-cover vh-100 ml-n3 gradient-overlay">
+            <div className="position-absolute login-signup-content">
+              <div className="position-relative text-white col-md-12 col-lg-7">
+                <h2 className="text-white">Create Your Account</h2>
+                <p className="lead">
+                  Keep your face always toward the sunshine - and shadows will fall behind you. 
+                  Continually pursue fully researched niches whereas timely platforms. 
+                  Credibly parallel task optimal catalysts for change after focused catalysts for change.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-          <Form
-            onSubmit={this.handleRegister}
-            ref={c => {
-              this.form = c;
-            }} >
+        <div className="col-12 col-md-11 col-lg-6 col-xl-6 px-lg-6 mt-3 mb-3">
+          <div className="login-signup-wrap px-4 px-lg-2">
+            {/* <!-- Heading --> */}
+            <h1 className="text-center mb-1">Signup</h1>
+
+            {/* <!-- Subheading --> */}
+            <p className="text-muted text-center mb-5">Free access to our dashboard.</p>
+            
+            {/* <!-- Form --> */}
+            <Form onSubmit={this.handleRegister}
+                  ref={c => { this.form = c; }} 
+            >
             {!this.state.successful && (
-              <div>
-                <div className='row'>
-                  <div className="form-group">
-                    <label htmlFor="username">Username</label>
+              <div className=''>
+                <div className='signup-form-row'>
+                  <div className="form-group signup-form-group">
+                    <label className="pb-1" htmlFor="username">Username</label>
                     <Input
                       type="text"
+                      size="25"
                       className="form-control"
                       name="username"
                       value={this.state.username}
@@ -227,10 +244,11 @@ export default class Register extends Component {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div className="form-group signup-form-group">
                     <label htmlFor="password">Password</label>
                     <Input
                       type="password"
+                      size="25"
                       className="form-control"
                       name="password"
                       value={this.state.password}
@@ -240,11 +258,12 @@ export default class Register extends Component {
                   </div>
                 </div>
 
-                <div className='row'>
-                  <div className="form-group">
-                    <label htmlFor="email">Email</label>
+                <div className='signup-form-row'>
+                  <div className="form-group signup-form-group">
+                    <label className='' htmlFor="email">Email</label>
                     <Input
                       type="text"
+                      size="25"
                       className="form-control"
                       name="email"
                       value={this.state.email}
@@ -253,10 +272,11 @@ export default class Register extends Component {
                     />
                   </div>   
 
-                  <div className="form-group">
+                  <div className="form-group signup-form-group">
                     <label htmlFor="contact">Contact Number</label>
                     <Input
-                      type="tel"
+                      type="text"
+                      size="25"
                       className="form-control"
                       name="contact"
                       value={this.state.contact}
@@ -266,10 +286,10 @@ export default class Register extends Component {
                   </div>        
                 </div>
 
-                <div className='row'>
-                  <div className="form-group">
-                    <label htmlFor="gender">Gender</label>
-                    <div className='row'>
+                <div className='signup-form-row'>
+                  <div className="form-group signup-form-group">
+                    <label className='signup-form-label' htmlFor="gender">Gender</label>
+                    <div className='signup-form-radio'>
                       <Input
                         type="radio"
                         className="form-control"
@@ -293,10 +313,11 @@ export default class Register extends Component {
                     </div>
                   </div>   
 
-                  <div className="form-group">
+                  <div className="form-group signup-form-group">
                     <label htmlFor="dob">Date of Birth</label>
                     <Input
                       type="date"
+                      size="25"
                       className="form-control"
                       name="dob"
                       value={this.state.dob}
@@ -306,8 +327,8 @@ export default class Register extends Component {
                   </div>        
                 </div>
 
-                <div className='row'>
-                  <div className="form-group addressCol">
+                <div className='signup-form-row'>
+                  <div className="form-group signup-form-group-address">
                     <label htmlFor="address">Address</label>
                     <Input
                       type="text"
@@ -320,8 +341,8 @@ export default class Register extends Component {
                   </div>          
                 </div>
 
-                <div className='row'>
-                  <div className="form-group">
+                <div className='signup-form-row'>
+                  <div className="form-group signup-form-group">
                     <label htmlFor="poscode">Poscode</label>
                     <Input
                       type="text"
@@ -333,7 +354,7 @@ export default class Register extends Component {
                     />
                   </div>  
 
-                  <div className="form-group">
+                  <div className="form-group signup-form-group">
                     <label htmlFor="state">State</label>
                     <select
                       list="state"
@@ -342,39 +363,45 @@ export default class Register extends Component {
                       value={this.state.state}
                       onChange={this.onChangeState}
                       validations={[required]} >
-                      <option value="johor">Johor</option>
-                      <option value="kedah">Kedah</option>
-                      <option value="kelantan">Kelantan</option>
-                      <option value="melaka">Melaka</option>
-                      <option value="negerisembilan">Negeri Sembilan</option>
-                      <option value="pahang">Pahang</option>
-                      <option value="penang">Penang</option>
-                      <option value="perak">Perak</option>
-                      <option value="perlis">Perlis</option>
-                      <option value="sabah">Sabah</option>
-                      <option value="sarawak">Sarawak</option>
-                      <option value="selangor">Selangor</option>
-                      <option value="terengganu">Terengganu</option>                      
+                      <option value="Johor">Johor</option>
+                      <option value="Kedah">Kedah</option>
+                      <option value="Kelantan">Kelantan</option>
+                      <option value="Melaka">Melaka</option>
+                      <option value="Negeri Sembilan">Negeri Sembilan</option>
+                      <option value="Pahang">Pahang</option>
+                      <option value="Penang">Penang</option>
+                      <option value="Perak">Perak</option>
+                      <option value="Perlis">Perlis</option>
+                      <option value="Sabah">Sabah</option>
+                      <option value="Sarawak">Sarawak</option>
+                      <option value="Selangor">Selangor</option>
+                      <option value="Terengganu">Terengganu</option>                      
                     </select>
                   </div>        
                 </div>
 
+                {/* <!-- Submit --> */}
                 <div className="form-group signupbtn">
-                  <button className="btn btn-primary btn-block">SIGN UP</button>
+                  <button className="btn btn-block solid-btn border-radius mt-4 mb-3">SIGN UP</button>
+                </div>
+
+                {/* <!-- Link --> */}
+                <div className="text-center">
+                  <small className="text-muted text-center">
+                    Already have an account? <a href="/login">Log in</a>.
+                  </small>
                 </div>
               </div>
             )}
 
-            {this.state.message && (
+            { this.state.message && (
               <div className="form-group">
-                <div
-                  className={
-                    this.state.successful
+                <div className={ 
+                  this.state.successful
                       ? "alert alert-success"
                       : "alert alert-danger"
                   }
-                  role="alert"
-                >
+                  role="alert" >
                   {this.state.message}
                 </div>
               </div>
@@ -386,6 +413,7 @@ export default class Register extends Component {
                 this.checkBtn = c;
               }} />
           </Form>
+          </div>
         </div>
       </div>
     );

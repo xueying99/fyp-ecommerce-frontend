@@ -63,9 +63,7 @@
 .fa {
     font-size: 30px;
 }
-p {
-    color: #000;
-}
+
 .rounded-circle {
     border: 1px solid white;
     padding: 5px;
@@ -76,7 +74,7 @@ p {
 
 
 /* Login Page */
-.modal-dialog {
+/* .modal-dialog {
     margin: 50px auto 70px auto;
 }
 .modal-header {
@@ -114,17 +112,28 @@ p {
 .form-text {
     margin-left: 15px;
     margin-bottom: 40px;
-}
+} */
+
+/* Menu Navigation Bar */
 .home-nav {
     margin-left: auto;
 }
 .navbar .navbar-nav {
     padding: 0 0.25em;
     height: 34px;
+    color: #fff;
+}
+.nav-link {
+    color: #fff !important;
 }
 .navbar .navbar-nav:not(:last-child) {
-    border-right: 2px solid rgba(255,255,255,.5);
+    border-right: 2px solid #fff;
 }
 .navbar-collapse .nav-link {
     line-height: 17px;
+}
+.nav-username {
+    color: #fff;
+    margin-top: 5px !important;
+    margin-right: 20px;
 }

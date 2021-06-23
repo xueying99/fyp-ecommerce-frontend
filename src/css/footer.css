@@ -2,7 +2,7 @@
     display: block;
 }
 .footer-top {
-    background-color: #343a40;
+    background-color: #343a40 !important;
     padding-top: 10px;
 }
 .footer-container {

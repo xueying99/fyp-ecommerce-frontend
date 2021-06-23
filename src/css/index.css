@@ -1,0 +1,100 @@
+/* Sign In Page */
+.solid-btn{
+    color: #fff !important;
+    -webkit-box-shadow: 0 20px 30px 0 rgba(67,37,204,.2) !important;
+    box-shadow: 0 20px 30px 0 rgba(67,37,204,.2) !important;
+    background: #7202bb !important;
+    border: 2px solid #7202bb !important;
+    border-radius: 30px;
+    padding: 10px 25px !important;
+}
+.solid-btn:hover{
+    background: transparent !important;
+    color: #7202bb !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+/*Sign Up Page */
+.signup-form-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.signup-form-group {
+    width: 40%;
+}
+.signup-form-group-address {
+    width: 90%;
+}
+.signup-form-radio {
+    display: flex;
+    flex-direction: row;
+    padding: 0 10px;
+}
+.signupbtn {
+    margin: 20px auto auto;
+    width: 90%;
+}
+
+/* Footer Page */
+.email-form-control {
+    height: calc(2.56em + .75rem + 2px);
+}
+
+/* Cart Page */
+.cart-div {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 650px;
+    padding: 15px 25px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    /* justify-content: space-evenly; */
+}
+.cart-item-div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.item-img {
+    width: 40%;
+}
+.cart-item-div img {
+    width: 200px;
+    height: 200px;
+    float: left;
+}
+.cart-item-info {
+    flex-direction: row;
+    padding: 5px 15px;
+    margin: 0 auto auto 5px;
+}
+.item-info {
+    padding: 5px 0;
+}
+.cart-detail-div {
+    position: relative;
+    display: block;
+    flex-direction: column;
+    width: 350px;
+    padding: 15px 25px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    justify-content: space-evenly;
+}
+.cart-btn-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+.input-quantity {
+    text-align: center;
+    margin: auto 5px;
+    padding: 5px;
+}
+.qty-btn {
+    margin-top: -3px;
+}

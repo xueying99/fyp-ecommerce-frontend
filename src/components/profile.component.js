@@ -2,17 +2,23 @@ import React, { Component } from "react";
 import AuthService from "../services/auth.service";
 import "../css/component.css";
 
+// import UserDataService from "../services/user.service";
+
 export default class Profile extends Component {
   constructor(props) {
     super(props);
+    // this.retrieveUsers = this.retrieveUsers.bind(this);
+    // this.setActiveUser = this.setActiveUser.bind(this);
 
     this.state = {
-      currentUser: AuthService.getCurrentUser()
+      users: [],
+      currentUser: AuthService.getCurrentUser(),
+      currentIndex: -1
     };
   }
 
   render() {
-    const { currentUser } = this.state;
+    const { users, currentUser, currentIndex } = this.state;
 
     return (
       <div className="container">
@@ -21,14 +27,15 @@ export default class Profile extends Component {
         </div>
         <div className="profile-view">
           <div className="profile-table">
+          <img src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                    alt="profile-img"
+                    className="profile-img-card" />
         <table>
           <tbody>
-            <tr>
-              <th></th>
-              <td><img src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                    alt="profile-img"
-                    className="profile-img-card" /></td>
-            </tr>
+          {/* {users && users.map((user, index) => (
+            <div className={'userprofile-div' + (index === currentIndex ? ' active' : '')}
+            onClick={() => this.setActiveUser(user, index)}
+             key={index}>                 */}
             <tr>
               <th>Username</th>
               <td>{currentUser.username}</td>
@@ -42,24 +49,24 @@ export default class Profile extends Component {
                 <td>{currentUser.gender}</td>
               </tr>
               <tr>
-                <th>Contact Number</th>
-                <td>{currentUser.contact}</td>
-              </tr>
-              <tr>
                 <th>Date of Birth</th>
                 <td>{currentUser.dob}</td>
+              </tr>
+              <tr>
+                <th>Contact Number</th>
+                <td>{currentUser.contact}</td>
               </tr>
               <tr>
                 <th>Address</th>
                 <td>{currentUser.address}</td>
               </tr>
               <tr>
-                <th>State</th>
-                <td>{currentUser.state}</td>
-              </tr>
-              <tr>
                 <th>Poscode</th>
                 <td>{currentUser.poscode}</td>
+              </tr>
+              <tr>
+                <th>State</th>
+                <td>{currentUser.state}</td>
               </tr>
               </tbody>
             </table>

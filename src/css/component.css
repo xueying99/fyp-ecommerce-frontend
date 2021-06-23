@@ -1,8 +1,9 @@
-img {
+/* Product-Women Page */
+.component-img {
     width: 250px;
     height: 250px;
 }
-p {
+.component-p {
     color: #000;
     text-align: center;
     font-size: 18px;
@@ -41,16 +42,17 @@ p {
     border-radius: 50%;
     line-height: 22px;
     font-size: 17px;
-    border: 2px solid #8A2BE2;
-    background-color: #E6E6FA;
+    border: 1px solid #8A2BE2;
+    background-color: #8A2BE2;
     margin: auto 3px;
     width: 30px;
     height: 30px;
+    color: #fff;
 }
 .sizebtn:hover {
-    color: #fff;
-    background-color: #8A2BE2;
-    border: 1px solid #E6E6FA;
+    color: #8A2BE2;
+    background-color: #E6E6FA;
+    border: 2px solid #8A2BE2;
 }
 .cartbtn {
     border-radius: 20px;
@@ -62,17 +64,28 @@ p {
     height: auto;
     margin: auto;
 }
+.carticonbtn {
+    border-radius: 50%;
+    background-color: #DDA0DD;
+    border: 1px solid  #DDA0DD;
+    text-align: center;
+    padding: 10px 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    line-height: 19px;
+}
 .product-detail .cartbtn {
     font-size: 18px;
     margin: 20px auto;
-    float: right;
+    /* float: right; */
     width: 170px;
 }
-.cartbtn:hover {
+.cartbtn:hover, .carticonbtn:hover{
     background-color: #FF00FF;
     border: 1px solid #FF00FF;
 }
-.container {
+.container-div {
     max-width: 1450px;
     margin-top: 30px;
     margin-bottom: 5px;
@@ -86,12 +99,12 @@ p {
     padding: 15px 0;
 }
 
-/*Promotion Page*/
-.promo-view {
+/*Event Page*/
+.event-view {
     display: flex;
     flex-direction: column;
 }
-.promo-div {
+.event-div {
     position: relative;
     display: block;
     padding: 2px;
@@ -99,16 +112,16 @@ p {
     margin: 15px auto;
     border: 1px solid rgba(0,0,0,.125);
 }
-.promo-div img {
+.event-div img {
     width: 1165px; 
     height: 400px;
 }
 h4 {
     text-align: center;
 }
-/*Promotion Page*/
+/*Event Page*/
 
-.form-group {
+.event-form-group {
     width: 330px;
 }
 input[type=radio] {
@@ -117,19 +130,19 @@ input[type=radio] {
 .radiobtn {
     margin: auto;
 }
-.signupbtn {
+/* .signupbtn {
     margin: 20px auto auto;
     width: 100%;
-}
-.addressCol {
+} */
+/* .addressCol {
     width: 100%;
-}
-.registerform {
+} */
+/* .registerform {
     max-width: 750px !important;
 }
 .loginform {
     margin: 20px auto auto;
-}
+} */
 
 /*Profile Page*/
 .profile-header {
