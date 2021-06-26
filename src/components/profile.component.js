@@ -28,8 +28,8 @@ export default class Profile extends Component {
         <div className="profile-view">
           <div className="profile-table">
           <img src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                    alt="profile-img"
-                    className="profile-img-card" />
+               alt="profile-img"
+               className="profile-img-card" />
         <table>
           <tbody>
           {/* {users && users.map((user, index) => (

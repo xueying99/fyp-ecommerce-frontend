@@ -120,7 +120,7 @@ export default class Login extends Component {
             >
 
             <div className="form-group">
-              <label htmlFor="username" class="pb-1">Username</label>
+              <label htmlFor="username" className="pb-1">Username</label>
               <Input
                 type="text"
                 className="form-control"
@@ -133,7 +133,7 @@ export default class Login extends Component {
             <div className="form-group">
               <div className="row">
                 <div className="col">
-                  <label htmlFor="password" class="pb-1">Password</label>
+                  <label htmlFor="password" className="pb-1">Password</label>
                 </div>
                 <div className="col-auto">
                   <a href="#password-reset" className="form-text small text-muted">Forgot password?</a>

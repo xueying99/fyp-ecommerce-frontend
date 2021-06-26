@@ -24,6 +24,7 @@ import Women from './components/women.component';
 import Men from './components/men.component';
 import Event from './components/event.component';
 import Cart from './components/cart.component';
+import Checkout from './components/checkout.component';
 
 import AuthService from "./services/auth.service";
 import Login from "./components/login.component";
@@ -42,7 +43,7 @@ import EventManagement from "./components/event-mgt.component";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.logOut = this.logOut.bind(this);
+    this.logout = this.logout.bind(this);
 
     this.state = {
       showModeratorBoard: false,
@@ -63,7 +64,7 @@ class App extends Component {
     }
   }
 
-  logOut() {
+  logout() {
     AuthService.logout();
   }
 
@@ -78,7 +79,7 @@ class App extends Component {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav>
+            <Nav className="mr-auto">
               <Nav.Link className='nav-btn' href="/home">HOME</Nav.Link>
               <UserHeader />
             </Nav> 
@@ -108,7 +109,7 @@ class App extends Component {
                 <label className='nav-username'>Hi, {currentUser.username} !</label>
                 <Nav.Link className='nav-link fa fa-search' aria-hidden="true" href="/search"></Nav.Link>
                 <Nav.Link className='nav-link fa fa-shopping-cart' aria-hidden="true" href="/cart"></Nav.Link>
-                <Nav.Link href="/login" onClick={this.logOut}>Log Out</Nav.Link>
+                <Nav.Link href="/login" onClick={this.logout}>Log Out</Nav.Link>
               </Nav>
             ) : (
               <Nav className="home-nav">
@@ -127,6 +128,7 @@ class App extends Component {
           <Route exact path="#men" component={Men} />
           <Route exact path="/event" component={Event} />
           <Route exact path="/cart" component={Cart} />
+          <Route path="/checkout" component={Checkout} />
           
           <Route exact path="/product-mgt" component={ProductManagement} />
           <Route exact path="/event-mgt" component={EventManagement} />

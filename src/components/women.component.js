@@ -99,7 +99,6 @@ export default class Women extends Component {
     })
       .then(response => {
         alert("Successfully add to cart!");
-        // this.retrieveCart();
       })
       .catch(e => {
         alert("Please login to make order!");
