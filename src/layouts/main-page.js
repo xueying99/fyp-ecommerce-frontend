@@ -135,7 +135,7 @@ export default class MainPage extends Component {
                         </div>
                         <div className='category'>
                             <img src='./images/fitting-room.jpg' alt='Virtual Fitting Room icon' />
-                            <Link to="/tutorials"><p>VIRTUAL FITTING ROOM SERVICE</p></Link>
+                            <Link to="/v-fitting-room"><p>VIRTUAL FITTING ROOM SERVICE</p></Link>
                         </div>
                     </div>
                 </div>

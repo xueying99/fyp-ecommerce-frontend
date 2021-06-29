@@ -22,11 +22,11 @@ export default class Cart extends Component {
             products: [],
             currentCart: null,
             currentIndex: -1,
-            quantity: 0,
             cart: [],
             totalprice: 0.00,
             totalitem: 0,
-            order: []
+            order: [],
+            date: new Date().toLocaleString()
         };
     }
 
@@ -87,9 +87,9 @@ export default class Cart extends Component {
 
     checkout() {
         OrderDataService.create({
-            cartId: this.state.id,
-            totalQuantity: this.totalitem,
-            totalPrice: this.totalprice,
+            productId: this.state.productId,
+            quantity: this.state.quantity,
+            productPrice: this.state.productPrice,
             date: this.state.date
         })
             .then(response => {
@@ -106,21 +106,20 @@ export default class Cart extends Component {
 
     saveOrder() {
         var data = {
-            cartId: this.state.id,
-            totalQuantity: this.totalitem,
-            totalPrice: this.totalprice
+            productId: this.state.productId,
+            quantity: this.state.quantity,
+            productPrice: this.state.productPrice,
+            date: this.state.date
         };
 
         OrderDataService.create(data)
             .then(response => {
                 this.setState({
-                    cartId: response.data.id,
-                    totalQuantity: response.data.totalitem,
-                    totalPrice: response.data.totalprice,
+                    productId: response.data.productId,
+                    quantity: response.data.quantity,
+                    productPrice: response.data.productPrice,
                     date: response.data.date,
-                    accepted: response.data.accepted,
-
-                    submitted: true
+                    accepted: response.data.accepted
                 });
                 console.log(response.data);
                 alert("Order submitted!");
@@ -204,7 +203,7 @@ export default class Cart extends Component {
                                 </div>
                                 <div className='cart-btn-div'>
                                     <div>Total:</div> 
-                                    <div>RM {this.state.totalprice.toFixed(2)}</div>
+                                    <div>RM {this.state.totalprice}</div>
                                 </div>
                                 <div className='cart-btn-div'>
                                     <a className="btn btn-primary" href="/checkout" onClick={this.saveOrder}>Checkout</a>

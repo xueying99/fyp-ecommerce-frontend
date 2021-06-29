@@ -25,6 +25,7 @@ import Men from './components/men.component';
 import Event from './components/event.component';
 import Cart from './components/cart.component';
 import Checkout from './components/checkout.component';
+import Vroom from './components/vroom.component';
 
 import AuthService from "./services/auth.service";
 import Login from "./components/login.component";
@@ -129,6 +130,7 @@ class App extends Component {
           <Route exact path="/event" component={Event} />
           <Route exact path="/cart" component={Cart} />
           <Route path="/checkout" component={Checkout} />
+          <Route exact path="/v-fitting-room" component={Vroom} />
           
           <Route exact path="/product-mgt" component={ProductManagement} />
           <Route exact path="/event-mgt" component={EventManagement} />

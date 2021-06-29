@@ -23,7 +23,7 @@ export default function() {
                 <NavDropdown.Item href="#suits">Suits</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/event">OFFER & EVENTS</Nav.Link>
-            <Nav.Link href="#v-fitting-room">V-FITTING ROOM</Nav.Link>                    
+            <Nav.Link href="/v-fitting-room">V-FITTING ROOM</Nav.Link>                    
         </Nav>
     )
 }
