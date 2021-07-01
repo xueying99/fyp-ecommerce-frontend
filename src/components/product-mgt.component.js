@@ -190,7 +190,10 @@ export default class ProductManagement extends Component {
         const { searchProductname, products, currentProduct, currentIndex } = this.state;
 
         return (
-            <div className='container'>
+            <div className=''>
+                <header className="jumbotron">
+                    <h3><b>PRODUCT MANAGEMENT</b></h3>
+                </header>
                 {/* <div className='col-md-8'>
                     <div className='input-group mb-3'>
                         <input

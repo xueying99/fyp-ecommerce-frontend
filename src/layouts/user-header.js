@@ -7,7 +7,7 @@ import '../css/header.css';
 export default function() {
 
     return (
-        <Nav>
+        <Nav className='mr-auto'>
             <NavDropdown title="WOMEN" id="collasible-nav-dropdown">
                 <NavDropdown.Item href="/women">View All</NavDropdown.Item>
                 <NavDropdown.Divider />
@@ -16,7 +16,7 @@ export default function() {
                 <NavDropdown.Item href="/add">Shorts</NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="MEN" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="/products-women">View All</NavDropdown.Item>
+                <NavDropdown.Item href="/products">View All</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item href="#shirts">Shirts</NavDropdown.Item>
                 <NavDropdown.Item href="#pants">Pants</NavDropdown.Item>

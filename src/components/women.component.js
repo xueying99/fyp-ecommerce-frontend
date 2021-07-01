@@ -4,8 +4,124 @@ import '../css/layouts.css';
 import '../css/component.css';
 import '../css/themify-icons/themify-icons.css';
 
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
+import ImageMagnify from "../layouts/image-magnify";
+
 import ProductDataService from "../services/product.service";
 import CartDataService from "../services/cart.service";
+
+const PREFIX_URL = './images/women/dress';
+
+class ReactImageGallery extends Component {
+  myRenderItem() {
+    return <ImageMagnify {...this.props} />;
+  }
+
+constructor() {
+    super();
+    this.state = {
+      showIndex: false,
+      showBullets: true,
+      infinite: true,
+      showThumbnails: true,
+      showFullscreenButton: true,
+      showGalleryFullscreenButton: true,
+      thumbnailPosition: 'bottom',
+      showVideo: {},
+      renderItem: this.myRenderItem.bind(this)
+
+    };
+    
+    this.images = [
+      {
+        thumbnail: `${PREFIX_URL}01-1.jpg`,
+        original: `${PREFIX_URL}01-1.jpg`,
+        description: 'Render custom slides within the gallery',
+      },
+      {
+        original: `${PREFIX_URL}01-2.jpg`,
+        thumbnail: `${PREFIX_URL}01-2.jpg`,
+      },
+      {
+        original: `${PREFIX_URL}01-3.jpg`,
+        thumbnail: `${PREFIX_URL}01-3.jpg`,
+        originalClass: 'featured-slide',
+        thumbnailClass: 'featured-thumb',
+        description: 'Custom class for slides & thumbnails dress03'
+      },
+      {
+        original: `${PREFIX_URL}01-4.jpg`,
+        thumbnail: `${PREFIX_URL}01-4.jpg`,
+        originalClass: 'featured-slide',
+        thumbnailClass: 'featured-thumb',
+        description: 'Custom class for slides & thumbnails'
+      },
+    ].concat(this._getStaticImages());
+  }
+
+  _onImageClick(event) {
+    console.debug('clicked on image', event.target, 'at index', this._imageGallery.getCurrentIndex());
+  }
+
+  _onImageLoad(event) {
+    console.debug('loaded image', event.target.src);
+  }
+
+  _onScreenChange(fullScreenElement) {
+    console.debug('isFullScreen?', !!fullScreenElement);
+  }
+
+  _getStaticImages() {
+    let images = [];
+    for (let i = 2; i < images.length; i++) {
+      images.push({
+        original: `${PREFIX_URL}${i}.jpg`,
+        thumbnail:`${PREFIX_URL}${i}t.jpg`
+      });
+    }
+
+    return images;
+  }
+
+  _resetVideo() {
+    this.setState({showVideo: {}});
+
+    if (this.state.showFullscreenButton) {
+      this.setState({showGalleryFullscreenButton: true});
+    }
+  }
+
+  render() {
+  
+    return (
+
+      <section className='app'>
+        <ImageGallery
+          ref={i => this._imageGallery = i}
+          items={this.images}
+          lazyLoad={false}
+          onClick={this._onImageClick.bind(this)}
+          onImageLoad={this._onImageLoad}
+          onScreenChange={this._onScreenChange.bind(this)}
+          infinite={this.state.infinite}
+          showBullets={this.state.showBullets}
+          showFullscreenButton={this.state.showFullscreenButton && this.state.showGalleryFullscreenButton}
+          showThumbnails={this.state.showThumbnails}
+          additionalClass="app-image-gallery"
+        />
+
+        <div className='app-sandbox'>
+
+          <div className='app-sandbox-content'>
+            {/* <h2 className='app-header'>Settings</h2> */}
+          </div>
+
+        </div>
+      </section>
+    );
+  }
+}
 
 export default class Women extends Component {
   constructor(props) {
@@ -110,12 +226,10 @@ export default class Women extends Component {
     const { searchProductname, products, currentProduct, currentIndex } = this.state;
 
     return (
-      <div className="container">
-        {/* <header className="jumbotron">
-        </header> */}
-        <div className='mainHeader'>
-          <h3>Women Fashion</h3>
-        </div>
+      <div className="">
+        <header className="jumbotron">
+            <h3><b>WOMEN FASHION</b></h3>
+        </header>
         <div className='mainContainer'>
           <div className='component-div'>
             <ul className='product-view'>
@@ -124,7 +238,7 @@ export default class Women extends Component {
                   <li className={'product-div' + (index === currentIndex ? ' active' : '')}
                     onClick={() => this.setActiveProduct(product, index)}
                     key={index}>
-                    <img src={'./images/women/' + (product.title) + '.jpg'} className="component-img"></img>
+                    <img src={'./images/women/' + (product.title) + '-1.jpg'} className="component-img"></img>
                     <div className="d-flex col justify-content-between pt-3">
                       <div>
                         {product.productname.toUpperCase()}
@@ -137,11 +251,15 @@ export default class Women extends Component {
                 ))}
             </ul>
           </div>
-          <div className='col-md-6'>
+          <div className='col-md-auto'>
             {currentProduct ? (
-              <form>
+              <form className=''>
                 <div className="product-detail">
-                  <img src={'./images/women/' + currentProduct.title.toLowerCase() + '.jpg'} className="component-img"></img>
+                <ReactImageGallery />
+                
+                  {/* <img src={'./images/women/' + currentProduct.title.toLowerCase() + '-1.jpg'} className="component-img"></img>
+                  <img src={'./images/women/' + currentProduct.title.toLowerCase() + '-2.jpg'} className="component-img"></img>
+                  <img src={'./images/women/' + currentProduct.title.toLowerCase() + '-3.jpg'} className="component-img"></img> */}
                   <div className="product-info">
                     <div>
                       <label>
@@ -173,9 +291,9 @@ export default class Women extends Component {
                       <label>
                         <strong>Quantity:</strong>
                       </label> {" "}
-                      <input type='number' 
-                             value={this.state.quantity} 
-                             onChange={this.onChangeQuantity}>
+                      <input type='number'
+                        value={this.state.quantity}
+                        onChange={this.onChangeQuantity}>
                       </input>
                     </div>
                     <div className="cartbtn" onClick={this.addToCart}>Add to Cart</div>

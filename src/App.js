@@ -26,6 +26,7 @@ import Event from './components/event.component';
 import Cart from './components/cart.component';
 import Checkout from './components/checkout.component';
 import Vroom from './components/vroom.component';
+import Payment from './components/payment.component';
 
 import AuthService from "./services/auth.service";
 import Login from "./components/login.component";
@@ -37,6 +38,8 @@ import BoardAdmin from "./components/board-admin.component";
 
 import ProductManagement from "./components/product-mgt.component";
 import EventManagement from "./components/event-mgt.component";
+
+import Image from './components/image'
 
 // export default async function() {
 //   let response = await fetch('http://localhost:8080/tutorials')
@@ -80,7 +83,7 @@ class App extends Component {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="mr-auto">
+            <Nav>
               <Nav.Link className='nav-btn' href="/home">HOME</Nav.Link>
               <UserHeader />
             </Nav> 
@@ -94,7 +97,7 @@ class App extends Component {
             )}
 
             {showAdminBoard && (
-              <Nav className="mr-auto">
+              <Nav className="ml-0 mr-auto">
                 <AdminHeader />
               </Nav>
             )}
@@ -105,7 +108,7 @@ class App extends Component {
                </Nav>
              )} */}
             {currentUser ? (
-              <Nav>
+              <Nav className="home-nav">
                 <Nav.Link className='nav-link fa fa-user-circle-o' aria-hidden="true" href="/profile"></Nav.Link>
                 <label className='nav-username'>Hi, {currentUser.username} !</label>
                 <Nav.Link className='nav-link fa fa-search' aria-hidden="true" href="/search"></Nav.Link>
@@ -130,6 +133,7 @@ class App extends Component {
           <Route exact path="/event" component={Event} />
           <Route exact path="/cart" component={Cart} />
           <Route path="/checkout" component={Checkout} />
+          <Route path="/payment" component={Payment} />
           <Route exact path="/v-fitting-room" component={Vroom} />
           
           <Route exact path="/product-mgt" component={ProductManagement} />
@@ -145,6 +149,8 @@ class App extends Component {
           <Route path="/user" component={BoardUser} />
           <Route path="/mod" component={BoardModerator} />
           <Route path="/admin" component={BoardAdmin} />
+
+          <Route path="/image" component={Image} />
         </Switch>
 
         <Footer />

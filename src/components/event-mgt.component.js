@@ -178,7 +178,10 @@ export default class EventManagement extends Component {
         const { searchEventname, events, currentEvent, currentIndex } = this.state;
 
         return (
-            <div className='container'>
+            <div className=''>
+                <header className="jumbotron">
+                    <h3><b>EVENT MANAGEMENT</b></h3>
+                </header>
                 {/* <div className='col-md-8'>
                     <div className='input-group mb-3'>
                         <input

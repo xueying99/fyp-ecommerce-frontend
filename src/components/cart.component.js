@@ -112,7 +112,7 @@ export default class Cart extends Component {
             date: this.state.date
         };
 
-        OrderDataService.create(data)
+        CartDataService.checkout(data)
             .then(response => {
                 this.setState({
                     productId: response.data.productId,
@@ -123,7 +123,7 @@ export default class Cart extends Component {
                 });
                 console.log(response.data);
                 alert("Order submitted!");
-                this.removeAllCartItems();
+                // this.removeAllCartItems();
             })
             .catch(e => {
                 console.log(e);
@@ -162,7 +162,7 @@ export default class Cart extends Component {
                                             <div className="cart-div" key={c.id}>
                                                 <div className="cart-item-div" key={c.id}>
                                                     <div className="item-img">
-                                                        <img src={'./images/women/' + (p.title) + '.jpg'}></img>
+                                                        <img src={'./images/women/' + (p.title) + '-1.jpg'}></img>
                                                     </div>
                                                     <div className="cart-item-info">
                                                         <div className='item-info'>

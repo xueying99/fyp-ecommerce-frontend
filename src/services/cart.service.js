@@ -21,6 +21,10 @@ class CartDataService {
   deleteAll() {
     return http.delete(`/carts`, { headers: authHeader() });
   }
+  
+  checkout(data) {
+    return http.post("/carts/checkout", data, { headers: authHeader() });
+  }
 }
 
 export default new CartDataService();

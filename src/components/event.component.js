@@ -79,12 +79,10 @@ export default class Event extends Component {
     const { searchEvent, events, currentEvent, currentIndex } = this.state;
 
     return (
-      <div className="container">
-        {/* <header className="jumbotron">
-        </header> */}
-        <div className='mainHeader'>
-            <h3>Offer & Events</h3>
-        </div>
+      <div className="">
+        <header className="jumbotron">
+            <h3><b>OFFER & EVENTS</b></h3>
+        </header>
         <div className='mainContainer'>
           <div className='component-div'>
             <ul className='event-view'>

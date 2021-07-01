@@ -1,3 +1,14 @@
+.jumbotron {
+    background-image: linear-gradient(to left, #3264f5, #4a54e8, #5b42db, #682ccb, #7202bb) !important;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 !important;
+}
+.jumbotron h3 {
+    color: #fff;
+    text-align: center;
+}
+
 /* Sign In Page */
 .solid-btn{
     color: #fff !important;
@@ -97,4 +108,148 @@
 }
 .qty-btn {
     margin-top: -3px;
+}
+
+/* Checkout Page */
+.checkout-div {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 950px;
+    padding: 15px 25px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    /* justify-content: space-evenly; */
+}
+.checkout-item-div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.item-img {
+    width: 40%;
+}
+.checkout-item-div img {
+    width: 100px;
+    height: 100px;
+    float: left;
+}
+.checkout-item-info {
+    flex-direction: row;
+    padding: 5px 15px;
+    margin: 0 auto auto 5px;
+}
+.checkout-detail-div {
+    position: relative;
+    display: block;
+    flex-direction: row;
+    width: 950px;
+    padding: 15px 25px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    justify-content: space-evenly;
+}
+.checkout-btn-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin: 15px 0;
+}
+
+/* Payment Page */
+.billing-div {
+    position: relative;
+    display: block;
+    flex-direction: column;
+    width: 650px;
+    padding: 15px 25px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    justify-content: space-evenly;
+    margin-right: 25px;
+}
+.payment-div {
+    position: relative;
+    display: block;
+    flex-direction: column;
+    width: 400px;
+    padding: 15px 35px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    justify-content: center;
+    margin-left: 25px;
+}
+.payment-form-group {
+    width: 100%;
+}
+.paybtn {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Product Image Gallery */
+.Image {
+    font-family: sans-serif;
+    text-align: center;
+}
+.image-gallery-left-nav {
+    display: none;
+}
+.image-gallery-right-nav {
+    display: none;
+}
+.image-gallery-play-button {
+    display: none;
+}
+
+/* Profile Tab */
+.tab-list-div {
+    width: 16%;
+}
+.tab-content-div {
+    width: 100%;
+}
+.profile-header {
+    margin: auto 150px;
+}
+.profile-view {
+    margin: auto;
+    display: flex;
+}
+.profile-table {
+    flex-direction: column;
+    width: 70%;
+    padding: 0 50px;
+}
+.profile-btn {
+    flex-direction: column;
+    width: 25%;
+    justify-content: center;
+}
+.profile-btn-div {
+    text-align: center;
+    flex-direction: column;
+    margin: 40px 0;
+}
+.profile-button {
+    flex-direction: row;
+    margin: 30px auto;
+    width: 150px;
+    padding: 5px 10px;
+    border: 1px black solid;
+}
+.profile-table-row {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0; 
+}
+.profile-table-row label {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+}
+.profile-table-row input {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
 }
