@@ -12,31 +12,6 @@ class ReactImageGallery extends Component {
     return <ImageMagnify {...this.props} />;
   }
 
-//   render() {
-//     const properties = {
-//       thumbnailPosition: "left",
-//       useBrowserFullscreen: false,
-//       showPlayButton: false,
-//       renderItem: this.myRenderItem.bind(this),
-//       items: [
-//         {
-//           original: "./images/women/dress01-1.jpg",
-//           thumbnail: "./images/women/dress01-1.jpg"
-//         },
-//         {
-//           original: "./images/women/dress01-2.jpg",
-//           thumbnail: "./images/women/dress01-2.jpg"
-//         },
-//         {
-//           original: "./images/women/dress01-3.jpg",
-//           thumbnail: "./images/women/dress01-3.jpg"
-//         }
-//       ]
-//     };
-
-//     return <ImageGallery {...properties} />;
-//   }
-
 constructor() {
     super();
     this.state = {

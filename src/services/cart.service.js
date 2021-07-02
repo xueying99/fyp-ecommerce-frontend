@@ -16,14 +16,14 @@ class CartDataService {
 
   delete(id) {
     return http.delete(`/carts/${id}`, { headers: authHeader() });
-  }
+  }   
 
   deleteAll() {
     return http.delete(`/carts`, { headers: authHeader() });
   }
   
   checkout(data) {
-    return http.post("/carts/checkout", data, { headers: authHeader() });
+    return http.post("/carts", data, { headers: authHeader() });
   }
 }
 

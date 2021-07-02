@@ -34,7 +34,9 @@ class Review extends Component {
       
       function getBMI(calculateBMI) {
         if(calculateBMI < 18.5) {
-            return "Awesome! you are UNDERWEIGHT and your ideal size are S.";
+            return (
+                "Awesome! you are UNDERWEIGHT and your ideal size are S."
+            );
         }
         if(calculateBMI >= 18.5 && calculateBMI < 24.9) {
             return "Excellent! You have a Normal Weight and you are free to take a S or M size of apparel.";

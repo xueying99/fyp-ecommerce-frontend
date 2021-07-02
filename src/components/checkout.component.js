@@ -7,6 +7,7 @@ import '../css/themify-icons/themify-icons.css';
 import ProductDataService from "../services/product.service";
 import CartDataService from "../services/cart.service";
 import OrderDataService from "../services/order.service";
+import OrderItemDataService from "../services/orderItem.service";
 import AuthService from "../services/auth.service";
 
 export default class Checkout extends Component {
@@ -15,19 +16,19 @@ export default class Checkout extends Component {
         this.retrieveProducts = this.retrieveProducts.bind(this);
         this.refreshList = this.refreshList.bind(this);
         this.retrieveCart = this.retrieveCart.bind(this);
-        // this.removeAllOrders = this.removeAllOrders.bind(this);
-        // this.checkout = this.checkout.bind(this);
         this.retrieveOrder = this.retrieveOrder.bind(this);
-        this.saveOrder = this.saveOrder.bind(this);
+        this.retrieveOrderItem = this.retrieveOrderItem.bind(this);
+        // this.saveOrder = this.saveOrder.bind(this);
 
         this.state = {
             products: [],
             currentOrder: null,
             currentIndex: -1,
-            cart: [],
             tempprice: 0.00,
             totalitem: 0,
+            cart: [],
             order: [],
+            orderItem: [],
             users: [],
             currentUser: AuthService.getCurrentUser(),
             currentIndex: -1
@@ -38,6 +39,8 @@ export default class Checkout extends Component {
         this.retrieveProducts();
         this.retrieveCart();
         this.retrieveOrder();
+        this.retrieveOrderItem();
+        this.refreshList();
     }
 
     retrieveProducts() {
@@ -46,7 +49,7 @@ export default class Checkout extends Component {
                 this.setState({
                     products: response.data
                 });
-                // console.log(response.data);
+                // this.retrieveOrder();
             })
             .catch(e => {
                 console.log(e);
@@ -56,7 +59,7 @@ export default class Checkout extends Component {
     refreshList() {
         this.retrieveProducts();
         // this.retrieveCart();
-        this.retrieveOrder();
+        // this.retrieveOrder();
         this.setState({
             currentOrder: null,
             currentIndex: -1
@@ -66,8 +69,8 @@ export default class Checkout extends Component {
     retrieveCart() {
         CartDataService.getAll()
             .then(res => {
-                this.setState({
-                    cart: res.data
+                this.setState({ 
+                    cart: res.data 
                 })
                 console.log(res.data)
             })
@@ -89,66 +92,54 @@ export default class Checkout extends Component {
             });
     }
 
-    // removeAllOrders() { //NO NEED
-    //     OrderDataService.deleteAll()
-    //         .then(response => {
-    //             console.log(response.data);
-    //             this.refreshList();
-    //         })
-    //         .catch(e => {
-    //             console.log(e);
-    //         });
-    // }
-
-    // checkout() {
-    //     OrderDataService.create({
-    //         cartId: this.state.currentCart.id,
-    //         quantity: this.state.quantity,
-    //         totalPrice: this.state.currentCart.price,
-    //         date: this.state.date,
-    //         accepted: false
-    //     })
-    //         .then(() => {
-    //             // this.removeAllOrders(); 
-    //         })
-    // }
-
-    saveOrder() {
-        var data = {
-            productId: this.state.productId,
-            quantity: this.state.quantity,
-            productPrice: this.state.productPrice,
-            date: this.state.date
-        };
-
-        OrderDataService.create(data)
-            .then(response => {
+    retrieveOrderItem() {
+        OrderItemDataService.getAll()
+            .then(res => {
                 this.setState({
-                    productId: response.data.productId,
-                    quantity: response.data.quantity,
-                    productPrice: response.data.productPrice,
-                    date: response.data.date,
-                    accepted: response.data.accepted
-                });
-                console.log(response.data);
-                alert("Order submitted!");
-                this.removeAllCartItems();
+                    orderItem: res.data
+                })
+                console.log(res.data)
             })
             .catch(e => {
                 console.log(e);
             });
     }
 
-    render() {
-        const { products, currentProduct, currentIndex, currentUser } = this.state;
+    // saveOrder() {
+    //     var data = {
+    //         productId: this.state.productId,
+    //         quantity: this.state.quantity,
+    //         productPrice: this.state.productPrice,
+    //         date: this.state.date
+    //     };
 
+    //     OrderDataService.create(data)
+    //         .then(response => {
+    //             this.setState({
+    //                 productId: response.data.productId,
+    //                 quantity: response.data.quantity,
+    //                 productPrice: response.data.productPrice,
+    //                 date: response.data.date,
+    //                 accepted: response.data.accepted
+    //             });
+    //             console.log(response.data);
+    //             alert("Order submitted!");
+    //             this.removeAllCartItems();
+    //         })
+    //         .catch(e => {
+    //             console.log(e);
+    //         });
+    // }
+
+    render() {
+        const { products, currentProduct, currentIndex, currentUser, order, orderItem } = this.state;
+        console.log(this.state.order.length)
+        console.log(this.state.orderItem.length)
         return (
             <div className="">
                 <header className="jumbotron">
                     <h3>CHECKOUT FORM</h3>
                 </header>
-                {/* <div className='mainHeader'>
-                </div> */}
                 <div className='mainContainer'>
                     <div className='d-flex justify-content-center row'>
                         <div className=''>
@@ -158,13 +149,7 @@ export default class Checkout extends Component {
                                         <h3>Empty Order</h3>
                                     ) :
                                     this.state.order.map(o => {
-                                        let p = this.state.products.filter(i => i.id === o.productId)[0]
-                                        this.state.tempprice = this.state.order.reduce(
-                                            (prevPrice, currentPrice) => prevPrice.productPrice + currentPrice.productPrice);
-                                        this.state.totalprice = this.state.tempprice + this.state.fee;
-                                        this.state.totalitem = this.state.order.reduce(
-                                            (prevQuantity, currentQuantity) => prevQuantity.quantity + currentQuantity.quantity);
-                                        // console.log("total " + this.state.totalprice)
+                                        let p = this.state.products.filter(i => i.id === o.orderId)[0]
                                         return (
                                             <div className='d-flex justify-content-center' key={o.id}>
                                                 <div className="checkout-div" key={o.id}>
@@ -189,6 +174,7 @@ export default class Checkout extends Component {
                                             </div>
                                         )
                                     })
+                                    // (<div>not empty order</div>)
                             }
                             <div className=''>
                                 <div className='checkout-detail-div'>

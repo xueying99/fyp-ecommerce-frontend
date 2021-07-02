@@ -7,6 +7,7 @@ import '../css/themify-icons/themify-icons.css';
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import ImageMagnify from "../layouts/image-magnify";
+import '../css/images-gallery.css';
 
 import ProductDataService from "../services/product.service";
 import CartDataService from "../services/cart.service";
@@ -57,6 +58,30 @@ constructor() {
         thumbnailClass: 'featured-thumb',
         description: 'Custom class for slides & thumbnails'
       },
+      {
+        original: `${PREFIX_URL}02-1.jpg`,
+        thumbnail: `${PREFIX_URL}02-1.jpg`,
+        originalClass: 'featured-slide',
+        thumbnailClass: 'featured-thumb',
+      },
+      {
+        original: `${PREFIX_URL}02-2.jpg`,
+        thumbnail: `${PREFIX_URL}02-2.jpg`,
+        originalClass: 'featured-slide',
+        thumbnailClass: 'featured-thumb',
+      },
+      {
+        original: `${PREFIX_URL}02-1.jpg`,
+        thumbnail: `${PREFIX_URL}02-1.jpg`,
+        originalClass: 'featured-slide',
+        thumbnailClass: 'featured-thumb',
+      },
+      {
+        original: `${PREFIX_URL}02-2.jpg`,
+        thumbnail: `${PREFIX_URL}02-2.jpg`,
+        originalClass: 'featured-slide',
+        thumbnailClass: 'featured-thumb',
+      },
     ].concat(this._getStaticImages());
   }
 
@@ -77,7 +102,7 @@ constructor() {
     for (let i = 2; i < images.length; i++) {
       images.push({
         original: `${PREFIX_URL}${i}.jpg`,
-        thumbnail:`${PREFIX_URL}${i}t.jpg`
+        thumbnail:`${PREFIX_URL}${i}.jpg`
       });
     }
 
@@ -96,7 +121,7 @@ constructor() {
   
     return (
 
-      <section className='app'>
+      <section className='app-gallery'>
         <ImageGallery
           ref={i => this._imageGallery = i}
           items={this.images}
@@ -256,24 +281,20 @@ export default class Women extends Component {
               <form className=''>
                 <div className="product-detail">
                 <ReactImageGallery />
-                
-                  {/* <img src={'./images/women/' + currentProduct.title.toLowerCase() + '-1.jpg'} className="component-img"></img>
-                  <img src={'./images/women/' + currentProduct.title.toLowerCase() + '-2.jpg'} className="component-img"></img>
-                  <img src={'./images/women/' + currentProduct.title.toLowerCase() + '-3.jpg'} className="component-img"></img> */}
                   <div className="product-info">
-                    <div>
+                    <div className='product-info-div'>
                       <label>
                         <strong>Product Name:</strong>
-                      </label> {" "}
-                      {currentProduct.productname.toUpperCase()}
+                      </label> 
+                      <p>{currentProduct.productname.toUpperCase()}</p>
                     </div>
-                    <div>
+                    <div className='product-info-div'>
                       <label>
                         <strong>Description:</strong>
                       </label> {" "}
-                      {currentProduct.description}
+                      <p>{currentProduct.description}</p>
                     </div>
-                    <div>
+                    <div className='product-info-div'>
                       <label>
                         <strong>Size: </strong>{currentProduct.size.toUpperCase()}
                       </label> {" "}
@@ -281,19 +302,19 @@ export default class Women extends Component {
                       <button className="sizebtn"><b>M</b></button>
                       <button className="sizebtn"><b>L</b></button>
                     </div>
-                    <div>
+                    <div className='product-info-div'>
                       <label>
                         <strong>Price:</strong>
                       </label> {" "}
                       RM {currentProduct.price.toFixed(2)}
                     </div>
-                    <div>
+                    <div className='product-info-div'>
                       <label>
                         <strong>Quantity:</strong>
                       </label> {" "}
                       <input type='number'
-                        value={this.state.quantity}
-                        onChange={this.onChangeQuantity}>
+                             value={this.state.quantity}
+                             onChange={this.onChangeQuantity}>
                       </input>
                     </div>
                     <div className="cartbtn" onClick={this.addToCart}>Add to Cart</div>

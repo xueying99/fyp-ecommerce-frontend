@@ -14,7 +14,6 @@ export default class MainPage extends Component {
         this.retrieveProduct = this.retrieveProduct.bind(this);
         this.refreshList = this.refreshList.bind(this);
         this.setActiveProduct = this.setActiveProduct.bind(this);
-        // this.removeAllTutorials = this.removeAllTutorials.bind(this);
         this.searchProduct = this.searchProduct.bind(this);
 
         this.state = {

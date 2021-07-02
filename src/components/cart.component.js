@@ -15,33 +15,32 @@ export default class Cart extends Component {
         this.refreshList = this.refreshList.bind(this);
         this.retrieveCart = this.retrieveCart.bind(this);
         this.removeAllCartItems = this.removeAllCartItems.bind(this);
+        // this.checkout = this.checkout.bind(this);
         this.checkout = this.checkout.bind(this);
-        this.saveOrder = this.saveOrder.bind(this);
 
         this.state = {
             products: [],
             currentCart: null,
             currentIndex: -1,
             cart: [],
-            totalprice: 0.00,
-            totalitem: 0,
             order: [],
-            date: new Date().toLocaleString()
+            orderItem: [],
         };
     }
 
     componentDidMount() {
-        this.retrieveProducts();
-        this.retrieveCart();
+        // this.retrieveProducts();       
         this.refreshList();
     }
 
     retrieveProducts() {
-        ProductDataService.getAll()
+        ProductDataService.getAll()        
             .then(response => {
+                // console.log(response)               
                 this.setState({
                     products: response.data
                 });
+                this.retrieveCart();
             })
             .catch(e => {
                 console.log(e);
@@ -50,7 +49,7 @@ export default class Cart extends Component {
 
     refreshList() {
         this.retrieveProducts();
-        this.retrieveCart();
+        // this.retrieveCart();
         this.setState({
             currentCart: null,
             currentIndex: -1
@@ -85,45 +84,33 @@ export default class Cart extends Component {
             });
     }
 
+    // checkout() {
+    //     OrderDataService.create({
+    //         productId: this.state.productId,
+    //         quantity: this.state.quantity,
+    //         productPrice: this.state.productPrice,
+    //         date: this.state.date
+    //     })
+    //         .then(response => {
+    //             this.setState({
+    //                 accepted: response.data.accepted
+    //             });
+    //             alert("Order submitted!");
+    //             this.removeAllCartItems();
+    //         })
+    //         .catch(e => {
+    //             console.log(e);
+    //           });
+    // }
+
     checkout() {
-        OrderDataService.create({
-            productId: this.state.productId,
-            quantity: this.state.quantity,
-            productPrice: this.state.productPrice,
-            date: this.state.date
-        })
+        CartDataService.checkout()
             .then(response => {
                 this.setState({
-                    accepted: response.data.accepted
-                });
-                alert("Order submitted!");
-                this.removeAllCartItems();
-            })
-            .catch(e => {
-                console.log(e);
-              });
-    }
-
-    saveOrder() {
-        var data = {
-            productId: this.state.productId,
-            quantity: this.state.quantity,
-            productPrice: this.state.productPrice,
-            date: this.state.date
-        };
-
-        CartDataService.checkout(data)
-            .then(response => {
-                this.setState({
-                    productId: response.data.productId,
-                    quantity: response.data.quantity,
-                    productPrice: response.data.productPrice,
-                    date: response.data.date,
-                    accepted: response.data.accepted
+                    cart: response.data
                 });
                 console.log(response.data);
                 alert("Order submitted!");
-                // this.removeAllCartItems();
             })
             .catch(e => {
                 console.log(e);
@@ -132,14 +119,23 @@ export default class Cart extends Component {
 
     render() {
         const { products, currentCart, currentIndex } = this.state;
-        
+
+        let totalprice = 0.00
+        for(let i=0; i < this.state.cart.length; i++) {
+            totalprice = totalprice + this.state.cart[i].productPrice
+        }
+
+        let totalitem = 0
+        for(let i=0; i < this.state.cart.length; i++) {
+            totalitem = totalitem + this.state.cart[i].quantity
+        }
         return (
-            <div className="container">
-                {/* <header className="jumbotron">
-                </header> */}
-                <div className='mainHeader'>
+            <div className="">
+                <header className="jumbotron">
                     <h3>SHOPPING CART</h3>
-                </div>
+                </header>
+                {/* <div className='mainHeader'>
+                </div> */}
                 <div className='mainContainer'>
                     <div className='d-flex justify-content-around row'>
                         <div className=''>
@@ -149,13 +145,8 @@ export default class Cart extends Component {
                                     <h3>Empty Cart</h3>
                                 ) :
                                     this.state.cart.map(c => {
+                                        
                                         let p = this.state.products.filter(i => i.id === c.productId)[0]
-                                        this.state.totalprice = this.state.cart.reduce(
-                                            (prevPrice, currentPrice) => prevPrice.productPrice + currentPrice.productPrice);
-                                        this.state.totalitem = this.state.cart.reduce(
-                                            (prevQuantity, currentQuantity) => prevQuantity.quantity + currentQuantity.quantity);
-                                        console.log("quantity:" + this.state.totalitem, " price:" + this.state.totalprice)
-
                                         return ( 
                                             <div className='d-flex justify-content-around' key={c.id}>
                                             
@@ -176,15 +167,11 @@ export default class Cart extends Component {
                                                             Quantity: {c.quantity}<br></br>
                                                         </div> */}
                                                         <div className='quantity-group'>
-                                                            <button className='btn btn-danger qty-btn ti-minus'> 
-                                                            </button>
-                                                            <input 
-                                                                   className='input-quantity'
+                                                            <button className='btn btn-danger qty-btn ti-minus' disabled></button>
+                                                            <input className='input-quantity'
                                                                    size="1"
-                                                                   value={c.quantity} 
-                                                            />
-                                                            <button className='btn btn-success qty-btn ti-plus'>
-                                                            </button>
+                                                                   defaultValue={c.quantity} />
+                                                            <button className='btn btn-success qty-btn ti-plus' disabled></button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -199,14 +186,14 @@ export default class Cart extends Component {
                             <div className='cart-detail-div'> 
                                 <div className='cart-btn-div'>
                                     <div>Total Items:</div> 
-                                    <div>{this.state.totalitem}</div>
+                                    <div>{totalitem}</div>
                                 </div>
                                 <div className='cart-btn-div'>
                                     <div>Total:</div> 
-                                    <div>RM {this.state.totalprice}</div>
+                                    <div>RM {totalprice.toFixed(2)}</div>
                                 </div>
                                 <div className='cart-btn-div'>
-                                    <a className="btn btn-primary" href="/checkout" onClick={this.saveOrder}>Checkout</a>
+                                    <a className="btn btn-primary" href="/checkout" onClick={this.checkout}>Checkout</a>
                                     <div className="btn btn-danger" onClick={this.removeAllCartItems}>Clear All</div>
                                 </div>
                             </div>

@@ -201,6 +201,9 @@
 .image-gallery-play-button {
     display: none;
 }
+.app-gallery {
+    width: 55% !important;
+}
 
 /* Profile Tab */
 .tab-list-div {
