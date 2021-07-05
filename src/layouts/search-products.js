@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import ProductDataService from "../services/product.service";
 import { Link } from "react-router-dom";
 import '../css/layouts.css';
+
+import ProductDataService from "../services/product.service";
 
 export default class SearchPage extends Component {
     constructor(props) {
@@ -10,7 +11,6 @@ export default class SearchPage extends Component {
         this.retrieveProduct = this.retrieveProduct.bind(this);
         this.refreshList = this.refreshList.bind(this);
         this.setActiveProduct = this.setActiveProduct.bind(this);
-        // this.removeAllTutorials = this.removeAllTutorials.bind(this);
         this.searchProduct = this.searchProduct.bind(this);
 
         this.state = {
@@ -78,8 +78,8 @@ export default class SearchPage extends Component {
         const { searchProduct, products, currentProduct, currentIndex } = this.state;
 
         return (
-            <div className='mainView'>
-                <div className='justify-content-end col-md-3'>
+            <div className='container mt-5 mb-5'>
+                <div className='justify-content-end col-md-4'>
                     <div className='input-group mb-3'>
                         <input
                             type='text'
@@ -98,54 +98,75 @@ export default class SearchPage extends Component {
                     </div>
                 </div>           
 
-                <div className='col-md-6'>
-                    <h4>Products List</h4>
+                <div className='row search-div'>
+                        <div className='col-md-6'>
+                            <h4 className='text-left'>Products List</h4>
 
-                    <ul className='list-group'>
-                        {products && 
-                         products.map((product, index) => (
-                            <li className={'list-group-item' + (index === currentIndex ? 'active' : '')}
-                                onClick={() => this.setActiveProduct(product, index)}
-                                key={index}>
-                                {product.title}
-                            </li>
-                         ))}
-                    </ul>
-                </div>
-                <div className='col=md-6'>
-                    {currentProduct ? (
-                        <div>
-                            <h4>Product</h4>
-                            <div>
-                                <label>
-                                    <strong>Title:</strong>
-                                </label> {" "}
-                                {currentProduct.title}
-                            </div>
-                            <div>
-                                <label>
-                                    <strong>Description:</strong>
-                                </label> {" "}
-                                {currentProduct.description}
-                            </div>
-                            <div>
-                                <label>
-                                    <strong>Status:</strong>
-                                </label> {" "}
-                                {currentProduct.published ? "Published" : "Pending"}
-                            </div>
-
-                            <Link to={'/tutorials/' + currentProduct.id} className='badge badge-warning'>
-                                Edit
-                            </Link> 
+                            <ul className='mgt-list-view'>
+                                {products &&
+                                    products.map((product, index) => (
+                                        <li className={'list-div' + (index === currentIndex ? ' active' : '')}
+                                            onClick={() => this.setActiveProduct(product, index)}
+                                            key={index}>
+                                            <div>
+                                                <p>{product.productname}</p>
+                                            </div>
+                                        </li>
+                                    ))}
+                            </ul>
                         </div>
-                    ) : (
-                        <div>
-                            <br />
-                            <p>Please click on a Product...</p>
+                        <div className='col=md-6'>
+                            {currentProduct ? (
+                                <div className='event-mgt-detail'>
+                                    <h4>Product</h4>
+                                    <div className='product-mgt-detail-img'>
+                                    <img src={'http://localhost:8080/api/files/' + currentProduct.title + '-1.jpg'} className="mgt-img"></img>
+                                    </div>
+                                    <div className='product-mgt-detail-info '>
+                                        <label>
+                                            <strong>Name:</strong>
+                                        </label> {" "}
+                                        {currentProduct.productname}
+                                    </div>
+                                    <div className='product-mgt-detail-info '>
+                                        <label>
+                                            <strong>Description:</strong>
+                                        </label> {" "}
+                                        {currentProduct.description}
+                                    </div>
+                                    <div className='product-mgt-detail-info '>
+                                        <label>
+                                            <strong>Size:</strong>
+                                        </label> {" "}
+                                        {currentProduct.size}
+                                    </div>
+                                    <div className='product-mgt-detail-info '>
+                                        <label>
+                                            <strong>Price:</strong>
+                                        </label> {" "}
+                                        {currentProduct.price}
+                                    </div>
+                                    <div className='product-mgt-detail-info '>
+                                        <label>
+                                            <strong>Quantity:</strong>
+                                        </label> {" "}
+                                        {currentProduct.quantity}
+                                    </div>
+                                    <div className='product-mgt-detail-info '>
+                                        <label>
+                                            <strong>Status:</strong>
+                                        </label> {" "}
+                                        {currentProduct.published ? "Published" : "Pending"}
+                                    </div>
+                                </div>
+                            ) : (
+                                <div>
+                                    <br />
+                                    <p>Please click on a Product to view detail information...</p>
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
+                    </div>
             </div> 
         );
     }

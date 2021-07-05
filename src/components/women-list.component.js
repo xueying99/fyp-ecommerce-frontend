@@ -1,26 +1,28 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import '../css/layouts.css';
-import '../css/component.css';
-import '../css/themify-icons/themify-icons.css';
-
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import ImageMagnify from "../layouts/image-magnify";
 import '../css/images-gallery.css';
+import '../css/layouts.css';
+import '../css/component.css';
+import Grid from "@material-ui/core/Grid";
 
+import ImageMagnify from "../layouts/image-magnify";
 import ProductDataService from "../services/product.service";
 import CartDataService from "../services/cart.service";
+import UploadService from "../services/file-upload.service";
 
-const PREFIX_URL = './images/women/dress';
+const PREFIX_URL = "http://localhost:8080/api/files/dress";
+// './images/women/dress';
 
 class ReactImageGallery extends Component {
   myRenderItem() {
     return <ImageMagnify {...this.props} />;
   }
 
-constructor() {
+  constructor() {
     super();
+
     this.state = {
       showIndex: false,
       showBullets: true,
@@ -30,15 +32,15 @@ constructor() {
       showGalleryFullscreenButton: true,
       thumbnailPosition: 'bottom',
       showVideo: {},
-      renderItem: this.myRenderItem.bind(this)
-
+      imageInfos: [],
     };
-    
+
     this.images = [
       {
         thumbnail: `${PREFIX_URL}01-1.jpg`,
         original: `${PREFIX_URL}01-1.jpg`,
         description: 'Render custom slides within the gallery',
+        renderItem: this.myRenderItem.bind(this)
       },
       {
         original: `${PREFIX_URL}01-2.jpg`,
@@ -64,24 +66,24 @@ constructor() {
         originalClass: 'featured-slide',
         thumbnailClass: 'featured-thumb',
       },
+      // {
+      //   original: `${PREFIX_URL}02-2.jpg`,
+      //   thumbnail: `${PREFIX_URL}02-2.jpg`,
+      //   originalClass: 'featured-slide',
+      //   thumbnailClass: 'featured-thumb',
+      // },
       {
-        original: `${PREFIX_URL}02-2.jpg`,
-        thumbnail: `${PREFIX_URL}02-2.jpg`,
+        original: `${PREFIX_URL}03-1.jpg`,
+        thumbnail: `${PREFIX_URL}03-1.jpg`,
         originalClass: 'featured-slide',
         thumbnailClass: 'featured-thumb',
       },
-      {
-        original: `${PREFIX_URL}02-1.jpg`,
-        thumbnail: `${PREFIX_URL}02-1.jpg`,
-        originalClass: 'featured-slide',
-        thumbnailClass: 'featured-thumb',
-      },
-      {
-        original: `${PREFIX_URL}02-2.jpg`,
-        thumbnail: `${PREFIX_URL}02-2.jpg`,
-        originalClass: 'featured-slide',
-        thumbnailClass: 'featured-thumb',
-      },
+      // {
+      //   original: `${PREFIX_URL}02-2.jpg`,
+      //   thumbnail: `${PREFIX_URL}02-2.jpg`,
+      //   originalClass: 'featured-slide',
+      //   thumbnailClass: 'featured-thumb',
+      // },
     ].concat(this._getStaticImages());
   }
 
@@ -102,23 +104,31 @@ constructor() {
     for (let i = 2; i < images.length; i++) {
       images.push({
         original: `${PREFIX_URL}${i}.jpg`,
-        thumbnail:`${PREFIX_URL}${i}.jpg`
+        thumbnail: `${PREFIX_URL}${i}.jpg`,
+        // renderItem: this.myRenderItem.bind(this)
       });
     }
-
     return images;
   }
 
   _resetVideo() {
-    this.setState({showVideo: {}});
+    this.setState({ showVideo: {} });
 
     if (this.state.showFullscreenButton) {
-      this.setState({showGalleryFullscreenButton: true});
+      this.setState({ showGalleryFullscreenButton: true });
     }
   }
 
+  componentDidMount() {
+    UploadService.getFiles().then((response) => {
+      this.setState({
+        imageInfos: response.data,
+      });
+    });
+  }
+
   render() {
-  
+
     return (
 
       <section className='app-gallery'>
@@ -135,14 +145,6 @@ constructor() {
           showThumbnails={this.state.showThumbnails}
           additionalClass="app-image-gallery"
         />
-
-        <div className='app-sandbox'>
-
-          <div className='app-sandbox-content'>
-            {/* <h2 className='app-header'>Settings</h2> */}
-          </div>
-
-        </div>
       </section>
     );
   }
@@ -151,33 +153,28 @@ constructor() {
 export default class Women extends Component {
   constructor(props) {
     super(props);
-    this.onChangeSearchProduct = this.onChangeSearchProduct.bind(this);
     this.onChangeQuantity = this.onChangeQuantity.bind(this);
     this.retrieveProducts = this.retrieveProducts.bind(this);
     this.refreshList = this.refreshList.bind(this);
     this.setActiveProduct = this.setActiveProduct.bind(this);
-    this.searchProductname = this.searchProductname.bind(this);
     this.addToCart = this.addToCart.bind(this);
 
     this.state = {
       products: [],
       currentProduct: null,
       currentIndex: -1,
-      searchProductname: "",
       quantity: 1,
-      cart: []
+      cart: [],
+      imageInfos: [],
     };
   }
 
   componentDidMount() {
     this.retrieveProducts();
-  }
-
-  onChangeSearchProduct(e) {
-    const searchProductname = e.target.value;
-
-    this.setState({
-      searchProductname: searchProductname
+    UploadService.getFiles().then((response) => {
+      this.setState({
+        imageInfos: response.data,
+      });
     });
   }
 
@@ -217,19 +214,6 @@ export default class Women extends Component {
     });
   }
 
-  searchProductname() {
-    ProductDataService.findByTitle(this.state.searchProductname)
-      .then(response => {
-        this.setState({
-          products: response.data
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
-
   addToCart() {
     let tempPrice = this.state.currentProduct.price * this.state.quantity
 
@@ -248,22 +232,32 @@ export default class Women extends Component {
   }
 
   render() {
-    const { searchProductname, products, currentProduct, currentIndex } = this.state;
+    const { products, currentProduct, currentIndex, imageInfos } = this.state;
+
+    let imagename = ''
+    for (let i = 0; i < this.state.imageInfos.length; i++) {
+      for (let j = 0; j < this.state.products.length; j++) {
+        if (this.state.imageInfos[i].name === (this.state.products[j].title + "-1.jpg")) {
+          imagename = this.state.imageInfos[i].name
+        }
+      }
+    }
 
     return (
       <div className="">
         <header className="jumbotron">
-            <h3><b>WOMEN FASHION</b></h3>
+          <h3><b>WOMEN FASHION</b></h3>
         </header>
         <div className='mainContainer'>
           <div className='component-div'>
-            <ul className='product-view'>
+            <ul className='product-view flex-wrap'>
+
               {products &&
                 products.map((product, index) => (
                   <li className={'product-div' + (index === currentIndex ? ' active' : '')}
                     onClick={() => this.setActiveProduct(product, index)}
                     key={index}>
-                    <img src={'./images/women/' + (product.title) + '-1.jpg'} className="component-img"></img>
+                    <img src={'http://localhost:8080/api/files/' + (product.title) + '-1.jpg'} className="component-img"></img>
                     <div className="d-flex col justify-content-between pt-3">
                       <div>
                         {product.productname.toUpperCase()}
@@ -280,12 +274,20 @@ export default class Women extends Component {
             {currentProduct ? (
               <form className=''>
                 <div className="product-detail">
+                <Grid container spacing={4}>
+                <Grid item xs={6}>
                 <ReactImageGallery />
+                </Grid>
+                <Grid container spacing={2} item xs={6} direction="column">
+                <Grid item>
+                    <div id="myPortal" />
+                
+                  {/* <ReactImageGallery /> */}
                   <div className="product-info">
                     <div className='product-info-div'>
                       <label>
                         <strong>Product Name:</strong>
-                      </label> 
+                      </label>
                       <p>{currentProduct.productname.toUpperCase()}</p>
                     </div>
                     <div className='product-info-div'>
@@ -313,21 +315,20 @@ export default class Women extends Component {
                         <strong>Quantity:</strong>
                       </label> {" "}
                       <input type='number'
-                             value={this.state.quantity}
-                             onChange={this.onChangeQuantity}>
+                        value={this.state.quantity}
+                        onChange={this.onChangeQuantity}>
                       </input>
                     </div>
                     <div className="cartbtn" onClick={this.addToCart}>Add to Cart</div>
                   </div>
+                  </Grid>
+                </Grid>
+            </Grid>
                 </div>
               </form>
+            ) : (
+              <div></div>
             )
-              : (
-                <div>
-                  {/*<br />
-                 <p>Please click on a Product...</p> */}
-                </div>
-              )
             }
           </div>
         </div>

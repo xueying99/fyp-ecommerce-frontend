@@ -3,9 +3,8 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
-// import "../css/component.css";
-import "../css/style.css";
 import "../css/bootstrap.min.css";
+import "../css/style.css";
 import "../css/index.css";
 
 import AuthService from "../services/auth.service";
@@ -94,6 +93,7 @@ export default class Register extends Component {
       address: "",
       poscode: "",
       state: "",
+
       successful: false,
       message: ""
     };
@@ -128,7 +128,7 @@ export default class Register extends Component {
       dob: e.target.value
     });
   }
-  
+
   onChangeAddress(e) {
     this.setState({
       address: e.target.value
@@ -207,8 +207,8 @@ export default class Register extends Component {
               <div className="position-relative text-white col-md-12 col-lg-7">
                 <h2 className="text-white">Create Your Account</h2>
                 <p className="lead">
-                  Keep your face always toward the sunshine - and shadows will fall behind you. 
-                  Continually pursue fully researched niches whereas timely platforms. 
+                  Keep your face always toward the sunshine - and shadows will fall behind you.
+                  Continually pursue fully researched niches whereas timely platforms.
                   Credibly parallel task optimal catalysts for change after focused catalysts for change.
                 </p>
               </div>
@@ -223,196 +223,196 @@ export default class Register extends Component {
 
             {/* <!-- Subheading --> */}
             <p className="text-muted text-center mb-5">Free access to our dashboard.</p>
-            
+
             {/* <!-- Form --> */}
             <Form onSubmit={this.handleRegister}
-                  ref={c => { this.form = c; }} 
+              ref={c => { this.form = c; }}
             >
-            {!this.state.successful && (
-              <div className=''>
-                <div className='signup-form-row'>
-                  <div className="form-group signup-form-group">
-                    <label className="pb-1" htmlFor="username">Username</label>
-                    <Input
-                      type="text"
-                      size="25"
-                      className="form-control"
-                      name="username"
-                      value={this.state.username}
-                      onChange={this.onChangeUsername}
-                      validations={[required, vusername]}
-                    />
-                  </div>
-
-                  <div className="form-group signup-form-group">
-                    <label htmlFor="password">Password</label>
-                    <Input
-                      type="password"
-                      size="25"
-                      className="form-control"
-                      name="password"
-                      value={this.state.password}
-                      onChange={this.onChangePassword}
-                      validations={[required, vpassword]}
-                    />
-                  </div>
-                </div>
-
-                <div className='signup-form-row'>
-                  <div className="form-group signup-form-group">
-                    <label className='' htmlFor="email">Email</label>
-                    <Input
-                      type="text"
-                      size="25"
-                      className="form-control"
-                      name="email"
-                      value={this.state.email}
-                      onChange={this.onChangeEmail}
-                      validations={[required, email]}
-                    />
-                  </div>   
-
-                  <div className="form-group signup-form-group">
-                    <label htmlFor="contact">Contact Number</label>
-                    <Input
-                      type="text"
-                      size="25"
-                      className="form-control"
-                      name="contact"
-                      value={this.state.contact}
-                      onChange={this.onChangeContact}
-                      validations={[required, contact]}
-                    />
-                  </div>        
-                </div>
-
-                <div className='signup-form-row'>
-                  <div className="form-group signup-form-group">
-                    <label className='signup-form-label' htmlFor="gender">Gender</label>
-                    <div className='signup-form-radio'>
+              {!this.state.successful && (
+                <div className=''>
+                  <div className='signup-form-row'>
+                    <div className="form-group signup-form-group">
+                      <label className="pb-1" htmlFor="username">Username</label>
                       <Input
-                        type="radio"
+                        type="text"
+                        size="25"
                         className="form-control"
-                        id="male"
-                        name="gender"
-                        value="male"
-                        onChange={this.onChangeGender}
-                        validations={[required]}
+                        name="username"
+                        value={this.state.username}
+                        onChange={this.onChangeUsername}
+                        validations={[required, vusername]}
                       />
-                      <label for="male" className="radiobtn">Male</label>
-                      <Input
-                        type="radio"
-                        className="form-control"
-                        id="female"
-                        name="gender"
-                        value="female"
-                        onChange={this.onChangeGender}
-                        validations={[required]}
-                      />
-                      <label for="female" className="radiobtn">Female</label>
                     </div>
-                  </div>   
 
-                  <div className="form-group signup-form-group">
-                    <label htmlFor="dob">Date of Birth</label>
-                    <Input
-                      type="date"
-                      size="25"
-                      className="form-control"
-                      name="dob"
-                      value={this.state.dob}
-                      onChange={this.onChangeDOB}
-                      validations={[required, dob]}
-                    />
-                  </div>        
+                    <div className="form-group signup-form-group">
+                      <label htmlFor="password">Password</label>
+                      <Input
+                        type="password"
+                        size="25"
+                        className="form-control"
+                        name="password"
+                        value={this.state.password}
+                        onChange={this.onChangePassword}
+                        validations={[required, vpassword]}
+                      />
+                    </div>
+                  </div>
+
+                  <div className='signup-form-row'>
+                    <div className="form-group signup-form-group">
+                      <label className='' htmlFor="email">Email</label>
+                      <Input
+                        type="text"
+                        size="25"
+                        className="form-control"
+                        name="email"
+                        value={this.state.email}
+                        onChange={this.onChangeEmail}
+                        validations={[required, email]}
+                      />
+                    </div>
+
+                    <div className="form-group signup-form-group">
+                      <label htmlFor="contact">Contact Number</label>
+                      <Input
+                        type="text"
+                        size="25"
+                        className="form-control"
+                        name="contact"
+                        value={this.state.contact}
+                        onChange={this.onChangeContact}
+                        validations={[required, contact]}
+                      />
+                    </div>
+                  </div>
+
+                  <div className='signup-form-row'>
+                    <div className="form-group signup-form-group">
+                      <label className='signup-form-label' htmlFor="gender">Gender</label>
+                      <div className='signup-form-radio'>
+                        <Input
+                          type="radio"
+                          className="form-control"
+                          id="male"
+                          name="gender"
+                          value="male"
+                          onChange={this.onChangeGender}
+                          validations={[required]}
+                        />
+                        <label for="male" className="radiobtn">Male</label>
+                        <Input
+                          type="radio"
+                          className="form-control"
+                          id="female"
+                          name="gender"
+                          value="female"
+                          onChange={this.onChangeGender}
+                          validations={[required]}
+                        />
+                        <label for="female" className="radiobtn">Female</label>
+                      </div>
+                    </div>
+
+                    <div className="form-group signup-form-group">
+                      <label htmlFor="dob">Date of Birth</label>
+                      <Input
+                        type="date"
+                        size="25"
+                        className="form-control"
+                        name="dob"
+                        value={this.state.dob}
+                        onChange={this.onChangeDOB}
+                        validations={[required, dob]}
+                      />
+                    </div>
+                  </div>
+
+                  <div className='signup-form-row'>
+                    <div className="form-group signup-form-group-address">
+                      <label htmlFor="address">Address</label>
+                      <Input
+                        type="text"
+                        className="form-control"
+                        name="address"
+                        value={this.state.address}
+                        onChange={this.onChangeAddress}
+                        validations={[required]}
+                      />
+                    </div>
+                  </div>
+
+                  <div className='signup-form-row'>
+                    <div className="form-group signup-form-group">
+                      <label htmlFor="poscode">Poscode</label>
+                      <Input
+                        type="text"
+                        className="form-control"
+                        name="poscode"
+                        value={this.state.poscode}
+                        onChange={this.onChangePoscode}
+                        validations={[required]}
+                      />
+                    </div>
+
+                    <div className="form-group signup-form-group">
+                      <label htmlFor="state">State</label>
+                      <select
+                        list="state"
+                        className="form-control"
+                        name="state"
+                        value={this.state.state}
+                        onChange={this.onChangeState}
+                        validations={[required]} >
+                        <option value="Johor">Johor</option>
+                        <option value="Kedah">Kedah</option>
+                        <option value="Kelantan">Kelantan</option>
+                        <option value="Melaka">Melaka</option>
+                        <option value="Negeri Sembilan">Negeri Sembilan</option>
+                        <option value="Pahang">Pahang</option>
+                        <option value="Penang">Penang</option>
+                        <option value="Perak">Perak</option>
+                        <option value="Perlis">Perlis</option>
+                        <option value="Sabah">Sabah</option>
+                        <option value="Sarawak">Sarawak</option>
+                        <option value="Selangor">Selangor</option>
+                        <option value="Terengganu">Terengganu</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* <!-- Submit --> */}
+                  <div className="form-group signupbtn">
+                    <button className="btn btn-block solid-btn border-radius mt-4 mb-3">SIGN UP</button>
+                  </div>
+
+                  {/* <!-- Link --> */}
+                  <div className="text-center">
+                    <small className="text-muted text-center">
+                      Already have an account? <a href="/login">Log in</a>.
+                    </small>
+                  </div>
                 </div>
+              )}
 
-                <div className='signup-form-row'>
-                  <div className="form-group signup-form-group-address">
-                    <label htmlFor="address">Address</label>
-                    <Input
-                      type="text"
-                      className="form-control"
-                      name="address"
-                      value={this.state.address}
-                      onChange={this.onChangeAddress}
-                      validations={[required]}
-                    />
-                  </div>          
-                </div>
-
-                <div className='signup-form-row'>
-                  <div className="form-group signup-form-group">
-                    <label htmlFor="poscode">Poscode</label>
-                    <Input
-                      type="text"
-                      className="form-control"
-                      name="poscode"
-                      value={this.state.poscode}
-                      onChange={this.onChangePoscode}
-                      validations={[required]}
-                    />
-                  </div>  
-
-                  <div className="form-group signup-form-group">
-                    <label htmlFor="state">State</label>
-                    <select
-                      list="state"
-                      className="form-control"
-                      name="state"
-                      value={this.state.state}
-                      onChange={this.onChangeState}
-                      validations={[required]} >
-                      <option value="Johor">Johor</option>
-                      <option value="Kedah">Kedah</option>
-                      <option value="Kelantan">Kelantan</option>
-                      <option value="Melaka">Melaka</option>
-                      <option value="Negeri Sembilan">Negeri Sembilan</option>
-                      <option value="Pahang">Pahang</option>
-                      <option value="Penang">Penang</option>
-                      <option value="Perak">Perak</option>
-                      <option value="Perlis">Perlis</option>
-                      <option value="Sabah">Sabah</option>
-                      <option value="Sarawak">Sarawak</option>
-                      <option value="Selangor">Selangor</option>
-                      <option value="Terengganu">Terengganu</option>                      
-                    </select>
-                  </div>        
-                </div>
-
-                {/* <!-- Submit --> */}
-                <div className="form-group signupbtn">
-                  <button className="btn btn-block solid-btn border-radius mt-4 mb-3">SIGN UP</button>
-                </div>
-
-                {/* <!-- Link --> */}
-                <div className="text-center">
-                  <small className="text-muted text-center">
-                    Already have an account? <a href="/login">Log in</a>.
-                  </small>
-                </div>
-              </div>
-            )}
-
-            { this.state.message && (
-              <div className="form-group">
-                <div className={ 
-                  this.state.successful
+              {this.state.message && (
+                <div className="form-group">
+                  <div className={
+                    this.state.successful
                       ? "alert alert-success"
                       : "alert alert-danger"
                   }
-                  role="alert" >
-                  {this.state.message}
+                    role="alert" >
+                    {this.state.message}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            <CheckButton
-              style={{ display: "none" }}
-              ref={c => {
-                this.checkBtn = c;
-              }} />
-          </Form>
+              <CheckButton
+                style={{ display: "none" }}
+                ref={c => {
+                  this.checkBtn = c;
+                }} />
+            </Form>
           </div>
         </div>
       </div>

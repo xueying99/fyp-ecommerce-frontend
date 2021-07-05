@@ -1,19 +1,12 @@
 import React, { Component } from "react";
-import CartDataService from "../services/cart.service";
+
 import OrderDataService from "../services/order.service";
+import OrderItemDataService from "../services/orderItem.service";
 import AuthService from "../services/auth.service";
 
 export default class Payment extends Component {
     constructor(props) {
         super(props);
-        // this.onChangeTitle = this.onChangeTitle.bind(this);
-        // this.onChangeDescription = this.onChangeDescription.bind(this);
-        // this.getOrder = this.getOrder.bind(this);
-        // this.deleteTutorial = this.deleteTutorial.bind(this);
-        // this.updatePublished = this.updatePublished.bind(this);
-        this.updateOrder = this.updateOrder.bind(this);
-        this.retrieveOrder = this.retrieveOrder.bind(this);
-        this.retrieveCart = this.retrieveCart.bind(this);
         this.onChangeUsername = this.onChangeUsername.bind(this);
         this.onChangeLastname = this.onChangeLastname.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
@@ -22,15 +15,21 @@ export default class Payment extends Component {
         this.onChangePoscode = this.onChangePoscode.bind(this);
         this.onChangeState = this.onChangeState.bind(this);
         this.onChangeBank = this.onChangeBank.bind(this);
-        this.onChangeBankAcc =this.onChangeBankAcc.bind(this);
-        this.savePayment = this.savePayment.bind(this);
+        this.onChangeBankAcc = this.onChangeBankAcc.bind(this);
+        this.retrieveOrder = this.retrieveOrder.bind(this);
+        this.retrieveOrderItem = this.retrieveOrderItem.bind(this);
+        this.payment = this.payment.bind(this);
+        // this.saveOrder = this.saveOrder.bind(this);
 
         this.state = {
+            date: new Date().toDateString(),
             order: [],
-            payment: [],
+            orderItem: [],
             users: [],
             currentUser: AuthService.getCurrentUser(),
             currentIndex: -1,
+            payment: 0.00,
+
             username: '',
             lastName: '',
             email: '',
@@ -40,66 +39,67 @@ export default class Payment extends Component {
             state: '',
             bank: '',
             bankAcc: '',
-            totalprice: 0.00
+            shippingname: '',
+            shippingaddress: '',
         };
     }
 
     componentDidMount() {
         this.retrieveOrder();
-        this.retrieveCart();
+        this.retrieveOrderItem();
     }
 
     onChangeUsername(e) {
         this.setState({
-          username: e.target.value
+            username: e.target.value
         });
     }
     onChangeLastname(e) {
         this.setState({
-          lastname: e.target.value
+            lastname: e.target.value
         });
     }
     onChangeEmail(e) {
         this.setState({
-          email: e.target.value
+            email: e.target.value
         });
     }
     onChangeContact(e) {
         this.setState({
-          contact: e.target.value
+            contact: e.target.value
         });
     }
     onChangeAddress(e) {
         this.setState({
-          address: e.target.value
+            address: e.target.value
         });
     }
     onChangePoscode(e) {
         this.setState({
-          poscode: e.target.value
+            poscode: e.target.value
         });
     }
     onChangeState(e) {
         this.setState({
-          state: e.target.value
+            state: e.target.value
         });
     }
     onChangeBank(e) {
         this.setState({
-          bank: e.target.value
+            bank: e.target.value
         });
     }
     onChangeBankAcc(e) {
         this.setState({
-          bankAcc: e.target.value
+            bankAcc: e.target.value
         });
-    }  
+    }
 
-    retrieveCart() {
-        CartDataService.getAll()
+    retrieveOrderItem() {
+        OrderItemDataService.getAll()
             .then(res => {
                 this.setState({
-                    cart: res.data
+                    orderItem: res.data
                 })
                 console.log(res.data)
             })
@@ -121,55 +121,58 @@ export default class Payment extends Component {
             });
     }
 
-    savePayment(status) {
-        var data = {
-            username: this.state.currentUser.username,
-            lastname: this.state.lastname,
-            email: this.state.currentUser.email,
-            contact: this.state.currentUser.contact,
-            address: this.state.currentUser.address,
-            poscode: this.state.currentUser.poscode,
-            state: this.state.currentUser.state,
-            accepted: status,
-            bank: this.state.bank,
-            bankAcc: this.state.bankAcc
-        };
-
-        OrderDataService
-            .update(this.state.currentOrder.id, data)
-            .then(response => {
-                this.setState(prevState => ({
-                    currentOrder: {
-                        ...prevState.currentOrder,
-                        published: status,
-                    },
-                    message: "The order was updated successsfully!"
-                }));
-                console.log(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
+    payment() {
+        this.setState({
+            order: [],
+            orderItem: []
+        });
     }
 
-    updateOrder() {
-        OrderDataService.update(
-            this.state.currentOrder.id,
-            this.state.currentOrder
-        )
-            .then(response => {
-                console.log(response.data);
-                this.setState({
-                    message: "The order was updated successsfully!"
-                });
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    }
+    // saveOrder() {
+    //     var data = {
+    //         userId: this.state.userId,
+    //         date: this.state.date,
+    //         shippingname: this.state.shippingname,
+    //         shippingaddress: this.state.shippingaddress,
+    //         payment: this.state.payment,
+    //         bankname: this.state.bankname,
+    //         accepted: true
+    //     };
+
+    //     OrderDataService.update(data)
+    //         .then(response => {
+    //             console.log(response.data);
+    //             this.payment();
+    //         })
+    //         .catch(e => {
+    //             console.log(e);
+    //         });
+    // }
 
     render() {
-        const { currentOrder, currentUser } = this.state;
+        const { currentOrder, order, currentUser } = this.state;
+
+        let id = null
+        for (let i = 0; i < this.state.order.length; i++) {
+            for (let j = 0; j < this.state.orderItem.length; j++) {
+                if (this.state.order[i].id === this.state.orderItem[j].orderId) {
+                    id = this.state.order[i].id
+                }
+                console.log(id)
+                console.log(this.state.order[i].id)
+                console.log(this.state.orderItem[j].orderId)
+            }
+        }
+
+        let totalitem = 0
+        let totalprice = 0.00
+        for (let j = 0; j < this.state.orderItem.length; j++) {
+            if (id === this.state.orderItem[j].orderId) {
+                totalitem = totalitem + this.state.orderItem[j].quantity
+                totalprice = totalprice + this.state.orderItem[j].price
+            }
+        }
+        this.state.payment = totalprice
 
         return (
             <div className="">
@@ -291,55 +294,78 @@ export default class Payment extends Component {
                                 </div>
                             </div>
                         </div>
+
                         <div className=''>
                             <div className='payment-div'>
-                                <div className="form-group payment-form-group">
-                                    <label htmlFor="state">Bank</label>
-                                    <select
-                                        list="state"
-                                        className="form-control"
-                                        name="bank"
-                                        onChange={this.onChangeBank}
-                                        required >
-                                        <option value="Affin Bank">Affin Bank</option>
-                                        <option value="AmBank">AmBank</option>
-                                        <option value="Bank Rakyat">Bank Rakyat</option>
-                                        <option value="CIMB Bank">CIMB Bank</option>
-                                        <option value="Citibank">Citibank</option>
-                                        <option value="Hong Leong Bank">Hong Leong Bank</option>
-                                        <option value="HSBC Bank">HSBC Bank</option>
-                                        <option value="Maybank">Maybank</option>
-                                        <option value="OCBC Bank">OCBC Bank</option>
-                                        <option value="Public Bank">Public Bank</option>
-                                        <option value="RHB Bank">RHB Bank</option>
-                                        <option value="Standard Chartered Bank">Standard Chartered Bank</option>
-                                        <option value="United Overseas Bank">United Overseas Bank</option>
-                                    </select>
-                                </div>
-                                <div className="form-group payment-form-group">
-                                    <label htmlFor="address">Bank Account Number</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        name="bankacc"
-                                        onChange={this.onChangeBankAcc}
-                                        required
-                                    />
-                                </div>
-                                <div className='form-group row justify-content-between mt-4 mr-0'>
-                                    <label className='col' htmlFor="totalprice">Total (RM)</label>
-                                    <input
-                                        type="text"
-                                        className="col text-right form-control"
-                                        name="totalprice"
-                                        value={this.state.totalprice.toFixed(2)}
-                                        required disabled
-                                    />
-                                </div>
+                                {
+                                    this.state.order.length === 0 ?
+                                        (
+                                            <h5 className='text-center'>No Payment</h5>
+                                        ) :
+                                        (
+                                            <div>
+                                                <div className='form-group row justify-content-between mt-4 mr-0'>
+                                                    <label className='col' htmlFor="totalprice">Date</label>
+                                                    <input
+                                                        type="text"
+                                                        className="col text-right form-control"
+                                                        name="totalprice"
+                                                        defaultValue={this.state.date}
+                                                        required disabled
+                                                    />
+                                                </div>
 
-                                <div className=''>
-                                    <a className="btn btn-primary paybtn" href="#thankyou" onClick={this.savePayment}>Pay</a>
-                                </div>
+                                                <div className="form-group payment-form-group">
+                                                    <label htmlFor="state">Bank</label>
+                                                    <select
+                                                        list="state"
+                                                        className="form-control"
+                                                        name="bank"
+                                                        onChange={this.onChangeBank}
+                                                        required >
+                                                        <option value="Affin Bank">Affin Bank</option>
+                                                        <option value="AmBank">AmBank</option>
+                                                        <option value="Bank Rakyat">Bank Rakyat</option>
+                                                        <option value="CIMB Bank">CIMB Bank</option>
+                                                        <option value="Citibank">Citibank</option>
+                                                        <option value="Hong Leong Bank">Hong Leong Bank</option>
+                                                        <option value="HSBC Bank">HSBC Bank</option>
+                                                        <option value="Maybank">Maybank</option>
+                                                        <option value="OCBC Bank">OCBC Bank</option>
+                                                        <option value="Public Bank">Public Bank</option>
+                                                        <option value="RHB Bank">RHB Bank</option>
+                                                        <option value="Standard Chartered Bank">Standard Chartered Bank</option>
+                                                        <option value="United Overseas Bank">United Overseas Bank</option>
+                                                    </select>
+                                                </div>
+                                                <div className="form-group payment-form-group">
+                                                    <label htmlFor="bankacc">Bank Account Number</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        name="bankacc"
+                                                        onChange={this.onChangeBankAcc}
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className='form-group row justify-content-between mt-4 mr-0'>
+                                                    <label className='col' htmlFor="totalprice">Total (RM)</label>
+                                                    <input
+                                                        type="text"
+                                                        className="col text-right form-control"
+                                                        name="totalprice"
+                                                        value={totalprice.toFixed(2)}
+                                                        required disabled
+                                                    />
+                                                </div>
+
+                                                <div className=''>
+                                                    <a className="btn btn-primary paybtn" href="/status">Pay</a>
+                                                    {/* <a className="btn btn-primary paybtn" href="/status" onClick={this.saveOrder}>Pay</a> */}
+                                                </div>
+                                            </div>
+                                        )
+                                }
                             </div>
                         </div>
                     </div>

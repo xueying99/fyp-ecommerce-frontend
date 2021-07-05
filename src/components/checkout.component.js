@@ -1,31 +1,26 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Table from 'react-bootstrap/Table';
 import '../css/layouts.css';
 import '../css/component.css';
-import '../css/themify-icons/themify-icons.css';
 
+import AuthService from "../services/auth.service";
 import ProductDataService from "../services/product.service";
-import CartDataService from "../services/cart.service";
 import OrderDataService from "../services/order.service";
 import OrderItemDataService from "../services/orderItem.service";
-import AuthService from "../services/auth.service";
 
 export default class Checkout extends Component {
     constructor(props) {
         super(props);
         this.retrieveProducts = this.retrieveProducts.bind(this);
         this.refreshList = this.refreshList.bind(this);
-        this.retrieveCart = this.retrieveCart.bind(this);
         this.retrieveOrder = this.retrieveOrder.bind(this);
         this.retrieveOrderItem = this.retrieveOrderItem.bind(this);
-        // this.saveOrder = this.saveOrder.bind(this);
 
         this.state = {
             products: [],
             currentOrder: null,
             currentIndex: -1,
-            tempprice: 0.00,
-            totalitem: 0,
             cart: [],
             order: [],
             orderItem: [],
@@ -37,10 +32,19 @@ export default class Checkout extends Component {
 
     componentDidMount() {
         this.retrieveProducts();
-        this.retrieveCart();
         this.retrieveOrder();
         this.retrieveOrderItem();
         this.refreshList();
+    }
+    
+    refreshList() {
+        this.retrieveProducts();
+        this.retrieveOrder();
+        this.retrieveOrderItem();
+        this.setState({
+            currentOrder: null,
+            currentIndex: -1
+        });
     }
 
     retrieveProducts() {
@@ -49,34 +53,10 @@ export default class Checkout extends Component {
                 this.setState({
                     products: response.data
                 });
-                // this.retrieveOrder();
             })
             .catch(e => {
                 console.log(e);
             })
-    }
-
-    refreshList() {
-        this.retrieveProducts();
-        // this.retrieveCart();
-        // this.retrieveOrder();
-        this.setState({
-            currentOrder: null,
-            currentIndex: -1
-        });
-    }
-
-    retrieveCart() {
-        CartDataService.getAll()
-            .then(res => {
-                this.setState({ 
-                    cart: res.data 
-                })
-                console.log(res.data)
-            })
-            .catch(e => {
-                console.log(e);
-            });
     }
 
     retrieveOrder() {
@@ -105,103 +85,106 @@ export default class Checkout extends Component {
             });
     }
 
-    // saveOrder() {
-    //     var data = {
-    //         productId: this.state.productId,
-    //         quantity: this.state.quantity,
-    //         productPrice: this.state.productPrice,
-    //         date: this.state.date
-    //     };
-
-    //     OrderDataService.create(data)
-    //         .then(response => {
-    //             this.setState({
-    //                 productId: response.data.productId,
-    //                 quantity: response.data.quantity,
-    //                 productPrice: response.data.productPrice,
-    //                 date: response.data.date,
-    //                 accepted: response.data.accepted
-    //             });
-    //             console.log(response.data);
-    //             alert("Order submitted!");
-    //             this.removeAllCartItems();
-    //         })
-    //         .catch(e => {
-    //             console.log(e);
-    //         });
-    // }
-
     render() {
         const { products, currentProduct, currentIndex, currentUser, order, orderItem } = this.state;
-        console.log(this.state.order.length)
-        console.log(this.state.orderItem.length)
+
+        let id = null
+        for(let i = 0; i < this.state.order.length; i++){
+            for(let j = 0; j < this.state.orderItem.length; j++) {
+                if(this.state.order[i].id === this.state.orderItem[j].orderId) {
+                    id = this.state.order[i].id
+                }
+                console.log(id)
+                console.log(this.state.order[i].id)
+                console.log(this.state.orderItem[j].orderId)
+            }
+        }
+
+        let totalitem = 0
+        let totalprice = 0.00 
+        for (let j = 0; j < this.state.orderItem.length; j++) {
+            if(id === this.state.orderItem[j].orderId) {
+                totalitem = totalitem + this.state.orderItem[j].quantity
+                totalprice = totalprice + this.state.orderItem[j].price
+            }
+        }
+
         return (
             <div className="">
                 <header className="jumbotron">
                     <h3>CHECKOUT FORM</h3>
                 </header>
                 <div className='mainContainer'>
-                    <div className='d-flex justify-content-center row'>
-                        <div className=''>
-                            {
-                                this.state.order.length === 0 ?
-                                    (
-                                        <h3>Empty Order</h3>
-                                    ) :
-                                    this.state.order.map(o => {
-                                        let p = this.state.products.filter(i => i.id === o.orderId)[0]
-                                        return (
-                                            <div className='d-flex justify-content-center' key={o.id}>
-                                                <div className="checkout-div" key={o.id}>
-                                                    <div className="checkout-item-div" key={o.id}>
-                                                        <div className="item-img">
-                                                            <img src={'./images/women/' + (p.title) + '-1.jpg'}></img>
-                                                        </div>
-                                                        <div className="checkout-item-info">
-                                                            <div className='item-info'>
-                                                                <b>{p.productname}</b>
-                                                            </div>
-                                                            <div className='item-info'>
-                                                                RM: {o.productPrice}<br></br>
-                                                                rm: {p.price.toFixed(2)} (single price)
-                                                            </div>
-                                                            <div className='item-info'>
-                                                                Quantity: {o.quantity}<br></br>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                    <div className='checkout-detail-div'>
+                        <div className='checkout-div'>
+                            <h5>Order List</h5>
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                    <th className='text-left'><b>Product</b></th>
+                                    <th><b>Quantity</b></th>
+                                    <th><b>Price (RM)</b></th>
+                                    </tr>
+                                </thead>
+
+                                {
+                                    this.state.orderItem.length === 0 ?
+                                        (
+                                            <tbody>
+                                                <div>
+                                                <h5 className='text-center'>Empty Order</h5>
                                                 </div>
-                                            </div>
-                                        )
-                                    })
-                                    // (<div>not empty order</div>)
-                            }
+                                            </tbody>
+                                        ) :
+
+                                        this.state.orderItem
+                                        .filter(i => i.orderId === id)
+                                        .map(o => {
+                                            let p = this.state.products.filter(i => i.id === o.productId)[0]
+                                            return (
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div className='checkout-td-item'>
+                                                                <div className="checkout-item-div">
+                                                                    <img src={'./images/women/' + (p.title) + '-1.jpg'}></img>
+                                                                </div>
+                                                                <div>
+                                                                    {p.productname}
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            {o.quantity}
+                                                        </td>
+                                                        <td>
+                                                            {o.price.toFixed(2)}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            )
+                                        })
+                                }
+                                <tbody>
+                                    <tr>
+                                        <td className='text-left'>
+                                            <h6>Total:</h6>
+                                        </td>
+                                        <td className=''>
+                                            <h6>{totalitem}</h6>
+                                        </td>
+                                        <td className=''>
+                                            <h6>RM {totalprice.toFixed(2)}</h6>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </Table>
                             <div className=''>
-                                <div className='checkout-detail-div'>
-                                    <div className='cart-btn-div'>
-                                        <div>Total Item:</div>
-                                        <div>{this.state.totalitem}</div>
-                                    </div>
-                                    <div className='cart-btn-div'>
-                                        <div>Total Price:</div>
-                                        <div>RM {this.state.tempprice.toFixed(2)}</div>
-                                    </div>
-                                    {/* <div className='cart-btn-div'>
-                                        <div>Shipping Fee:</div>
-                                        <div>RM {this.state.fee.toFixed(2)}</div>
-                                    </div>
-                                    <div className='cart-btn-div'>
-                                        <div>Total Price:</div>
-                                        <div>RM {this.state.totalprice.toFixed(2)}</div>
-                                    </div> */}
-                                    <hr></hr>
-                                    <div className='checkout-btn-div'>
-                                        <a className="btn btn-primary" href="/payment" onClick={this.saveOrder}>Submit & Pay</a>
-                                    </div>
+                                <div className='checkout-btn-div'>
+                                    <a className="btn btn-primary" href="/payment">Submit & Pay</a>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

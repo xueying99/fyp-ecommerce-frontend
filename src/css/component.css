@@ -37,13 +37,15 @@
     flex-direction: row;
     padding: 5px 15px 5px 25px;
     margin: 0 auto;
-    width: 45%;
+    width: 100%;
+    z-index: -1;
+    /* position: absolute; */
 }
 .product-info-div {
     margin: 10px 0;
 }
 .product-info input {
-    width: 13%;
+    width: 15%;
     text-align: center;
 }
 .sizebtn {
@@ -86,7 +88,6 @@
 .product-detail .cartbtn {
     font-size: 18px;
     margin: 50px auto;
-    /* float: right; */
     width: 170px;
 }
 .cartbtn:hover, .carticonbtn:hover{
@@ -110,23 +111,49 @@
 /*Event Page*/
 .event-view {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 .event-div {
     position: relative;
     display: block;
     padding: 2px;
     background-color: #fff;
-    margin: 15px auto;
+    margin: 15px;
     border: 1px solid rgba(0,0,0,.125);
 }
 .event-div img {
-    width: 1165px; 
-    height: 400px;
+    width: 400px; 
+    height: 150px;
 }
 h4 {
     text-align: center;
 }
+.event-detail {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    padding: 15px 25px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    justify-content: center;
+    margin: auto;
+}
+.event-detail img {
+    width: 750px;
+    height: 300px;
+    margin: auto;
+}
+.event-info {
+    flex-direction: row;
+    padding: 5px 15px 5px 25px;
+    margin: 0 auto;
+    width: 85%;
+}
+.event-info-div {
+    margin: 10px 0;
+}
+
 /*Event Page*/
 
 .event-form-group {
@@ -138,69 +165,3 @@ input[type=radio] {
 .radiobtn {
     margin: auto;
 }
-/* .signupbtn {
-    margin: 20px auto auto;
-    width: 100%;
-} */
-/* .addressCol {
-    width: 100%;
-} */
-/* .registerform {
-    max-width: 750px !important;
-}
-.loginform {
-    margin: 20px auto auto;
-} */
-
-/*Profile Page*/
-/* .profile-header {
-    margin: auto 150px;
-}
-.profile-view {
-    margin: auto 150px;
-    display: flex;
-}
-.profile-table {
-    flex-direction: column;
-    width: 75%;
-}
-.profile-btn {
-    flex-direction: column;
-    width: 25%;
-    justify-content: center;
-}
-.profile-btn-div {
-    text-align: center;
-    flex-direction: column;
-    margin: 40px 0;
-}
-.profile-button {
-    flex-direction: row;
-    margin: 30px auto;
-    width: 150px;
-    padding: 5px 10px;
-    border: 1px black solid;
-} */
-/* 
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    margin: 20px auto;
-}
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 15px 25px;
-}
-th {
-    width: 25%;
-    text-align: center;
-}
-tr {
-    width: 75%;
-}  
-tr:nth-child(even) {
-    background-color: #dddddd;
-} */
-/*Profile Page*/

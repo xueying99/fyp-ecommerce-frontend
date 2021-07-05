@@ -1,28 +1,30 @@
 import React, { Component } from "react";
 
-import EventDataService from "../services/event.service";
+import ProductDataService from "../services/product.service";
 
-export default class Event extends Component {
+export default class Product extends Component {
     constructor(props) {
         super(props);
         this.onChangeTitle = this.onChangeTitle.bind(this);
-        this.onChangeEventname = this.onChangeEventname.bind(this);
+        this.onChangeProductname = this.onChangeProductname.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
-        this.onChangeStartdate = this.onChangeStartdate.bind(this);
-        this.onChangeEnddate = this.onChangeEnddate.bind(this);
-        this.getEvent = this.getEvent.bind(this);
+        this.onChangeSize = this.onChangeSize.bind(this);
+        this.onChangePrice = this.onChangePrice.bind(this);
+        this.onChangeQuantity = this.onChangeQuantity.bind(this);
+        this.getProduct = this.getProduct.bind(this);
         this.updatePublished = this.updatePublished.bind(this);
-        this.updateEvent = this.updateEvent.bind(this);
-        this.deleteEvent = this.deleteEvent.bind(this);
+        this.updateProduct = this.updateProduct.bind(this);
+        this.deleteProduct = this.deleteProduct.bind(this);
 
         this.state = {
-            currentEvent: {
+            currentProduct: {
                 id: null,
                 title: "",
-                eventname: "",
+                productname: "",
                 description: "",
-                startdate: "",
-                enddate: "",
+                size: "",
+                price: "",
+                quantity: "",
                 published: false,
 
             },
@@ -31,7 +33,7 @@ export default class Event extends Component {
     }
 
     componentDidMount() {
-        this.getEvent(this.props.match.params.id);
+        this.getProduct(this.props.match.params.id);
     }
 
     onChangeTitle(e) {
@@ -39,22 +41,22 @@ export default class Event extends Component {
 
         this.setState(function (prevState) {
             return {
-                currentEvent: {
-                    ...prevState.currentEvent,
+                currentProduct: {
+                    ...prevState.currentProduct,
                     title: title
                 }
             };
         });
     }
 
-    onChangeEventname(e) {
-        const eventname = e.target.value;
+    onChangeProductname(e) {
+        const productname = e.target.value;
 
         this.setState(function (prevState) {
             return {
-                currentEvent: {
-                    ...prevState.currentEvent,
-                    eventname: eventname
+                currentProduct: {
+                    ...prevState.currentProduct,
+                    productname: productname
                 }
             };
         });
@@ -64,40 +66,51 @@ export default class Event extends Component {
         const description = e.target.value;
 
         this.setState(prevState => ({
-            currentEvent: {
-                ...prevState.currentEvent,
+            currentProduct: {
+                ...prevState.currentProduct,
                 description: description
             }
         }));
     }
 
-    onChangeStartdate(e) {
-        const startdate = e.target.value;
+    onChangeSize(e) {
+        const size = e.target.value;
 
         this.setState(prevState => ({
-            currentEvent: {
-                ...prevState.currentEvent,
-                startdate: startdate
+            currentProduct: {
+                ...prevState.currentProduct,
+                size: size
             }
         }));
     }
 
-    onChangeEnddate(e) {
-        const enddate = e.target.value;
+    onChangePrice(e) {
+        const price = e.target.value;
 
         this.setState(prevState => ({
-            currentEvent: {
-                ...prevState.currentEvent,
-                enddate: enddate
+            currentProduct: {
+                ...prevState.currentProduct,
+                price: price
             }
         }));
     }
 
-    getEvent(id) {
-        EventDataService.get(id)
+    onChangeQuantity(e) {
+        const quantity = e.target.value;
+
+        this.setState(prevState => ({
+            currentProduct: {
+                ...prevState.currentProduct,
+                quantity: quantity
+            }
+        }));
+    }
+
+    getProduct(id) {
+        ProductDataService.get(id)
             .then(response => {
                 this.setState({
-                    currentEvent: response.data
+                    currentProduct: response.data
                 });
                 console.log(response.data);
             })
@@ -108,21 +121,22 @@ export default class Event extends Component {
 
     updatePublished(status) {
         var data = {
-            id: this.state.currentEvent.id,
-            title: this.state.currentEvent.title,
-            eventname: this.state.currentEvent.eventname,
-            description: this.state.currentEvent.description,
-            startdate: this.state.currentEvent.startdate,
-            enddate: this.state.currentEvent.enddate,
+            id: this.state.currentProduct.id,
+            title: this.state.currentProduct.title,
+            productname: this.state.currentProduct.productname,
+            description: this.state.currentProduct.description,
+            size: this.state.currentProduct.size,
+            price: this.state.currentProduct.price,
+            quantity: this.state.currentProduct.quantity,
             published: status
         };
 
-        EventDataService
-            .update(this.state.currentEvent.id, data)
+        ProductDataService
+            .update(this.state.currentProduct.id, data)
             .then(response => {
                 this.setState(prevState => ({
-                    currentEvent: {
-                        ...prevState.currentEvent,
+                    currentProduct: {
+                        ...prevState.currentProduct,
                         published: status
                     }
                 }));
@@ -133,15 +147,15 @@ export default class Event extends Component {
             });
     }
 
-    updateEvent() {
-        EventDataService.update(
-            this.state.currentEvent.id,
-            this.state.currentEvent
+    updateProduct() {
+        ProductDataService.update(
+            this.state.currentProduct.id,
+            this.state.currentProduct
         )
             .then(response => {
                 console.log(response.data);
                 this.setState({
-                    message: "The event was updated successsfully!"
+                    message: "The product was updated successsfully!"
                 });
             })
             .catch(e => {
@@ -149,11 +163,11 @@ export default class Event extends Component {
             });
     }
 
-    deleteEvent() {
-        EventDataService.delete(this.state.currentEvent.id)
+    deleteProduct() {
+        ProductDataService.delete(this.state.currentProduct.id)
             .then(response => {
                 console.log(response.data);
-                this.props.history.push('/events')
+                this.props.history.push('/products')
             })
             .catch(e => {
                 console.log(e);
@@ -161,15 +175,15 @@ export default class Event extends Component {
     }
 
     render() {
-        const { currentEvent } = this.state;
+        const { currentProduct } = this.state;
 
         return (
-            <div className='event-single-view'>
-                {currentEvent ? (
+            <div className='single-view'>
+                {currentProduct ? (
                     <div className='edit-form'>
-                        <h4>Event</h4>
+                        <h4>Product</h4>
                         <div className=' mt-4 mb-4 text-center'>
-                            <img src={'http://localhost:8080/api/files/' + currentEvent.title + '.png'}></img>
+                            <img src={'http://localhost:8080/api/files/' + currentProduct.title + '-1.jpg'}></img>
                         </div>
                         <div className='single-div'>
                             <form>
@@ -180,19 +194,19 @@ export default class Event extends Component {
                                             type='text'
                                             className='form-control'
                                             id='title'
-                                            value={currentEvent.title}
+                                            value={currentProduct.title}
                                             onChange={this.onChangeTitle} />
                                     </div>
                                     <div className='form-group'>
-                                        <label htmlfor='eventname'>Event Name</label>
+                                        <label htmlfor='productname'>Product Name</label>
                                         <input size='30'
                                             type='text'
                                             className='form-control'
-                                            id='eventname'
+                                            id='productname'
                                             required
-                                            value={currentEvent.eventname}
-                                            onChange={this.onChangeEventname}
-                                            name='eventname'
+                                            value={currentProduct.productname}
+                                            onChange={this.onChangeProductname}
+                                            name='productname'
                                         />
                                     </div>
                                 </div>
@@ -203,35 +217,47 @@ export default class Event extends Component {
                                             type='text'
                                             className='form-control'
                                             id='description'
-                                            value={currentEvent.description}
+                                            value={currentProduct.description}
                                             onChange={this.onChangeDescription} />
                                     </div>
 
                                 </div>
                                 <div className='form-group-row'>
 
-                                    <div className='form-group date-input'>
-                                        <label htmlfor='startdate'>Start Date</label>
-                                        <input
-                                            type='datetime-local'
+                                    <div className='form-group'>
+                                        <label htmlfor='size'>Size</label>
+                                        <input size='15'
+                                            type='text'
                                             className='form-control'
-                                            id='startdate'
+                                            id='size'
                                             required
-                                            value={currentEvent.startdate}
-                                            onChange={this.onChangeStartdate}
-                                            name='startdate'
+                                            value={currentProduct.size}
+                                            onChange={this.onChangeSize}
+                                            name='size'
                                         />
                                     </div>
-                                    <div className='form-group date-input'>
-                                        <label htmlfor='enddate'>End Date</label>
-                                        <input
-                                            type='datetime-local'
+                                    <div className='form-group'>
+                                        <label htmlfor='price'>Price</label>
+                                        <input size='15'
+                                            type='text'
                                             className='form-control'
                                             id='price'
                                             required
-                                            value={currentEvent.enddate}
-                                            onChange={this.onChangeEnddate}
-                                            name='enddate'
+                                            value={currentProduct.price}
+                                            onChange={this.onChangePrice}
+                                            name='price'
+                                        />
+                                    </div>
+                                    <div className='form-group qty-input'>
+                                        <label htmlfor='quantity'>Quantity</label>
+                                        <input
+                                            type='number'
+                                            className='form-control'
+                                            id='quantity'
+                                            required
+                                            value={currentProduct.quantity}
+                                            onChange={this.onChangeQuantity}
+                                            name='quantity'
                                         />
                                     </div>
                                 </div>
@@ -240,13 +266,13 @@ export default class Event extends Component {
                                         <label>
                                             <strong>Status: </strong>
                                         </label>{" "}
-                                        {currentEvent.published ? "Published" : "Pending"}
+                                        {currentProduct.published ? "Published" : "Pending"}
                                     </div>
 
                                 </div>
                             </form>
                             <div className='pl-5'>
-                                {currentEvent.published ? (
+                                {currentProduct.published ? (
                                     <button className='btn btn-primary mr-4' onClick={() => this.updatePublished(false)}>
                                         Unpublish
                                     </button>
@@ -256,10 +282,10 @@ export default class Event extends Component {
                                     </button>
                                 )}
 
-                                <button className='btn btn-danger mr-4' onClick={this.deleteEvent}>
+                                <button className='btn btn-danger mr-4' onClick={this.deleteProduct}>
                                     Delete
                                 </button>
-                                <button type='submit' className='btn btn-success' onClick={this.updateEvent}>
+                                <button type='submit' className='btn btn-success' onClick={this.updateProduct}>
                                     Update
                                 </button>
                                 <div className='mt-3'>

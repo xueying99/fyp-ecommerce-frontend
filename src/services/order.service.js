@@ -10,8 +10,8 @@ class OrderDataService {
     return http.post("/orders/create", data, { headers: authHeader() });
   }
 
-  update(id, data) {
-    return http.put(`/orders/${id}`, data, { headers: authHeader() });
+  update(data) {
+    return http.put("/orders", data, { headers: authHeader() });
   }
 
   delete(id) {

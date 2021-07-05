@@ -1,22 +1,21 @@
 import React, { Component } from "react";
-import ProductDataService from "../services/product.service";
 import { Link } from "react-router-dom";
+
+import ProductDataService from "../services/product.service";
 
 export default class ProductManagement extends Component {
     constructor(props) {
         super(props);
-        this.onChangeSearchProduct = this.onChangeSearchProduct.bind(this);
-        this.retrieveProducts = this.retrieveProducts.bind(this);
-        this.refreshList = this.refreshList.bind(this);
-        this.setActiveProduct = this.setActiveProduct.bind(this);
-        this.removeAllProducts = this.removeAllProducts.bind(this);
-        this.searchProductname = this.searchProductname.bind(this);
         this.onChangeTitle = this.onChangeTitle.bind(this);
         this.onChangeProductname = this.onChangeProductname.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeSize = this.onChangeSize.bind(this);
         this.onChangePrice = this.onChangePrice.bind(this);
         this.onChangeQuantity = this.onChangeQuantity.bind(this);
+        this.refreshList = this.refreshList.bind(this);
+        this.retrieveProducts = this.retrieveProducts.bind(this);
+        this.setActiveProduct = this.setActiveProduct.bind(this);
+        this.removeAllProducts = this.removeAllProducts.bind(this);
         this.saveProduct = this.saveProduct.bind(this);
         this.newProduct = this.newProduct.bind(this);
 
@@ -24,7 +23,6 @@ export default class ProductManagement extends Component {
             products: [],
             currentProduct: null,
             currentIndex: -1,
-            searchProductname: "",
 
             id: null,
             title: "",
@@ -41,14 +39,6 @@ export default class ProductManagement extends Component {
 
     componentDidMount() {
         this.retrieveProducts();
-    }
-
-    onChangeSearchProduct(e) {
-        const searchProductname = e.target.value;
-
-        this.setState({
-            searchProductname: searchProductname
-        });
     }
 
     retrieveProducts() {
@@ -84,19 +74,6 @@ export default class ProductManagement extends Component {
             .then(response => {
                 console.log(response.data);
                 this.refreshList();
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    }
-
-    searchProductname() {
-        ProductDataService.findByTitle(this.state.searchProductname)
-            .then(response => {
-                this.setState({
-                    products: response.data
-                });
-                console.log(response.data);
             })
             .catch(e => {
                 console.log(e);
@@ -187,194 +164,179 @@ export default class ProductManagement extends Component {
 
 
     render() {
-        const { searchProductname, products, currentProduct, currentIndex } = this.state;
+        const { products, currentProduct, currentIndex } = this.state;
+
 
         return (
             <div className=''>
                 <header className="jumbotron">
                     <h3><b>PRODUCT MANAGEMENT</b></h3>
                 </header>
-                {/* <div className='col-md-8'>
-                    <div className='input-group mb-3'>
-                        <input
-                            type='text'
-                            className='form-control'
-                            placeholder='Name'
-                            value={searchProductname}
-                            onChange={this.onChangeSearchProduct}
-                        />
-                        <div className='input-group-append'>
-                            <button 
-                                className='btn btn-outline-secondary'
-                                type='button'
-                                onClick={this.searchProductname}>
-                                Search    
+                <div className='mgt-container'>
+                    <div className="submit-form">
+                        {this.state.submitted ? (
+                            <div>
+                                <h4>You submitted successfully!</h4>
+                                <button className='btn btn-success' onClick={this.newProduct}>Add New Product</button>
+                            </div>
+                        ) : (
+                            <div className='mgt-div'>
+                                <h4 className='text-center mb-4'>Add New Product</h4>
+                                <div className='form-group'>
+                                    <label htmlfor='title'>Image Name<span> ( Please upload image at <a href='/image-mgt'>here</a> )</span></label>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='title'
+                                        required
+                                        value={this.state.title}
+                                        onChange={this.onChangeTitle}
+                                        name='title'
+                                        placeholder='Example: dress01-1'
+                                    />
+                                </div>
+                                <div className='form-group'>
+                                    <label htmlfor='productname'>Product Name</label>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='productname'
+                                        required
+                                        value={this.state.productname}
+                                        onChange={this.onChangeProductname}
+                                        name='productname'
+                                    />
+                                </div>
+                                <div className='form-group'>
+                                    <label htmlfor='description'>Description</label>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='description'
+                                        required
+                                        value={this.state.description}
+                                        onChange={this.onChangeDescription}
+                                        name='description'
+                                    />
+                                </div>
+                                <div className='form-group'>
+                                    <label htmlfor='size'>Size</label>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='size'
+                                        required
+                                        value={this.state.size}
+                                        onChange={this.onChangeSize}
+                                        name='size'
+                                    />
+                                </div>
+                                <div className='form-group'>
+                                    <label htmlfor='price'>Price</label>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='price'
+                                        required
+                                        value={this.state.price}
+                                        onChange={this.onChangePrice}
+                                        name='price'
+                                    />
+                                </div>
+                                <div className='form-group'>
+                                    <label htmlfor='quantity'>Quantity</label>
+                                    <input
+                                        type='number'
+                                        className='form-control'
+                                        id='quantity'
+                                        required
+                                        value={this.state.quantity}
+                                        onChange={this.onChangeQuantity}
+                                        name='quantity'
+                                    />
+                                </div>
+
+                                <button onClick={this.saveProduct} className='btn btn-success float-right'>Submit</button>
+                            </div>
+                        )}
+                    </div>
+                    <div className='row mgt-list-div'>
+                        <div className='col-md-6'>
+                            <h4 className='text-left'>Products List</h4>
+
+                            <ul className='mgt-list-view'>
+                                {products &&
+                                    products.map((product, index) => (
+                                        <li className={'list-div' + (index === currentIndex ? ' active' : '')}
+                                            onClick={() => this.setActiveProduct(product, index)}
+                                            key={index}>
+                                            <div>
+                                                <p>{product.productname.toUpperCase()}</p>
+                                            </div>
+                                        </li>
+                                    ))}
+                            </ul>
+                            <button className='m-3 btn btn-danger' onClick={this.removeAllTutorials}>
+                                Remove All
                             </button>
                         </div>
+                        <div className='col-md-6'>
+                            {currentProduct ? (
+                                <div className='event-mgt-detail'>
+                                    <h4>Product</h4>
+                                    <div className='product-mgt-detail-img'>
+                                        <img src={'http://localhost:8080/api/files/' + currentProduct.title + '-1.jpg'} className="mgt-img"></img>
+                                    </div>
+                                    <div className='product-mgt-detail-info '>
+                                        <label>
+                                            <strong>Name:</strong>
+                                        </label> {" "}
+                                        {currentProduct.productname}
+                                    </div>
+                                    <div className='product-mgt-detail-info '>
+                                        <label>
+                                            <strong>Description:</strong>
+                                        </label> {" "}
+                                        {currentProduct.description}
+                                    </div>
+                                    <div className='product-mgt-detail-info '>
+                                        <label>
+                                            <strong>Size:</strong>
+                                        </label> {" "}
+                                        {currentProduct.size}
+                                    </div>
+                                    <div className='product-mgt-detail-info '>
+                                        <label>
+                                            <strong>Price:</strong>
+                                        </label> {" "}
+                                        {currentProduct.price}
+                                    </div>
+                                    <div className='product-mgt-detail-info '>
+                                        <label>
+                                            <strong>Quantity:</strong>
+                                        </label> {" "}
+                                        {currentProduct.quantity}
+                                    </div>
+                                    <div className='product-mgt-detail-info '>
+                                        <label>
+                                            <strong>Status:</strong>
+                                        </label> {" "}
+                                        {currentProduct.published ? "Published" : "Pending"}
+                                    </div>
+
+                                    <Link to={'/products/' + currentProduct.id} className='btn btn-warning mgt-detail-btn'>
+                                        Edit
+                                    </Link>
+                                </div>
+                            ) : (
+                                <div>
+                                    <br />
+                                    <p>Please click on a Product to view detail information...</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
-                </div> */}
-
-                <div className="submit-form">
-                    {this.state.submitted ? (
-                        <div>
-                            <h4>You submitted successfully!</h4>
-                            <button className='btn btn-success' onClick={this.newProduct}>Add New Product</button>
-                        </div>
-                    ) : (
-                        <div>
-                            Add New Product
-                            <div className='form-group'>
-                                <label htmlfor='title'>Title</label>
-                                <input 
-                                    type='text'
-                                    className='form-control'
-                                    id='title'
-                                    required
-                                    value={this.state.title}
-                                    onChange={this.onChangeTitle}
-                                    name='title' 
-                                />
-                            </div>
-                            <div className='form-group'>
-                                <label htmlfor='productname'>Name</label>
-                                <input 
-                                    type='text'
-                                    className='form-control'
-                                    id='productname'
-                                    required
-                                    value={this.state.productname}
-                                    onChange={this.onChangeProductname}
-                                    name='productname' 
-                                />
-                            </div>
-                            <div className='form-group'>
-                                <label htmlfor='description'>Description</label>
-                                <input 
-                                    type='text'
-                                    className='form-control'
-                                    id='description'
-                                    required
-                                    value={this.state.description}
-                                    onChange={this.onChangeDescription}
-                                    name='description' 
-                                />
-                            </div>
-                            <div className='form-group'>
-                                <label htmlfor='size'>Size</label>
-                                <input 
-                                    type='text'
-                                    className='form-control'
-                                    id='size'
-                                    required
-                                    value={this.state.size}
-                                    onChange={this.onChangeSize}
-                                    name='size' 
-                                />
-                            </div>
-                            <div className='form-group'>
-                                <label htmlfor='price'>Price</label>
-                                <input 
-                                    type='text'
-                                    className='form-control'
-                                    id='price'
-                                    required
-                                    value={this.state.price}
-                                    onChange={this.onChangePrice}
-                                    name='price' 
-                                />
-                            </div>
-                            <div className='form-group'>
-                                <label htmlfor='description'>Quantity</label>
-                                <input 
-                                    type='text'
-                                    className='form-control'
-                                    id='quantity'
-                                    required
-                                    value={this.state.quantity}
-                                    onChange={this.onChangeQuantity}
-                                    name='quantity' 
-                                />
-                            </div>
-                            <button onClick={this.saveProduct} className='btn btn-success'>Submit</button>
-                        </div>
-                    )}
                 </div>
-
-                <div className='col-md-6'>
-                    <h4>Products List</h4>
-
-                    <ul className='product-view'>
-                    {products && 
-                    products.map((product, index) => (
-                        <li className={'product-div' + (index === currentIndex ? ' active' : '')}
-                            onClick={() => this.setActiveProduct(product, index)}
-                            key={index}>
-                            <img src={'./images/women/' + product.title + '.jpg'} className="component-img"></img>
-                            <div className="d-flex row justify-content-around p-2">
-                            <div>{product.productname.toUpperCase()}</div>
-                            <div>RM {product.price.toFixed(2)}</div>
-                            </div>
-                        </li>
-                         ))}
-                    </ul>
-                    <button className='m-3 btn btn-sm btn-danger' onClick={this.removeAllTutorials}>
-                        Remove All
-                    </button>
-                </div>
-                <div className='col=md-6'>
-                    {currentProduct ? (
-                        <div>
-                            <h4>Product</h4>
-                            <div>
-                                <label>
-                                    <strong>Name:</strong>
-                                </label> {" "}
-                                {currentProduct.productname}
-                            </div>
-                            <div>
-                                <label>
-                                    <strong>Description:</strong>
-                                </label> {" "}
-                                {currentProduct.description}
-                            </div>
-                            <div>
-                                <label>
-                                    <strong>Size:</strong>
-                                </label> {" "}
-                                {currentProduct.size}
-                            </div>
-                            <div>
-                                <label>
-                                    <strong>Price:</strong>
-                                </label> {" "}
-                                {currentProduct.price}
-                            </div>
-                            <div>
-                                <label>
-                                    <strong>Quantity:</strong>
-                                </label> {" "}
-                                {currentProduct.quantity}
-                            </div>
-                            <div>
-                                <label>
-                                    <strong>Status:</strong>
-                                </label> {" "}
-                                {currentProduct.published ? "Published" : "Pending"}
-                            </div>
-
-                            <Link to={'/products/' + currentProduct.id} className='badge badge-warning'>
-                                Edit
-                            </Link>
-                        </div>
-                    ) : (
-                        <div>
-                            <br />
-                            <p>Please click on a Product...</p>
-                        </div>
-                    )}
-                </div>
-
-                
             </div>
         );
     }

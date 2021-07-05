@@ -2,7 +2,12 @@
     width: 165px;
     height: 60px;
 }
-
+.hero-equal-height {
+    background-repeat: repeat-x;
+    min-height: 450px !important;
+    background-position: right;
+    background-position-y: top;
+}
 .mainView {
     margin: 10px 5px 80px 5px;
 }
@@ -31,7 +36,10 @@
     padding: 2px;
     margin: 0 auto;
 }
-
+.category p {
+    text-decoration: none;
+    color: #000;
+}
 .each-slide > div {
     display: flex;
     align-items: center;
@@ -68,51 +76,7 @@
     border: 1px solid white;
     padding: 5px;
     font-size: 18px;
-    /* height: auto; */
-    /* margin-top: 5px; */
 }
-
-
-/* Login Page */
-/* .modal-dialog {
-    margin: 50px auto 70px auto;
-}
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-}
-.modal-footer {
-    display: flex;
-    justify-content: flex-start;
-}
-.forgotPassword {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: -10px;
-}
-.button {
-    margin: 30px auto 0px auto;
-    width: 100%;
-}
-
-.submit-form {
-    margin: 40px 200px 80px 200px;
-}
-.form-group {
-    padding-right: 25px !important;
-    padding-left: 25px !important;
-}
-.row {
-    margin-right: 0;
-    margin-left: 0;
-}
-.form-check-inline {
-    margin-right: auto;
-}
-.form-text {
-    margin-left: 15px;
-    margin-bottom: 40px;
-} */
 
 /* Menu Navigation Bar */
 .home-nav {
@@ -137,3 +101,4 @@
     margin-top: 5px !important;
     margin-right: 20px;
 }
+
