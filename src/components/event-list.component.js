@@ -35,7 +35,7 @@ export default class EventList extends Component {
   }
 
   retrieveEvents() {
-    EventDataService.getAll()
+    EventDataService.getAllPublished()
       .then(response => {
         this.setState({
           events: response.data

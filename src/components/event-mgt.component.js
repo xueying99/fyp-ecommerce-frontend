@@ -32,7 +32,8 @@ export default class EventManagement extends Component {
             enddate: "",
             published: false,
 
-            submitted: false
+            submitted: false,
+            message: ""
         };
     }
 
@@ -129,12 +130,14 @@ export default class EventManagement extends Component {
                     enddate: response.data.enddate,
                     published: response.data.published,
 
-                    submitted: true
+                    submitted: true,
+                    message: "New Event CREATED successfully!"
                 });
                 console.log(response.data);
             })
             .catch(e => {
                 console.log(e);
+                alert("Failed! Please check all details cannot be empty / Event name already existed.")
             });
     }
 
@@ -155,90 +158,32 @@ export default class EventManagement extends Component {
     render() {
         const { events, currentEvent, currentIndex } = this.state;
 
+        // function validateForm() {
+        //     let x = document.forms["newProduct"]["title"]["eventname"]["description"]["startdate"]["enddate"].value;
+        //     if (x == "") {
+        //       alert("This field cannot be empty.");
+        //       return false;
+        //     }
+        //   }
+
         return (
             <div className=''>
                 <header className="jumbotron">
                     <h3><b>EVENT MANAGEMENT</b></h3>
                 </header>
                 <div className='mgt-container'>
-                    <div className="submit-form">
+                    <div className="submit-form mt-5 mb-5 mr-3 ml-3">
                         {this.state.submitted ? (
                             <div>
-                                <h4>You submitted successfully!</h4>
-                                <button className='btn btn-success' onClick={this.newEvent}>Add New Event / Promotion</button>
+                                {/* <h4>You submitted successfully!</h4> */}
+                                <a className='btn btn-success' href='#event01'>Add New Event / Promotion</a>
                             </div>
                         ) : (
-                            <div className='mgt-div'>
-                                <h4 className='text-center mb-4'>Add New Event / Promotion</h4>
-                                <div className='form-group'>
-                                    <label htmlfor='title'>Image Name<span> ( Please upload image at <a href='/image-mgt'>here</a> )</span></label>
-                                    <input
-                                        type='text'
-                                        className='form-control'
-                                        id='title'
-                                        required
-                                        value={this.state.title}
-                                        onChange={this.onChangeTitle}
-                                        name='title'
-                                        placeholder='Example: banner01'
-                                    />
-                                </div>
-                                <div className='form-group'>
-                                    <label htmlfor='eventname'>Event Name</label>
-                                    <input
-                                        type='text'
-                                        className='form-control'
-                                        id='eventname'
-                                        required
-                                        value={this.state.eventname}
-                                        onChange={this.onChangeEventname}
-                                        name='eventname'
-                                    />
-                                </div>
-                                <div className='form-group'>
-                                    <label htmlfor='description'>Description</label>
-                                    <input
-                                        type='text'
-                                        className='form-control'
-                                        id='description'
-                                        required
-                                        value={this.state.description}
-                                        onChange={this.onChangeDescription}
-                                        name='description'
-                                    />
-                                </div>
-                                <div className='form-group'>
-                                    <label htmlfor='startdate'>Start Date</label>
-                                    <input
-                                        type='datetime-local'
-                                        className='form-control'
-                                        id='startdate'
-                                        required
-                                        value={this.state.startdate}
-                                        onChange={this.onChangeStartdate}
-                                        name='startdate'
-                                    />
-                                </div>
-                                <div className='form-group'>
-                                    <label htmlfor='enddate'>End Date</label>
-                                    <input
-                                        type='datetime-local'
-                                        className='form-control'
-                                        id='enddate'
-                                        required
-                                        value={this.state.enddate}
-                                        onChange={this.onChangeEnddate}
-                                        name='enddate'
-                                    />
-                                </div>
-                                <div className='d-flex justify-content-between'>
-                                    <button className='btn btn-danger event-mgt-btn' onClick={this.newEvent}>Clear All</button>
-                                    <button onClick={this.saveEvent} className='btn btn-success event-mgt-btn'>Submit</button>
-                                </div>
+                            <div>
+                                <a className='btn btn-success' href='#event01'>Add New Event / Promotion</a>
                             </div>
                         )}
-                        <div>
-                        </div>
+
                     </div>
                     <div className='row mgt-list-div'>
                         <div className='col-md-5'>
@@ -302,6 +247,87 @@ export default class EventManagement extends Component {
                                     <p>Please click on an Event for detail information...</p>
                                 </div>
                             )}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="modal" id="event01">
+                    <div className='modal-dialog'>
+                        <div className='modal-content mgt-div'>
+                            <header className="modal-container">
+                                <a href="#" className="closebtn">×</a>
+                                <h4>Add New Event / Promotion</h4>
+                            </header>
+                            <form className='add-mgt-div'>
+                                <div className='form-group'>
+                                    <label htmlFor='title'>Image Name<span> ( Please upload image at <a href='/image-mgt'>here</a> )</span></label>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='title'
+                                        required
+                                        value={this.state.title}
+                                        onChange={this.onChangeTitle}
+                                        name='title'
+                                        placeholder='Example: banner01'
+                                    />
+                                </div>
+                                <div className='form-group'>
+                                    <label htmlFor='eventname'>Event Name</label>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='eventname'
+                                        required
+                                        value={this.state.eventname}
+                                        onChange={this.onChangeEventname}
+                                        name='eventname'
+                                    />
+                                </div>
+                                <div className='form-group'>
+                                    <label htmlFor='description'>Description</label>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='description'
+                                        required
+                                        value={this.state.description}
+                                        onChange={this.onChangeDescription}
+                                        name='description'
+                                    />
+                                </div>
+                                <div className='form-group'>
+                                    <label htmlFor='startdate'>Start Date</label>
+                                    <input
+                                        type='datetime-local'
+                                        className='form-control'
+                                        id='startdate'
+                                        required
+                                        value={this.state.startdate}
+                                        onChange={this.onChangeStartdate}
+                                        name='startdate'
+                                        min="2021-01-01T20:20" max="2021-12-31T20:20"
+                                    />
+                                </div>
+                                <div className='form-group'>
+                                    <label htmlFor='enddate'>End Date</label>
+                                    <input
+                                        type='datetime-local'
+                                        className='form-control'
+                                        id='enddate'
+                                        required
+                                        value={this.state.enddate}
+                                        onChange={this.onChangeEnddate}
+                                        name='enddate'
+                                        min="2021-07-01T20:20" max="2021-12-31T20:20"
+                                    />
+                                </div>
+                                <div className='d-flex justify-content-between'>
+                                    <button className='btn btn-danger event-mgt-btn' onClick={this.newEvent}>Clear All</button>
+                                    <button onClick={this.saveEvent} href='#' className='btn btn-success event-mgt-btn'>Submit</button>
+                                </div>
+                                <div>{this.state.message}</div>
+                            </form>
                         </div>
                     </div>
                 </div>

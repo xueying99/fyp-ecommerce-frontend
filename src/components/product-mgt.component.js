@@ -7,6 +7,7 @@ export default class ProductManagement extends Component {
     constructor(props) {
         super(props);
         this.onChangeTitle = this.onChangeTitle.bind(this);
+        this.onChangeCategory = this.onChangeCategory.bind(this);
         this.onChangeProductname = this.onChangeProductname.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeSize = this.onChangeSize.bind(this);
@@ -26,18 +27,21 @@ export default class ProductManagement extends Component {
 
             id: null,
             title: "",
+            category: "",
             productname: "",
             description: "",
             size: "",
-            price: "",
-            quantity: "",
+            price: 0.00,
+            quantity: 10,
             published: false,
 
-            submitted: false
+            submitted: false,
+            message: ""
         };
     }
 
     componentDidMount() {
+        this.refreshList();
         this.retrieveProducts();
     }
 
@@ -86,6 +90,12 @@ export default class ProductManagement extends Component {
         });
     }
 
+    onChangeCategory(e) {
+        this.setState({
+            category: e.target.value
+        });
+    }
+
     onChangeProductname(e) {
         this.setState({
             productname: e.target.value
@@ -119,6 +129,7 @@ export default class ProductManagement extends Component {
     saveProduct() {
         var data = {
             title: this.state.title,
+            category: this.state.category,
             productname: this.state.productname,
             description: this.state.description,
             size: this.state.size,
@@ -131,6 +142,7 @@ export default class ProductManagement extends Component {
                 this.setState({
                     id: response.data.id,
                     title: response.data.title,
+                    category: response.data.category,
                     productname: response.data.productname,
                     description: response.data.description,
                     size: response.data.size,
@@ -138,12 +150,14 @@ export default class ProductManagement extends Component {
                     quantity: response.data.quantity,
                     published: response.data.published,
 
-                    submitted: true
+                    submitted: true,
+                    message: "New Product CREATED successfully!"
                 });
                 console.log(response.data);
             })
             .catch(e => {
                 console.log(e);
+                alert("Failed! Please check all details cannot be empty / Product name already existed.")
             });
     }
 
@@ -151,6 +165,7 @@ export default class ProductManagement extends Component {
         this.setState({
             id: null,
             title: "",
+            category: "",
             productname: "",
             description: "",
             size: "",
@@ -173,90 +188,15 @@ export default class ProductManagement extends Component {
                     <h3><b>PRODUCT MANAGEMENT</b></h3>
                 </header>
                 <div className='mgt-container'>
-                    <div className="submit-form">
+                    <div className="submit-form mt-5 mb-5 mr-3 ml-3">
                         {this.state.submitted ? (
                             <div>
-                                <h4>You submitted successfully!</h4>
-                                <button className='btn btn-success' onClick={this.newProduct}>Add New Product</button>
+                                {/* <h4>You submitted successfully!</h4> */}
+                                <a className='btn btn-success' href='#product01'>Add New Product</a>
                             </div>
                         ) : (
-                            <div className='mgt-div'>
-                                <h4 className='text-center mb-4'>Add New Product</h4>
-                                <div className='form-group'>
-                                    <label htmlfor='title'>Image Name<span> ( Please upload image at <a href='/image-mgt'>here</a> )</span></label>
-                                    <input
-                                        type='text'
-                                        className='form-control'
-                                        id='title'
-                                        required
-                                        value={this.state.title}
-                                        onChange={this.onChangeTitle}
-                                        name='title'
-                                        placeholder='Example: dress01-1'
-                                    />
-                                </div>
-                                <div className='form-group'>
-                                    <label htmlfor='productname'>Product Name</label>
-                                    <input
-                                        type='text'
-                                        className='form-control'
-                                        id='productname'
-                                        required
-                                        value={this.state.productname}
-                                        onChange={this.onChangeProductname}
-                                        name='productname'
-                                    />
-                                </div>
-                                <div className='form-group'>
-                                    <label htmlfor='description'>Description</label>
-                                    <input
-                                        type='text'
-                                        className='form-control'
-                                        id='description'
-                                        required
-                                        value={this.state.description}
-                                        onChange={this.onChangeDescription}
-                                        name='description'
-                                    />
-                                </div>
-                                <div className='form-group'>
-                                    <label htmlfor='size'>Size</label>
-                                    <input
-                                        type='text'
-                                        className='form-control'
-                                        id='size'
-                                        required
-                                        value={this.state.size}
-                                        onChange={this.onChangeSize}
-                                        name='size'
-                                    />
-                                </div>
-                                <div className='form-group'>
-                                    <label htmlfor='price'>Price</label>
-                                    <input
-                                        type='text'
-                                        className='form-control'
-                                        id='price'
-                                        required
-                                        value={this.state.price}
-                                        onChange={this.onChangePrice}
-                                        name='price'
-                                    />
-                                </div>
-                                <div className='form-group'>
-                                    <label htmlfor='quantity'>Quantity</label>
-                                    <input
-                                        type='number'
-                                        className='form-control'
-                                        id='quantity'
-                                        required
-                                        value={this.state.quantity}
-                                        onChange={this.onChangeQuantity}
-                                        name='quantity'
-                                    />
-                                </div>
-
-                                <button onClick={this.saveProduct} className='btn btn-success float-right'>Submit</button>
+                            <div>
+                                <a className='btn btn-success' href='#product01'>Add New Product</a>
                             </div>
                         )}
                     </div>
@@ -292,6 +232,12 @@ export default class ProductManagement extends Component {
                                             <strong>Name:</strong>
                                         </label> {" "}
                                         {currentProduct.productname}
+                                    </div>
+                                    <div className='product-mgt-detail-info '>
+                                        <label>
+                                            <strong>Category:</strong>
+                                        </label> {" "}
+                                        {currentProduct.category}
                                     </div>
                                     <div className='product-mgt-detail-info '>
                                         <label>
@@ -334,6 +280,155 @@ export default class ProductManagement extends Component {
                                     <p>Please click on a Product to view detail information...</p>
                                 </div>
                             )}
+                        </div>
+                    </div>
+                </div>
+                <div className="modal" id="product01">
+                    <div className='modal-dialog'>
+                        <div className='modal-content mgt-div'>
+                            <header className="modal-container">
+                                <a href="#" className="closebtn">×</a>
+                                <h4>Add New Product</h4>
+                            </header>
+                            <div className='add-mgt-div'>
+                            <div className='form-group'>
+                                    <label htmlFor='title'>Image Name<span> ( Please upload image at <a href='/image-mgt'>here</a> )</span></label>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='title'
+                                        required
+                                        value={this.state.title}
+                                        onChange={this.onChangeTitle}
+                                        name='title'
+                                        placeholder='Example: dress01'
+                                    />
+                                </div>
+                                <div className='form-group'>
+                                    <label htmlFor='category'>Category</label>
+                                    <div className='signup-form-radio'>
+                                        <input
+                                            type="radio"
+                                            className="form-control"
+                                            id="women"
+                                            name="category"
+                                            value="women"
+                                            onChange={this.onChangeCategory}
+                                            required />
+                                        <label for="women" className="radiobtn">Women</label>
+                                        <input
+                                            type="radio"
+                                            className="form-control"
+                                            id="men"
+                                            name="category"
+                                            value="men"
+                                            onChange={this.onChangeCategory}
+                                            required />
+                                        <label for="men" className="radiobtn">Men</label>
+                                    </div>
+                                </div>
+                                <div className='form-group'>
+                                    <label htmlFor='productname'>Product Name</label>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='productname'
+                                        required
+                                        value={this.state.productname}
+                                        onChange={this.onChangeProductname}
+                                        name='productname'
+                                    />
+                                </div>
+                                <div className='form-group'>
+                                    <label htmlFor='description'>Description</label>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='description'
+                                        required
+                                        value={this.state.description}
+                                        onChange={this.onChangeDescription}
+                                        name='description'
+                                    />
+                                </div>
+                                <div className='form-group'>
+                                    <label htmlFor='size'>Size <span>( Only one size avaliable )</span></label>
+                                    <div className='signup-form-radio'>
+                                        <input
+                                            type="radio"
+                                            className="form-control"
+                                            id="S"
+                                            name="size"
+                                            value="S"
+                                            onChange={this.onChangeSize}
+                                            required />
+                                        <label for="S" className="radiobtn">S</label>
+                                        <input
+                                            type="radio"
+                                            className="form-control"
+                                            id="M"
+                                            name="size"
+                                            value="M"
+                                            onChange={this.onChangeSize}
+                                            required />
+                                        <label for="M" className="radiobtn">M</label>
+                                        <input
+                                            type="radio"
+                                            className="form-control"
+                                            id="L"
+                                            name="size"
+                                            value="L"
+                                            onChange={this.onChangeSize}
+                                            required />
+                                        <label for="L" className="radiobtn">L</label>
+                                        <input
+                                            type="radio"
+                                            className="form-control"
+                                            id="XL"
+                                            name="size"
+                                            value="XL"
+                                            onChange={this.onChangeSize}
+                                            required />
+                                        <label for="XL" className="radiobtn">XL</label>
+                                        <input
+                                            type="radio"
+                                            className="form-control"
+                                            id="XXL"
+                                            name="size"
+                                            value="XXL"
+                                            onChange={this.onChangeSize}
+                                            required />
+                                        <label for="XL" className="radiobtn">XXL</label>
+                                    </div>
+                                </div>
+                                <div className='form-group'>
+                                    <label htmlFor='price'>Price</label>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        id='price'
+                                        required
+                                        value={this.state.price}
+                                        onChange={this.onChangePrice}
+                                        name='price'
+                                    />
+                                </div>
+                                <div className='form-group'>
+                                    <label htmlFor='quantity'>Quantity</label>
+                                    <input
+                                        type='number'
+                                        className='form-control'
+                                        id='quantity'
+                                        required
+                                        value={this.state.quantity}
+                                        onChange={this.onChangeQuantity}
+                                        name='quantity'
+                                        min='10'
+                                    />
+                                </div>
+                                <button onClick={this.saveProduct} href='#' className='btn btn-success float-right'>Submit</button>
+                            </div>
+                            <div>{this.state.message}</div>
                         </div>
                     </div>
                 </div>

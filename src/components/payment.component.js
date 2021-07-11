@@ -19,7 +19,7 @@ export default class Payment extends Component {
         this.retrieveOrder = this.retrieveOrder.bind(this);
         this.retrieveOrderItem = this.retrieveOrderItem.bind(this);
         this.payment = this.payment.bind(this);
-        // this.saveOrder = this.saveOrder.bind(this);
+        this.saveOrder = this.saveOrder.bind(this);
 
         this.state = {
             date: new Date().toDateString(),
@@ -28,30 +28,43 @@ export default class Payment extends Component {
             users: [],
             currentUser: AuthService.getCurrentUser(),
             currentIndex: -1,
-            payment: 0.00,
 
             username: '',
-            lastName: '',
+            lastname: '',
             email: '',
-            contact: '',
             address: '',
             poscode: '',
             state: '',
-            bank: '',
-            bankAcc: '',
-            shippingname: '',
-            shippingaddress: '',
+
+            currentOrder: {
+                id: null,
+                date: '',
+                payment: '',
+                contact: '',
+                bankname: '',
+                bankacc: '',
+                shippingname: '',
+                shippingaddress: '',
+                shippingcontact: ''
+            }
         };
     }
 
     componentDidMount() {
-        this.retrieveOrder();
+        this.retrieveOrder(this.props.match.params.id);
         this.retrieveOrderItem();
     }
 
     onChangeUsername(e) {
-        this.setState({
-            username: e.target.value
+        const username = e.target.value;
+
+        this.setState(function (prevState) {
+            return {
+                currentUser: {
+                    ...prevState.currentUser,
+                    username: username
+                }
+            };
         });
     }
     onChangeLastname(e) {
@@ -60,38 +73,87 @@ export default class Payment extends Component {
         });
     }
     onChangeEmail(e) {
-        this.setState({
-            email: e.target.value
+        const email = e.target.value;
+
+        this.setState(function (prevState) {
+            return {
+                currentUser: {
+                    ...prevState.currentUser,
+                    email: email
+                }
+            };
         });
     }
     onChangeContact(e) {
-        this.setState({
-            contact: e.target.value
+        const contact = e.target.value;
+
+        this.setState(function (prevState) {
+            return {
+                currentUser: {
+                    ...prevState.currentUser,
+                    contact: contact
+                }
+            };
         });
     }
     onChangeAddress(e) {
-        this.setState({
-            address: e.target.value
+        const address = e.target.value;
+
+        this.setState(function (prevState) {
+            return {
+                currentUser: {
+                    ...prevState.currentUser,
+                    address: address
+                }
+            };
         });
     }
     onChangePoscode(e) {
-        this.setState({
-            poscode: e.target.value
+        const poscode = e.target.value;
+
+        this.setState(function (prevState) {
+            return {
+                currentUser: {
+                    ...prevState.currentUser,
+                    poscode: poscode
+                }
+            };
         });
     }
     onChangeState(e) {
-        this.setState({
-            state: e.target.value
+        const state = e.target.value;
+
+        this.setState(function (prevState) {
+            return {
+                currentUser: {
+                    ...prevState.currentUser,
+                    state: state
+                }
+            };
         });
     }
     onChangeBank(e) {
-        this.setState({
-            bank: e.target.value
+        const bankname = e.target.value;
+
+        this.setState(function (prevState) {
+            return {
+                currentOrder: {
+                    ...prevState.currentOrder,
+                    bankname: bankname
+                }
+            };
         });
     }
     onChangeBankAcc(e) {
-        this.setState({
-            bankAcc: e.target.value
+        const bankacc = e.target.value;
+
+        this.setState(function (prevState) {
+            return {
+                currentOrder: {
+                    ...prevState.currentOrder,
+                    bankacc: bankacc
+                }
+            };
         });
     }
 
@@ -108,13 +170,13 @@ export default class Payment extends Component {
             });
     }
 
-    retrieveOrder() {
-        OrderDataService.getAll()
-            .then(res => {
+    retrieveOrder(id) {
+        OrderDataService.get(id)
+            .then(response => {
                 this.setState({
-                    order: res.data
-                })
-                console.log(res.data)
+                    currentOrder: response.data
+                });
+                console.log(response.data);
             })
             .catch(e => {
                 console.log(e);
@@ -128,51 +190,51 @@ export default class Payment extends Component {
         });
     }
 
-    // saveOrder() {
-    //     var data = {
-    //         userId: this.state.userId,
-    //         date: this.state.date,
-    //         shippingname: this.state.shippingname,
-    //         shippingaddress: this.state.shippingaddress,
-    //         payment: this.state.payment,
-    //         bankname: this.state.bankname,
-    //         accepted: true
-    //     };
+    saveOrder() {
+        var data = {
+            id: this.state.currentOrder.id,
+            date: this.state.currentOrder.date,
+            payment: this.state.currentOrder.payment,
+            shippingname: this.state.currentOrder.shippingname,
+            shippingaddress: this.state.currentOrder.shippingaddress,
+            shippingcontact: this.state.currentOrder.shippingcontact,
+            bankname: this.state.currentOrder.bankname,
+            bankacc: this.state.currentOrder.bankacc,
+            completed: true,
+            accepted: false
+        };
 
-    //     OrderDataService.update(data)
-    //         .then(response => {
-    //             console.log(response.data);
-    //             this.payment();
-    //         })
-    //         .catch(e => {
-    //             console.log(e);
-    //         });
-    // }
+        OrderDataService
+            .update(this.state.currentOrder.id, data)
+            .then(response => {
+                this.setState(prevState => ({
+                    currentOrder: {
+                        ...prevState.currentOrder,
+                        completed: false,
+                        accepted: true
+                    }
+                }))
+                console.log(response.data);
+                this.payment();
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
 
     render() {
         const { currentOrder, order, currentUser } = this.state;
 
-        let id = null
-        for (let i = 0; i < this.state.order.length; i++) {
-            for (let j = 0; j < this.state.orderItem.length; j++) {
-                if (this.state.order[i].id === this.state.orderItem[j].orderId) {
-                    id = this.state.order[i].id
-                }
-                console.log(id)
-                console.log(this.state.order[i].id)
-                console.log(this.state.orderItem[j].orderId)
-            }
-        }
+        currentOrder.shippingname = currentUser.username + " " + this.state.lastname;
+        console.log(currentOrder.shippingname)
 
-        let totalitem = 0
-        let totalprice = 0.00
-        for (let j = 0; j < this.state.orderItem.length; j++) {
-            if (id === this.state.orderItem[j].orderId) {
-                totalitem = totalitem + this.state.orderItem[j].quantity
-                totalprice = totalprice + this.state.orderItem[j].price
-            }
-        }
-        this.state.payment = totalprice
+        currentOrder.shippingaddress = currentUser.address + ", " + currentUser.poscode + ", " + currentUser.state;
+        console.log(currentOrder.shippingaddress)
+
+        currentOrder.date = this.state.date;
+        console.log(currentOrder.date)
+
+        currentOrder.shippingcontact = currentUser.contact;
 
         return (
             <div className="">
@@ -180,195 +242,194 @@ export default class Payment extends Component {
                     <h3 className='text-center'>PAYMENT PAGE</h3>
                 </header>
                 <div className='mainContainer'>
-                    <div className='d-flex justify-content-center row'>
-                        <div className=''>
-                            <div className='d-flex'>
-                                <div className="billing-div">
-                                    <h5 className="mb-4">Enter Billing Information</h5>
-                                    <div className="signup-form-row">
-                                        <div className="form-group signup-form-group">
-                                            <label htmlFor="username">First Name</label>
-                                            <input
-                                                type="text"
-                                                size="25"
-                                                className="form-control"
-                                                name="username"
-                                                value={currentUser.username}
-                                                onChange={this.onChangeUsername}
-                                                required
-                                            />
-                                        </div>
+                    {currentOrder ? (
+                        <div>
+                            <div className='d-flex justify-content-center row'>
+                                <div className=''>
+                                    <div className='d-flex'>
+                                        <div className="billing-div">
+                                            <h5 className="mb-4">Enter Billing Information</h5>
+                                            <div className="signup-form-row">
+                                                <div className="form-group signup-form-group">
+                                                    <label htmlFor="username">First Name</label>
+                                                    <input
+                                                        type="text"
+                                                        size="25"
+                                                        className="form-control"
+                                                        name="username"
+                                                        value={currentUser.username}
+                                                        onChange={this.onChangeUsername}
+                                                        required
+                                                    />
+                                                </div>
 
-                                        <div className="form-group signup-form-group">
-                                            <label htmlFor="username">Last Name</label>
-                                            <input
-                                                type="text"
-                                                size="25"
-                                                className="form-control"
-                                                name="username"
-                                                onChange={this.onChangeLastname}
-                                            />
+                                                <div className="form-group signup-form-group">
+                                                    <label htmlFor="lastname">Last Name</label>
+                                                    <input
+                                                        type="text"
+                                                        size="25"
+                                                        className="form-control"
+                                                        name="lastname"
+                                                        onChange={this.onChangeLastname}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className='signup-form-row'>
+                                                <div className="form-group signup-form-group">
+                                                    <label htmlFor="email">Email</label>
+                                                    <input
+                                                        type="text"
+                                                        size="25"
+                                                        className="form-control"
+                                                        name="email"
+                                                        value={currentUser.email}
+                                                        onChange={this.onChangeEmail}
+                                                        required
+                                                    />
+                                                </div>
+
+                                                <div className="form-group signup-form-group">
+                                                    <label htmlFor="contact">Contact Number</label>
+                                                    <input
+                                                        type="text"
+                                                        size="25"
+                                                        className="form-control"
+                                                        name="contact"
+                                                        value={currentUser.contact}
+                                                        onChange={this.onChangeContact}
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className='signup-form-row'>
+                                                <div className="form-group signup-form-group-address">
+                                                    <label htmlFor="address">Address</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        name="address"
+                                                        value={currentUser.address}
+                                                        onChange={this.onChangeAddress}
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className='signup-form-row'>
+                                                <div className="form-group signup-form-group">
+                                                    <label htmlFor="poscode">Poscode</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id='poscode'
+                                                        name="poscode"
+                                                        value={currentUser.poscode}
+                                                        onChange={this.onChangePoscode}
+                                                        required
+                                                    />
+                                                </div>
+
+                                                <div className="form-group signup-form-group">
+                                                    <label htmlFor="state">State</label>
+                                                    <select
+                                                        list="state"
+                                                        className="form-control"
+                                                        name="state"
+                                                        value={currentUser.state}
+                                                        onChange={this.onChangeState}
+                                                        required >
+                                                        <option value="Johor">Johor</option>
+                                                        <option value="Kedah">Kedah</option>
+                                                        <option value="Kelantan">Kelantan</option>
+                                                        <option value="Melaka">Melaka</option>
+                                                        <option value="Negeri Sembilan">Negeri Sembilan</option>
+                                                        <option value="Pahang">Pahang</option>
+                                                        <option value="Penang">Penang</option>
+                                                        <option value="Perak">Perak</option>
+                                                        <option value="Perlis">Perlis</option>
+                                                        <option value="Sabah">Sabah</option>
+                                                        <option value="Sarawak">Sarawak</option>
+                                                        <option value="Selangor">Selangor</option>
+                                                        <option value="Terengganu">Terengganu</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div className='signup-form-row'>
-                                        <div className="form-group signup-form-group">
-                                            <label className='' htmlFor="email">Email</label>
-                                            <input
-                                                type="text"
-                                                size="25"
-                                                className="form-control"
-                                                name="email"
-                                                value={currentUser.email}
-                                                onChange={this.onChangeEmail}
-                                                required disabled
-                                            />
-                                        </div>
+                                <div className=''>
+                                    <div className='payment-div'>
+                                        <div>
+                                            <div className='form-group row justify-content-between mt-4 mr-0'>
+                                                <label className='col' htmlFor="date">Date</label>
+                                                <input
+                                                    type="text"
+                                                    className="col text-right form-control"
+                                                    name="date"
+                                                    defaultValue={this.state.date}
+                                                    required disabled
+                                                />
+                                            </div>
 
-                                        <div className="form-group signup-form-group">
-                                            <label htmlFor="contact">Contact Number</label>
-                                            <input
-                                                type="text"
-                                                size="25"
-                                                className="form-control"
-                                                name="contact"
-                                                value={currentUser.contact}
-                                                onChange={this.onChangeContact}
-                                                required
-                                            />
-                                        </div>
-                                    </div>
+                                            <div className="form-group payment-form-group">
+                                                <label htmlFor="bankname">Bank</label>
+                                                <select
+                                                    list="bankname"
+                                                    className="form-control"
+                                                    name="bankname"
+                                                    onChange={this.onChangeBank}
+                                                    required >
+                                                    <option value="Affin Bank">Affin Bank</option>
+                                                    <option value="AmBank">AmBank</option>
+                                                    <option value="Bank Rakyat">Bank Rakyat</option>
+                                                    <option value="CIMB Bank">CIMB Bank</option>
+                                                    <option value="Citibank">Citibank</option>
+                                                    <option value="Hong Leong Bank">Hong Leong Bank</option>
+                                                    <option value="HSBC Bank">HSBC Bank</option>
+                                                    <option value="Maybank">Maybank</option>
+                                                    <option value="OCBC Bank">OCBC Bank</option>
+                                                    <option value="Public Bank">Public Bank</option>
+                                                    <option value="RHB Bank">RHB Bank</option>
+                                                    <option value="Standard Chartered Bank">Standard Chartered Bank</option>
+                                                    <option value="United Overseas Bank">United Overseas Bank</option>
+                                                </select>
+                                            </div>
+                                            <div className="form-group payment-form-group">
+                                                <label htmlFor="bankacc">Bank Account Number</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    name="bankacc"
+                                                    onChange={this.onChangeBankAcc}
+                                                    required
+                                                />
+                                            </div>
+                                            <div className='form-group row justify-content-between mt-4 mr-0'>
+                                                <label className='col' htmlFor="totalprice">Total (RM)</label>
+                                                <input
+                                                    type="number"
+                                                    className="col text-right form-control"
+                                                    name="totalprice"
+                                                    defaultValue={currentOrder.payment}
+                                                    required disabled
+                                                />
+                                            </div>
 
-                                    <div className='signup-form-row'>
-                                        <div className="form-group signup-form-group-address">
-                                            <label htmlFor="address">Address</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                name="address"
-                                                value={currentUser.address}
-                                                onChange={this.onChangeAddress}
-                                                required
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className='signup-form-row'>
-                                        <div className="form-group signup-form-group">
-                                            <label htmlFor="poscode">Poscode</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                name="poscode"
-                                                value={currentUser.poscode}
-                                                onChange={this.onChangePoscode}
-                                                required
-                                            />
-                                        </div>
-
-                                        <div className="form-group signup-form-group">
-                                            <label htmlFor="state">State</label>
-                                            <select
-                                                list="state"
-                                                className="form-control"
-                                                name="state"
-                                                value={currentUser.state}
-                                                onChange={this.onChangeState}
-                                                required >
-                                                <option value="Johor">Johor</option>
-                                                <option value="Kedah">Kedah</option>
-                                                <option value="Kelantan">Kelantan</option>
-                                                <option value="Melaka">Melaka</option>
-                                                <option value="Negeri Sembilan">Negeri Sembilan</option>
-                                                <option value="Pahang">Pahang</option>
-                                                <option value="Penang">Penang</option>
-                                                <option value="Perak">Perak</option>
-                                                <option value="Perlis">Perlis</option>
-                                                <option value="Sabah">Sabah</option>
-                                                <option value="Sarawak">Sarawak</option>
-                                                <option value="Selangor">Selangor</option>
-                                                <option value="Terengganu">Terengganu</option>
-                                            </select>
+                                            <div className=''>
+                                                <a className="btn btn-primary paybtn" href="/status" onClick={this.saveOrder}>Pay</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div className=''>
-                            <div className='payment-div'>
-                                {
-                                    this.state.order.length === 0 ?
-                                        (
-                                            <h5 className='text-center'>No Payment</h5>
-                                        ) :
-                                        (
-                                            <div>
-                                                <div className='form-group row justify-content-between mt-4 mr-0'>
-                                                    <label className='col' htmlFor="totalprice">Date</label>
-                                                    <input
-                                                        type="text"
-                                                        className="col text-right form-control"
-                                                        name="totalprice"
-                                                        defaultValue={this.state.date}
-                                                        required disabled
-                                                    />
-                                                </div>
-
-                                                <div className="form-group payment-form-group">
-                                                    <label htmlFor="state">Bank</label>
-                                                    <select
-                                                        list="state"
-                                                        className="form-control"
-                                                        name="bank"
-                                                        onChange={this.onChangeBank}
-                                                        required >
-                                                        <option value="Affin Bank">Affin Bank</option>
-                                                        <option value="AmBank">AmBank</option>
-                                                        <option value="Bank Rakyat">Bank Rakyat</option>
-                                                        <option value="CIMB Bank">CIMB Bank</option>
-                                                        <option value="Citibank">Citibank</option>
-                                                        <option value="Hong Leong Bank">Hong Leong Bank</option>
-                                                        <option value="HSBC Bank">HSBC Bank</option>
-                                                        <option value="Maybank">Maybank</option>
-                                                        <option value="OCBC Bank">OCBC Bank</option>
-                                                        <option value="Public Bank">Public Bank</option>
-                                                        <option value="RHB Bank">RHB Bank</option>
-                                                        <option value="Standard Chartered Bank">Standard Chartered Bank</option>
-                                                        <option value="United Overseas Bank">United Overseas Bank</option>
-                                                    </select>
-                                                </div>
-                                                <div className="form-group payment-form-group">
-                                                    <label htmlFor="bankacc">Bank Account Number</label>
-                                                    <input
-                                                        type="text"
-                                                        className="form-control"
-                                                        name="bankacc"
-                                                        onChange={this.onChangeBankAcc}
-                                                        required
-                                                    />
-                                                </div>
-                                                <div className='form-group row justify-content-between mt-4 mr-0'>
-                                                    <label className='col' htmlFor="totalprice">Total (RM)</label>
-                                                    <input
-                                                        type="text"
-                                                        className="col text-right form-control"
-                                                        name="totalprice"
-                                                        value={totalprice.toFixed(2)}
-                                                        required disabled
-                                                    />
-                                                </div>
-
-                                                <div className=''>
-                                                    <a className="btn btn-primary paybtn" href="/status">Pay</a>
-                                                    {/* <a className="btn btn-primary paybtn" href="/status" onClick={this.saveOrder}>Pay</a> */}
-                                                </div>
-                                            </div>
-                                        )
-                                }
-                            </div>
-                        </div>
-                    </div>
+                    ) : (
+                        <div>No order</div>
+                    )
+                    }
                 </div>
             </div>
         );

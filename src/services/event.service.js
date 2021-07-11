@@ -5,6 +5,10 @@ class EventDataService {
     return http.get("/events");
   }
 
+  getAllPublished() {
+    return http.get("/events/published");
+  }
+
   get(id) {
     return http.get(`/events/${id}`);
   }
@@ -25,8 +29,8 @@ class EventDataService {
     return http.delete(`/events`);
   }
 
-  findByTitle(title) {
-    return http.get(`/events?title=${title}`);
+  findByEventname(eventname) {
+    return http.get(`/events?eventname=${eventname}`);
   }
 }
 

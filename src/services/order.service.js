@@ -6,12 +6,16 @@ class OrderDataService {
     return http.get("/orders", { headers: authHeader() });
   }
 
+  get(id) {
+    return http.get(`/orders/${id}`, { headers: authHeader() });
+  }
+
   create(data) {
     return http.post("/orders/create", data, { headers: authHeader() });
   }
 
-  update(data) {
-    return http.put("/orders", data, { headers: authHeader() });
+  update(id, data) {
+    return http.put(`/orders/${id}`, data, { headers: authHeader() });
   }
 
   delete(id) {

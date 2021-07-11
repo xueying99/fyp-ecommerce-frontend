@@ -10,8 +10,7 @@ const styles = theme => ({
 });
 
 const imageBaseUrl =
-  "http://localhost:8080/api/files/dress";
-// "./images/women/dress";
+  "http://localhost:8080/api/files/women";
 
 class ImageMagnify extends Component {
   constructor(props) {
@@ -37,10 +36,10 @@ class ImageMagnify extends Component {
           smallImage: {
             alt: "",
             isFluidWidth: true,
-            src: `${imageBaseUrl}01-1.jpg`,
+            src: `${imageBaseUrl}01.jpg`,
           },
           largeImage: {
-            src: `${imageBaseUrl}01-1.jpg`,
+            src: `${imageBaseUrl}01.jpg`,
             width: 480,
             height: 480
           },

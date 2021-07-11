@@ -21,10 +21,12 @@ export default class Profile extends Component {
     this.retrieveProducts = this.retrieveProducts.bind(this);
     this.retrieveOrder = this.retrieveOrder.bind(this);
     this.retrieveOrderItem = this.retrieveOrderItem.bind(this);
+    this.setActiveOrder = this.setActiveOrder.bind(this);
 
     this.state = {
       users: [],
       currentUser: AuthService.getCurrentUser(),
+      currentOrder: null,
       currentIndex: -1,
       email: "",
       address: "",
@@ -116,8 +118,15 @@ export default class Profile extends Component {
       });
   }
 
+  setActiveOrder(order, index) {
+    this.setState({
+      currentOrder: order,
+      currentIndex: index
+    });
+  }
+
   render() {
-    const { currentUser } = this.state;
+    const { currentUser, orders, currentOrder, currentIndex } = this.state;
 
     let uid = null
     let oid = []
@@ -229,115 +238,119 @@ export default class Profile extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="profile-btn">
+                {/* <div className="profile-btn">
                   <div className="profile-btn-div">
                     <button className="btn btn-primary profile-button" disabled>Update</button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </TabPanel>
 
             <TabPanel tabId="vertical-tab-two" className='tab-order-history'>
-              <div className='order-mgt-container'>
-                <div className='order-mgt-div'>
+              <div className='tab-order-container'>
+                <div className='tab-order-div'>
                   <h5><b>Order History</b></h5>
                   <Table striped bordered hover>
                     <thead>
                       <tr>
                         <th><b>Order Details</b></th>
-                        <th><b>Total Paid</b></th>
                         <th><b>Status</b></th>
                       </tr>
                     </thead>
 
-                    {
-                      this.state.orders.length === 0 ?
-                        (
-                          <tbody>
-                            <tr>
-                              <h5 className='text-center'>No Order</h5>
-                            </tr>
-                          </tbody>
-                        ) :
-
-                        this.state.orders
-                          .filter(i => i.userId === uid)
-                          .map(oi => {
-                            let item = this.state.orderItem.filter(i => i.id === oi.orderId)[0]
-                            let orderdate = oi.date
-                            return (
-                              <tbody>
-                                <tr>
-                                  <td>
-                                    <div className='order-detail-div'>
-                                      <div>
-                                        <p>Order ID: <b>{oi.id}</b>
-                                          <span>Date: <b>{orderdate}</b></span>
-                                        </p>
-                                      </div>
-                                      {/* <h6>Shipping Information</h6>
-                                    <table className='shipping-info-table'>
-                                      <tbody>
-                                        <tr>
-                                          <td>Shipping Name:</td>
-                                          <td></td>
-                                        </tr>
-                                        <tr>
-                                          <td>Shipping Address:</td>
-                                          <td></td>
-                                        </tr>
-                                        <tr>
-                                          <td>Contact:</td>
-                                          <td></td>
-                                        </tr>
-                                      </tbody>
-                                    </table> */}
-
-                                      <h6>Order Item List</h6>
-                                      <table className='order-item-table'>
-                                        <thead>
-                                          <tr>
-                                            <th>No</th>
-                                            <th>Product</th>
-                                            <th>Quantity</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          {
-                                            this.state.orderItem
-                                              .filter(i => i.orderId === oi.id)
-                                              .map(o => {
-                                                let p = this.state.products.filter(i => i.id === o.productId)[0]
-                                                return (
-                                                  <tr>
-                                                    <td>{o.id}</td>
-                                                    <td className=''>
-                                                      {p.productname}
-                                                    </td>
-                                                    <td>
-                                                      {o.quantity}
-                                                    </td>
-                                                  </tr>
-                                                )
-                                              })
-                                          }
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    RM {oi.payment.toFixed(2)}
-                                  </td>
-                                  <td>
-                                    {oi.accepted ? "Completed" : "Processing"}
-                                  </td>
-                                </tr>
-                              </tbody>
-                            )
-                          })
-                    }
+                    {orders &&
+                      orders.filter(i => i.userId === uid).map((order, index) => (
+                        <tbody>
+                          <tr>
+                            <td>
+                              <div className='order-detail-div'>
+                                <div>
+                                  <p>Order ID: <b>{order.id}</b>
+                                    <span>Date: <b>{order.date}</b></span>
+                                  </p>
+                                  <p>Total Paid: RM {order.payment.toFixed(2)} ({order.accepted ? "Accepted" : "Pending"})</p>
+                                </div>
+                                <a className={'btn btn-primary' + (index === currentIndex ? ' active' : '')}
+                                  onClick={() => this.setActiveOrder(order, index)}
+                                  key={index} href="#orderlist">
+                                  View Details
+                                </a>
+                              </div>
+                            </td>
+                            <td>
+                              {order.completed ? "Completed" : "In Progress"}
+                            </td>
+                          </tr>
+                        </tbody>
+                      ))}
                   </Table>
                 </div>
+              </div>
+              <div>
+                {currentOrder ? (
+                  <div className="modal" id="orderlist">
+                    <div className='modal-dialog'>
+                      <div className='modal-content'>
+                        <header className="modal-container">
+                          <a href="#" className="closebtn">×</a>
+                          <h4>Details of ORDER ID <b>{currentOrder.id}</b></h4>
+                        </header>
+
+                        <div className='modal-table-div'>
+                          <p>Shipping Information</p>
+                          <table className='modal-shipping-table'>
+                            <tbody>
+                              <tr>
+                                <td>Shipping Name:</td>
+                                <td>{currentOrder.shippingname}</td>
+                              </tr>
+                              <tr>
+                                <td>Shipping Address:</td>
+                                <td>{currentOrder.shippingaddress}</td>
+                              </tr>
+                              <tr>
+                                <td>Contact:</td>
+                                <td>{currentOrder.shippingcontact}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <p>Order Item List</p>
+                          <table className='modal-order-item-table'>
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {
+                                this.state.orderItem
+                                  .filter(i => i.orderId === currentOrder.id)
+                                  .map(o => {
+                                    let p = this.state.products.filter(i => i.id === o.productId)[0]
+                                    return (
+                                      <tr>
+                                        <td>{o.id}</td>
+                                        <td className=''>
+                                          {p.productname}
+                                        </td>
+                                        <td>
+                                          {o.quantity}
+                                        </td>
+                                      </tr>
+                                    )
+                                  })
+                              }
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
               </div>
             </TabPanel>
           </Tabs>

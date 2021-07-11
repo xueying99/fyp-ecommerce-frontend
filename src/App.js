@@ -16,6 +16,7 @@ import SearchPage from './layouts/search-products';
 import Status from "./layouts/status";
 import Product from "./components/product.component";
 import Women from './components/women-list.component';
+import Men from './components/men-list.component';
 import Event from './components/event.component';
 import EventList from './components/event-list.component';
 import Cart from './components/cart.component';
@@ -35,6 +36,7 @@ import ProductManagement from "./components/product-mgt.component";
 import EventManagement from "./components/event-mgt.component";
 import OrderManagement from "./components/order-mgt.component";
 import UploadImages from "./components/upload-files.component";
+import Order from "./components/order.component";
 
 class App extends Component {
   constructor(props) {
@@ -120,11 +122,12 @@ class App extends Component {
         <Switch>
           <Route exact path={["/", "/home"]} component={MainPage} />  
           <Route exact path="/search" component={SearchPage} />
-          <Route exact path="/products" component={Women} />
+          <Route exact path="/women-products" component={Women} />
+          <Route exact path="/men-products" component={Men} />
           <Route exact path="/events" component={EventList} />
           <Route exact path="/cart" component={Cart} />
-          <Route path="/checkout" component={Checkout} />
-          <Route path="/payment" component={Payment} />
+          <Route path="/cart/checkout" component={Checkout} />
+          <Route path="/cart/orders/:id" component={Payment} />
           <Route exact path="/v-fitting-room" component={Vroom} />
           <Route path="/status" component={Status} />
           
@@ -135,6 +138,7 @@ class App extends Component {
 
           <Route path="/products/:id" component={Product} />
           <Route path="/events/:id" component={Event} />
+          <Route path="/orders/:id" component={Order} />
 
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />

@@ -12,7 +12,7 @@ import ProductDataService from "../services/product.service";
 import CartDataService from "../services/cart.service";
 import UploadService from "../services/file-upload.service";
 
-const PREFIX_URL = "http://localhost:8080/api/files/women";
+const PREFIX_URL = "http://localhost:8080/api/files/men";
 
 class ReactImageGallery extends Component {
   myRenderItem() {
@@ -40,8 +40,7 @@ class ReactImageGallery extends Component {
         original: `${PREFIX_URL}01.jpg`,
         originalClass: 'featured-slide',
         thumbnailClass: 'featured-thumb',
-        description: 'Women Shirts 01',
-        renderItem: this.myRenderItem.bind(this)
+        description: 'Men Shirts 01',
       },
       {
         original: `${PREFIX_URL}01-1.jpg`,
@@ -54,7 +53,7 @@ class ReactImageGallery extends Component {
         thumbnail: `${PREFIX_URL}02.jpg`,
         originalClass: 'featured-slide',
         thumbnailClass: 'featured-thumb',
-        description: 'Women Shirts 02'
+        description: 'Men Shirts 02'
       },
       {
         original: `${PREFIX_URL}02-1.jpg`,
@@ -67,7 +66,6 @@ class ReactImageGallery extends Component {
         thumbnail: `${PREFIX_URL}03.jpg`,
         originalClass: 'featured-slide',
         thumbnailClass: 'featured-thumb',
-        description: 'Women Shirts 03'
       },
       {
         original: `${PREFIX_URL}03-1.jpg`,
@@ -140,7 +138,7 @@ class ReactImageGallery extends Component {
   }
 }
 
-export default class Women extends Component {
+export default class Men extends Component {
   constructor(props) {
     super(props);
     this.onChangeQuantity = this.onChangeQuantity.bind(this);
@@ -224,25 +222,16 @@ export default class Women extends Component {
   render() {
     const { products, currentProduct, currentIndex, imageInfos } = this.state;
 
-    let imagename = ''
-    for (let i = 0; i < this.state.imageInfos.length; i++) {
-      for (let j = 0; j < this.state.products.length; j++) {
-        if (this.state.imageInfos[i].name === (this.state.products[j].title + "-1.jpg")) {
-          imagename = this.state.imageInfos[i].name
-        }
-      }
-    }
-
     return (
       <div className="">
         <header className="jumbotron">
-          <h3><b>WOMEN FASHION</b></h3>
+          <h3><b>MEN FASHION</b></h3>
         </header>
         <div className='mainContainer'>
           <div className='component-div'>
             <ul className='product-view flex-wrap'>
               {products &&
-                products.filter(i=> i.category === "women").map((product, index) => (
+                products.filter(i=> i.category === "men").map((product, index) => (
                   <li className={'product-div' + (index === currentIndex ? ' active' : '')}
                     onClick={() => this.setActiveProduct(product, index)}
                     key={index}>

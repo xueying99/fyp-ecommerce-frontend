@@ -127,6 +127,7 @@ export default class Event extends Component {
                     }
                 }));
                 console.log(response.data);
+                alert("Event PUBLISHED successfully!");
             })
             .catch(e => {
                 console.log(e);
@@ -153,6 +154,7 @@ export default class Event extends Component {
         EventDataService.delete(this.state.currentEvent.id)
             .then(response => {
                 console.log(response.data);
+                alert("Event DELETED successfully!");
                 this.props.history.push('/events')
             })
             .catch(e => {

@@ -281,6 +281,15 @@ th, td {
 .tab-order-history {
     width: 80%;
 }
+.tab-order-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding: 20px 80px;
+}
+.tab-order-div {
+    width: 85%;
+}
 
 /* Logout Page */
 .logout-container {
@@ -300,6 +309,7 @@ th, td {
 }
 
 /* Order Management Page */
+
 .order-mgt-container {
     position: relative;
     display: flex;
@@ -308,7 +318,10 @@ th, td {
     justify-content: center;
 }
 .order-mgt-div {
-    width: 85%;
+    width: 70%;
+}
+.order-mgt-div a:hover {
+    text-decoration: none;
 }
 .order-detail-div {
     padding: 5px 10px;
@@ -316,16 +329,14 @@ th, td {
 }
 .order-detail-div span {
     float: right;
+    padding-right: 50px;
 }
 .order-detail-div td {
     text-align: left !important;
 }
 .shipping-info-table {
-    width: 100%;
-    margin-bottom: 25px;
-}
-.order-item-table {
     width: 80%;
+    margin-bottom: 25px;
 }
 
 /* Product Management Page */
@@ -338,6 +349,9 @@ th, td {
     width: 65%;
     margin: auto auto 50px auto;
     background-image: linear-gradient(to left, #b5c3ec, #a0a5eb, #9385db, #a282d4, #c3a4d8) !important;
+}
+.add-mgt-div {
+    padding: 35px 50px 20px 50px;
 }
 .mgt-list-div {
     padding: 50px 35px;
@@ -490,6 +504,20 @@ th, td {
     margin-top: 10px;
     background-color: rgb(207, 133, 207);
 }
+.order-table-div {
+    width: 100%;
+    margin: 20px auto;
+}
+.order-table-div table {
+    width: 100%;
+}
+.order-table-div td {
+    text-align: left !important;
+}
+.order-table-div h6 {
+    font-weight: bold;
+    text-decoration: underline;
+}
 
 /* Footer */
 ul {
@@ -526,4 +554,90 @@ li.dropdown {
 /* Search Page */
 .search-div {
     padding: 50px 35px;
+}
+
+/* The modal's background */
+@-webkit-keyframes example {
+    from {top:-100px;opacity: 0;}
+    to {top:0px;opacity:1;}
+}
+@keyframes example {
+    from {top:-100px;opacity: 0;}
+    to {top:0px;opacity:1;}
+}
+.modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.modal:target {
+    display: table;
+    position: absolute;
+}
+.modal-dialog {
+    display: table-cell;
+    vertical-align: middle;
+}  
+.modal-dialog .modal-content {
+    margin: auto;
+    background-color: #9f96ee;
+    position: relative;
+    padding: 20px;
+    outline: 0;
+    border: 1px #777 solid;
+    text-align: justify;
+    width: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
+    /* Add animation */
+    -webkit-animation-name: example; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 0.5s; /* Chrome, Safari, Opera */
+    animation-name: example;
+    animation-duration: 0.5s;
+}
+.closebtn {
+    text-decoration: none;
+    float: right;
+    font-size: 35px;
+    font-weight: bold;
+    color: #fff;
+    margin-top: -15px;
+}  
+.closebtn:hover,
+.closebtn:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.modal-container {
+    padding: 2px 16px;
+}
+.modal-table-div {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin: 15px auto 20px;
+}
+.modal-table-div p {
+    font-size: 19px;
+    margin: 0 0 10px 35px;
+    text-decoration: underline;
+}
+.modal-shipping-table {
+    width: 80%;
+    margin: auto auto 25px auto;
+}
+.modal-order-item-table {
+    width: 80%;
+    margin: auto;
+}
+.modal-order-item-table th, td {
+    border: 1px solid lightgrey;
+    padding: 8px;
 }

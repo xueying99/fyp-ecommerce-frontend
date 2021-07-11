@@ -33,7 +33,7 @@ const vusername = value => {
   if (value.length < 3 || value.length > 20) {
     return (
       <div className="alert alert-danger" role="alert">
-        The username must be between 3 and 20 characters.
+        Username must be between 3 and 20 characters.
       </div>
     );
   }
@@ -178,8 +178,9 @@ export default class Register extends Component {
         response => {
           this.setState({
             message: response.data.message,
-            successful: true
+            successful: true,
           });
+          // this.props.history.push('/login')
         },
         error => {
           const resMessage =
@@ -323,6 +324,7 @@ export default class Register extends Component {
                         value={this.state.dob}
                         onChange={this.onChangeDOB}
                         validations={[required, dob]}
+                        min="1900-01-01"  max="2021-07-01"
                       />
                     </div>
                   </div>

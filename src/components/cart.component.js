@@ -117,7 +117,7 @@ export default class Cart extends Component {
                     <h3>SHOPPING CART</h3>
                 </header>
                 <div className='mainContainer'>
-                    <div className='d-flex justify-content-around row'>
+                    <div className='d-flex justify-content-around row mr-5 ml-5'>
                         <div className=''>
                             {
                                 this.state.cart.length === 0 ?
@@ -133,7 +133,7 @@ export default class Cart extends Component {
                                                 <div className="cart-div" key={c.id}>
                                                     <div className="cart-item-div" key={c.id}>
                                                         <div className="item-img">
-                                                            <img src={'./images/women/' + (p.title) + '-1.jpg'}></img>
+                                                            <img src={'http://localhost:8080/api/files/' + (p.title) + '-1.jpg'}></img>
                                                         </div>
                                                         <div className="cart-item-info">
                                                             <div className='item-info'>
@@ -170,7 +170,7 @@ export default class Cart extends Component {
                                     <div>RM {totalprice.toFixed(2)}</div>
                                 </div>
                                 <div className='cart-btn-div'>
-                                    <a className="btn btn-primary" href="/checkout" onClick={this.checkout}>Checkout</a>
+                                    <a className="btn btn-primary" href='/cart/checkout' onClick={this.checkout}>Checkout</a>
                                     <div className="btn btn-danger" onClick={this.removeAllCartItems}>Clear All</div>
                                 </div>
                             </div>

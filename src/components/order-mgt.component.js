@@ -15,6 +15,9 @@ export default class OrderManagement extends Component {
         this.retrieveOrder = this.retrieveOrder.bind(this);
         this.retrieveOrderItem = this.retrieveOrderItem.bind(this);
         this.refreshList = this.refreshList.bind(this);
+        this.setActiveOrder = this.setActiveOrder.bind(this);
+        this.updateStatus = this.updateStatus.bind(this);
+        this.getSingleOrder = this.getSingleOrder.bind(this);
 
         this.state = {
             products: [],
@@ -33,6 +36,7 @@ export default class OrderManagement extends Component {
         this.retrieveProducts();
         this.retrieveOrder();
         this.retrieveOrderItem();
+        this.getSingleOrder(this.props.match.params.id);
     }
 
     retrieveProducts() {
@@ -82,30 +86,59 @@ export default class OrderManagement extends Component {
         });
     }
 
-    // updateStatus(status) {
-    //     var data = {
-    //         id: this.state.order.id,
-    //         accepted: status
-    //     };
+    setActiveOrder(order, index) {
+        this.setState({
+            currentOrder: order,
+            currentIndex: index
+        });
+    }
 
-    //     OrderDataService
-    //         .update(this.state.order.id, data)
-    //         .then(response => {
-    //             this.setState(prevState => ({
-    //                 currentTutorial: {
-    //                     ...prevState.order,
-    //                     accepted: status
-    //                 }
-    //             }));
-    //             console.log(response.data);
-    //         })
-    //         .catch(e => {
-    //             console.log(e);
-    //         });
-    // }
+    getSingleOrder(id) {
+        OrderDataService.get(id)
+            .then(response => {
+                this.setState({
+                    currentOrder: response.data
+                });
+                console.log(response.data);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
+
+    updateStatus(status) {
+        var data = {
+            id: this.state.currentOrder.id,
+            userId: this.state.currentOrder.userId,
+            date: this.state.currentOrder.date,
+            payment: this.state.currentOrder.payment,
+            shippingname: this.state.currentOrder.shippingname,
+            shippingaddress: this.state.currentOrder.shippingaddress,
+            shippingcontact: this.state.currentOrder.shippingcontact,
+            bankname: this.state.currentOrder.bankname,
+            bankacc: this.state.currentOrder.bankacc,
+            accepted: this.state.currentOrder.accepted,
+            completed: status
+        };
+
+        OrderDataService
+            .update(this.state.currentOrder.id, data)
+            .then(response => {
+                this.setState(prevState => ({
+                    currentOrder: {
+                        ...prevState.currentOrder,
+                        completed: status
+                    }
+                }));
+                console.log(response.data);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
 
     render() {
-        const { searchProductname, products, currentOrder, currentIndex, orders } = this.state;
+        const { products, currentOrder, currentIndex, orders } = this.state;
 
         let totalprice = 0.00
         for (let i = 0; i < this.state.orderItem.length; i++) {
@@ -121,115 +154,112 @@ export default class OrderManagement extends Component {
                     <div className='order-mgt-container'>
                         <div className='order-mgt-div'>
                             <h5><b>Order List</b></h5>
-                            <Table striped bordered hover>
-                                <thead>
-                                    <tr>
-                                        <th><b>Order Details</b></th>
-                                        <th><b>Sales</b></th>
-                                        <th><b>Status</b></th>
-                                    </tr>
-                                </thead>
+                            {orders &&
+                                orders.map((order, index) => (
+                                    <a className={'' + (index === currentIndex ? ' active' : '')}
+                                        onClick={() => this.setActiveOrder(order, index)} href='#order01'
+                                        key={index}>
+                                        <Table striped bordered hover>
+                                            <thead>
+                                                <tr>
+                                                    <th><b>Order ID {order.id}</b></th>
+                                                    <th><b>Status</b></th>
+                                                </tr>
+                                            </thead>
 
-                                {
-                                    this.state.orders.length === 0 ?
-                                        (
                                             <tbody>
-                                                <div>
-                                                    <h5 className='text-center'>No Order</h5>
-                                                </div>
-                                            </tbody>
-                                        ) :
-
-                                        this.state.orders.map(oi => {
-                                            let item = this.state.orderItem.filter(i => i.id === oi.orderId)[0]
-                                            let orderdate = oi.date
-                                            return (
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <div className='order-detail-div'>
-                                                                <div>
-                                                                    <p>Order ID: <b>{oi.id}</b>
-                                                                        <span>Date: <b>{orderdate}</b></span>
-                                                                    </p>
-                                                                    <p>User ID: <b>{oi.userId}</b></p>
-                                                                </div>
-                                                                {/* <h6>Shipping Information</h6>
-                                                                <table className='shipping-info-table'>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>Shipping Name:</td>
-                                                                            <td>{oi.username}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Shipping Address:</td>
-                                                                            <td>{(oi.address), (oi.poscode), (oi.state)}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Contact:</td>
-                                                                            <td>{oi.contact}</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table> */}
-
-                                                                <h6>Order Item List</h6>
-                                                                <table className='order-item-table'>
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>No</th>
-                                                                            <th>Product</th>
-                                                                            <th>Quantity</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        {
-                                                                            this.state.orderItem
-                                                                                .filter(i => i.orderId === oi.id)
-                                                                                .map(o => {
-                                                                                    let p = this.state.products.filter(i => i.id === o.productId)[0]
-                                                                                    return (
-                                                                                        <tr>
-                                                                                            <td>{o.id}</td>
-                                                                                            <td className=''>
-                                                                                                {p.productname}
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                {o.quantity}
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    )
-                                                                                })
-                                                                        }
-                                                                    </tbody>
-                                                                </table>
+                                                <tr>
+                                                    <td>
+                                                        <div className='order-detail-div'>
+                                                            <div>
+                                                                <p>Total Paid: RM {order.payment.toFixed(2)} ({order.accepted ? "Accepted" : "Pending"})
+                                                                    <span>Date: <b>{order.date}</b></span>
+                                                                </p>
                                                             </div>
+                                                            <h6>Shipping Information</h6>
+                                                            <table className='shipping-info-table'>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Shipping Name:</td>
+                                                                        <td>{order.shippingname}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Shipping Address:</td>
+                                                                        <td>{order.shippingaddress}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Contact:</td>
+                                                                        <td>{order.shippingcontact}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {order.completed ? "Completed" : "In Progress"}
 
-                                                        </td>
-                                                        <td>
-                                                            RM {oi.payment.toFixed(2)}
-                                                        </td>
-                                                        <td>
-                                                            {oi.accepted ? "Completed" : "Processing"}
-                                                            {/* {oi.accepted ? (
-                                                                <button className='btn btn-primary mr-2' onClick={() => this.updateStatus(true)}>
-                                                                    Completed
-                                                                </button>
-                                                            ) : (
-                                                                <button className='btn btn-primary mr-2' onClick={() => this.updateStatus(false)}>
-                                                                    Processing
-                                                                </button>
-                                                            )} */}
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            )
-                                        })
-                                }
-                            </Table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </Table>
+                                    </a>
+                                ))}
                         </div>
                     </div>
                 </div>
-            </div >
+                {currentOrder ? (
+                    <div className="modal" id="order01">
+                        <div className='modal-dialog'>
+                            <div className='modal-content'>
+                                <header className="modal-container">
+                                    <a href="#" className="closebtn">×</a>
+                                    <h4>View Details of ORDER ID <b>{currentOrder.id}</b></h4>
+                                </header>
+                                <div className='modal-table-div'>
+                          
+                          <p>Order Item List</p>
+                          <table className='modal-order-item-table'>
+                            <thead>
+                              <tr>
+                                <th>No</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {
+                                this.state.orderItem
+                                  .filter(i => i.orderId === currentOrder.id)
+                                  .map(o => {
+                                    let p = this.state.products.filter(i => i.id === o.productId)[0]
+                                    return (
+                                      <tr>
+                                        <td>{o.id}</td>
+                                        <td className=''>
+                                          {p.productname}
+                                        </td>
+                                        <td>
+                                          {o.quantity}
+                                        </td>
+                                      </tr>
+                                    )
+                                  })
+                              }
+                            </tbody>
+                          </table>
+                        </div>
+                                <div className='d-flex justify-content-center mt-4'>
+                                <a className="btn btn-warning pr-5 pl-5" href={'orders/' + currentOrder.id}>
+                                    Edit
+                                </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <div></div>
+                )}
+            </div>
         );
     }
 }

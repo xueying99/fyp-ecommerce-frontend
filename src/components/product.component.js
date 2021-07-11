@@ -141,6 +141,7 @@ export default class Product extends Component {
                     }
                 }));
                 console.log(response.data);
+                alert("Product is PUBLISHED successfully!");
             })
             .catch(e => {
                 console.log(e);
@@ -167,6 +168,7 @@ export default class Product extends Component {
         ProductDataService.delete(this.state.currentProduct.id)
             .then(response => {
                 console.log(response.data);
+                alert("Product is DELETED sucessfully!");
                 this.props.history.push('/products')
             })
             .catch(e => {
@@ -179,7 +181,7 @@ export default class Product extends Component {
 
         return (
             <div className='single-view'>
-                {currentProduct ? (
+                { currentProduct ? (
                     <div className='edit-form'>
                         <h4>Product</h4>
                         <div className=' mt-4 mb-4 text-center'>
