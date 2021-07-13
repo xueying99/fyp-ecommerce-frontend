@@ -213,7 +213,7 @@ export default class Event extends Component {
                                 <div className='form-group-row'>
 
                                     <div className='form-group date-input'>
-                                        <label htmlfor='startdate'>Start Date</label>
+                                        <label htmlfor='startdate'>Start Date ({currentEvent.startdate})</label>
                                         <input
                                             type='datetime-local'
                                             className='form-control'
@@ -225,7 +225,7 @@ export default class Event extends Component {
                                         />
                                     </div>
                                     <div className='form-group date-input'>
-                                        <label htmlfor='enddate'>End Date</label>
+                                        <label htmlfor='enddate'>End Date ({currentEvent.enddate})</label>
                                         <input
                                             type='datetime-local'
                                             className='form-control'

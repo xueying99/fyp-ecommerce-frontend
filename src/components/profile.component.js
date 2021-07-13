@@ -312,6 +312,14 @@ export default class Profile extends Component {
                                 <td>Contact:</td>
                                 <td>{currentOrder.shippingcontact}</td>
                               </tr>
+                              <tr>
+                                <td>Courier Service:</td>
+                                <td>{currentOrder.courier}</td>
+                              </tr>
+                              <tr>
+                                <td>Tracking Number:</td>
+                                <td>{currentOrder.tracking}</td>
+                              </tr>
                             </tbody>
                           </table>
                           <p>Order Item List</p>

@@ -170,8 +170,8 @@ export default class UploadImages extends Component {
                             {imageInfos &&
                                 imageInfos.map((img, index) => (
                                     <li className="list-group-item" key={index}>
-                                        <div className=''>
-                                        {/* <img src={img.url} alt={img.name} height="80px" /> */}
+                                        <div className='row text-left'>
+                                        <img src={img.url} alt={img.name} height="50px" />
                                         <p><a href={img.url}>{img.name}</a></p>
                                         </div>
                                     </li>

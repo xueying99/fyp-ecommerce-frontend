@@ -11,14 +11,14 @@ export default class MainPage extends Component {
 
         return (
             <div className=''>
-                <div class="hero-equal-height gradient-overlay"
-                    style={{ backgroundImage: `url(${shopping})` }}>
-                    <div class="container">
-                        <div class="row align-items-center justify-content-around">
-                            <div class="">
-                                <div class="hero-content-left position-relative z-index text-center text-white">
-                                    <h1 class="text-white">Welcome to FORTRY Virtual Fitting Room</h1>
-                                    <p class="lead">
+                <div className="hero-equal-height gradient-overlay">
+                    {/* style={{ backgroundImage: `url(${shopping})` }} */}
+                    <div className="container">
+                        <div className="row align-items-center justify-content-around">
+                            <div className="">
+                                <div className="hero-content-left position-relative z-index text-center text-white">
+                                    <h1 className="text-white">Welcome to FORTRY Virtual Fitting Room</h1>
+                                    <p className="lead">
                                         Our design projects are fresh and simple and will benefit your business greatly. Learn more
                                         about our work! Here is Final Year Project by <span className='font-italic'>KHOOXUEYING</span>
                                     </p>
@@ -26,8 +26,8 @@ export default class MainPage extends Component {
                             </div>
                         </div>
                     </div>
-                    <div class="shape-bottom">
-                        <img src="img/curve-shape-top.svg" alt="shape" class="bottom-shape img-fluid" />
+                    <div className="shape-bottom">
+                        <img src="img/curve-shape-top.svg" alt="shape" className="bottom-shape img-fluid" />
                     </div>
                 </div>
 
@@ -38,11 +38,11 @@ export default class MainPage extends Component {
                     <div className='categoryDiv'>
                         <div className='category'>
                             <img src='./images/women-fashion.jpg' alt='Female Fashion icon' />
-                            <Link to="/products"><p>WOMEN</p></Link>
+                            <Link to="/women-products"><p>WOMEN</p></Link>
                         </div>
                         <div className='category'>
                             <img src='./images/men-clothing.jpg' alt='Male Fashion icon' />
-                            <Link to="#men" disabled><p>MEN</p></Link>
+                            <Link to="/men-products"><p>MEN</p></Link>
                         </div>
                         <div className='category'>
                             <img src='./images/sale-icon-2.jpg' alt='Sale icon' />

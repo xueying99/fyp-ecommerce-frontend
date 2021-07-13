@@ -43,12 +43,12 @@ class ReactImageGallery extends Component {
         description: 'Women Shirts 01',
         renderItem: this.myRenderItem.bind(this)
       },
-      {
-        original: `${PREFIX_URL}01-1.jpg`,
-        thumbnail: `${PREFIX_URL}01-1.jpg`,
-        originalClass: 'featured-slide',
-        thumbnailClass: 'featured-thumb',
-      },
+      // {
+      //   original: `${PREFIX_URL}01-1.jpg`,
+      //   thumbnail: `${PREFIX_URL}01-1.jpg`,
+      //   originalClass: 'featured-slide',
+      //   thumbnailClass: 'featured-thumb',
+      // },
       {
         original: `${PREFIX_URL}02.jpg`,
         thumbnail: `${PREFIX_URL}02.jpg`,
@@ -56,12 +56,12 @@ class ReactImageGallery extends Component {
         thumbnailClass: 'featured-thumb',
         description: 'Women Shirts 02'
       },
-      {
-        original: `${PREFIX_URL}02-1.jpg`,
-        thumbnail: `${PREFIX_URL}02-1.jpg`,
-        originalClass: 'featured-slide',
-        thumbnailClass: 'featured-thumb',
-      },
+      // {
+      //   original: `${PREFIX_URL}02-1.jpg`,
+      //   thumbnail: `${PREFIX_URL}02-1.jpg`,
+      //   originalClass: 'featured-slide',
+      //   thumbnailClass: 'featured-thumb',
+      // },
       {
         original: `${PREFIX_URL}03.jpg`,
         thumbnail: `${PREFIX_URL}03.jpg`,
@@ -69,12 +69,12 @@ class ReactImageGallery extends Component {
         thumbnailClass: 'featured-thumb',
         description: 'Women Shirts 03'
       },
-      {
-        original: `${PREFIX_URL}03-1.jpg`,
-        thumbnail: `${PREFIX_URL}03-1.jpg`,
-        originalClass: 'featured-slide',
-        thumbnailClass: 'featured-thumb',
-      },
+      // {
+      //   original: `${PREFIX_URL}03-1.jpg`,
+      //   thumbnail: `${PREFIX_URL}03-1.jpg`,
+      //   originalClass: 'featured-slide',
+      //   thumbnailClass: 'featured-thumb',
+      // },
     ].concat(this._getStaticImages());
   }
 
@@ -216,22 +216,13 @@ export default class Women extends Component {
         alert("Successfully add to cart!");
       })
       .catch(e => {
-        alert("Please login to make order!");
+        alert("Please login to proceed add cart!");
         console.log(e);
       });
   }
 
   render() {
     const { products, currentProduct, currentIndex, imageInfos } = this.state;
-
-    let imagename = ''
-    for (let i = 0; i < this.state.imageInfos.length; i++) {
-      for (let j = 0; j < this.state.products.length; j++) {
-        if (this.state.imageInfos[i].name === (this.state.products[j].title + "-1.jpg")) {
-          imagename = this.state.imageInfos[i].name
-        }
-      }
-    }
 
     return (
       <div className="">
@@ -253,7 +244,7 @@ export default class Women extends Component {
                         <br></br>
                         RM {product.price.toFixed(2)}
                       </div>
-                      <div className="carticonbtn ti-shopping-cart" onClick={this.addToCart}></div>
+                      <div className="carticonbtn ti-shopping-cart" onClick={this.setActiveProduct}></div>
                     </div>
                   </li>
                 ))}
@@ -284,6 +275,63 @@ export default class Women extends Component {
                             </label> {" "}
                             <p>{currentProduct.description}</p>
                           </div>
+                          <div>
+                            <table>
+                              <thead>
+                                <tr>
+                                  <td>Size</td>
+                                  <td>Shoulder</td>
+                                  <td>Waist</td>
+                                  <td>Hip</td>
+                                  <td>Top Length</td>
+                                  <td>Pants Length</td>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>S</td>
+                                  <td>37.5</td>
+                                  <td>62 - 98</td>
+                                  <td>104</td>
+                                  <td>39 / 49</td>
+                                  <td>94</td>
+                                </tr>
+                                <tr>
+                                  <td>M</td>
+                                  <td>38.5</td>
+                                  <td>66 - 102</td>
+                                  <td>108</td>
+                                  <td>40 / 50</td>
+                                  <td>95</td>
+                                </tr>
+                                <tr>
+                                  <td>L</td>
+                                  <td>40</td>
+                                  <td>72 - 108</td>
+                                  <td>114</td>
+                                  <td>41.5 / 51.5</td>
+                                  <td>96.5</td>
+                                </tr>
+                                <tr>
+                                  <td>XL</td>
+                                  <td>41.5</td>
+                                  <td>78 - 114</td>
+                                  <td>120</td>
+                                  <td>43 / 53</td>
+                                  <td>98</td>
+                                </tr>
+                                <tr>
+                                  <td>XXL</td>
+                                  <td>43</td>
+                                  <td>82 - 120</td>
+                                  <td>126</td>
+                                  <td>44.5 / 54.5</td>
+                                  <td>98</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <p>This data was obtained from manually measuring the product, it may be off by 1-2CM.</p>
+                          </div>
                           <div className='product-info-div'>
                             <label>
                               <strong>Size: </strong>
@@ -302,10 +350,11 @@ export default class Women extends Component {
                             </label> {" "}
                             <input type='number'
                               value={this.state.quantity}
-                              onChange={this.onChangeQuantity}>
+                              onChange={this.onChangeQuantity} 
+                              min='1' max='20'>
                             </input>
                           </div>
-                          <div className="cartbtn" onClick={this.addToCart}>Add to Cart</div>
+                          <div className="cartbtn ti-shopping-cart" onClick={this.addToCart}>Add to Cart</div>
                         </div>
                       </Grid>
                     </Grid>

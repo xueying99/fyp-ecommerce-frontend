@@ -8,8 +8,6 @@ export default class Payment extends Component {
     constructor(props) {
         super(props);
         this.onChangeUsername = this.onChangeUsername.bind(this);
-        this.onChangeLastname = this.onChangeLastname.bind(this);
-        this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangeContact = this.onChangeContact.bind(this);
         this.onChangeAddress = this.onChangeAddress.bind(this);
         this.onChangePoscode = this.onChangePoscode.bind(this);
@@ -30,8 +28,6 @@ export default class Payment extends Component {
             currentIndex: -1,
 
             username: '',
-            lastname: '',
-            email: '',
             address: '',
             poscode: '',
             state: '',
@@ -63,23 +59,6 @@ export default class Payment extends Component {
                 currentUser: {
                     ...prevState.currentUser,
                     username: username
-                }
-            };
-        });
-    }
-    onChangeLastname(e) {
-        this.setState({
-            lastname: e.target.value
-        });
-    }
-    onChangeEmail(e) {
-        const email = e.target.value;
-
-        this.setState(function (prevState) {
-            return {
-                currentUser: {
-                    ...prevState.currentUser,
-                    email: email
                 }
             };
         });
@@ -133,27 +112,13 @@ export default class Payment extends Component {
         });
     }
     onChangeBank(e) {
-        const bankname = e.target.value;
-
-        this.setState(function (prevState) {
-            return {
-                currentOrder: {
-                    ...prevState.currentOrder,
-                    bankname: bankname
-                }
-            };
+        this.setState({
+            bankname: e.target.value
         });
     }
     onChangeBankAcc(e) {
-        const bankacc = e.target.value;
-
-        this.setState(function (prevState) {
-            return {
-                currentOrder: {
-                    ...prevState.currentOrder,
-                    bankacc: bankacc
-                }
-            };
+        this.setState({
+            bankacc: e.target.value
         });
     }
 
@@ -200,8 +165,8 @@ export default class Payment extends Component {
             shippingcontact: this.state.currentOrder.shippingcontact,
             bankname: this.state.currentOrder.bankname,
             bankacc: this.state.currentOrder.bankacc,
-            completed: true,
-            accepted: false
+            accepted: true,
+            completed: false,
         };
 
         OrderDataService
@@ -210,48 +175,46 @@ export default class Payment extends Component {
                 this.setState(prevState => ({
                     currentOrder: {
                         ...prevState.currentOrder,
+                        accepted: true,
                         completed: false,
-                        accepted: true
                     }
                 }))
                 console.log(response.data);
                 this.payment();
+                this.props.history.push('/status')
             })
             .catch(e => {
                 console.log(e);
+                alert("Failed! Please check all details are filled.")
             });
     }
 
     render() {
         const { currentOrder, order, currentUser } = this.state;
-
-        currentOrder.shippingname = currentUser.username + " " + this.state.lastname;
-        console.log(currentOrder.shippingname)
-
+        currentOrder.shippingname = currentUser.username;
         currentOrder.shippingaddress = currentUser.address + ", " + currentUser.poscode + ", " + currentUser.state;
-        console.log(currentOrder.shippingaddress)
-
         currentOrder.date = this.state.date;
-        console.log(currentOrder.date)
-
         currentOrder.shippingcontact = currentUser.contact;
+        currentOrder.bankname = this.state.bankname;
+        currentOrder.bankacc = this.state.bankacc;
 
         return (
             <div className="">
                 <header className="jumbotron">
                     <h3 className='text-center'>PAYMENT PAGE</h3>
+                    <p>(PLEASE DON'T LEAVE THIS PAGE BEFORE SUBMIT)</p>
                 </header>
                 <div className='mainContainer'>
                     {currentOrder ? (
                         <div>
-                            <div className='d-flex justify-content-center row'>
+                            <form className='d-flex justify-content-center row'>
                                 <div className=''>
                                     <div className='d-flex'>
                                         <div className="billing-div">
-                                            <h5 className="mb-4">Enter Billing Information</h5>
+                                            <h5 className="mb-4">Shipping Information</h5>
                                             <div className="signup-form-row">
                                                 <div className="form-group signup-form-group">
-                                                    <label htmlFor="username">First Name</label>
+                                                    <label htmlFor="username">Receiver Name</label>
                                                     <input
                                                         type="text"
                                                         size="25"
@@ -259,32 +222,6 @@ export default class Payment extends Component {
                                                         name="username"
                                                         value={currentUser.username}
                                                         onChange={this.onChangeUsername}
-                                                        required
-                                                    />
-                                                </div>
-
-                                                <div className="form-group signup-form-group">
-                                                    <label htmlFor="lastname">Last Name</label>
-                                                    <input
-                                                        type="text"
-                                                        size="25"
-                                                        className="form-control"
-                                                        name="lastname"
-                                                        onChange={this.onChangeLastname}
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div className='signup-form-row'>
-                                                <div className="form-group signup-form-group">
-                                                    <label htmlFor="email">Email</label>
-                                                    <input
-                                                        type="text"
-                                                        size="25"
-                                                        className="form-control"
-                                                        name="email"
-                                                        value={currentUser.email}
-                                                        onChange={this.onChangeEmail}
                                                         required
                                                     />
                                                 </div>
@@ -319,7 +256,7 @@ export default class Payment extends Component {
 
                                             <div className='signup-form-row'>
                                                 <div className="form-group signup-form-group">
-                                                    <label htmlFor="poscode">Poscode</label>
+                                                    <label htmlFor="poscode">Postcode</label>
                                                     <input
                                                         type="text"
                                                         className="form-control"
@@ -382,6 +319,7 @@ export default class Payment extends Component {
                                                     name="bankname"
                                                     onChange={this.onChangeBank}
                                                     required >
+                                                    <option value="" disabled selected hidden>Choose a Bank</option>
                                                     <option value="Affin Bank">Affin Bank</option>
                                                     <option value="AmBank">AmBank</option>
                                                     <option value="Bank Rakyat">Bank Rakyat</option>
@@ -419,12 +357,12 @@ export default class Payment extends Component {
                                             </div>
 
                                             <div className=''>
-                                                <a className="btn btn-primary paybtn" href="/status" onClick={this.saveOrder}>Pay</a>
+                                                <a className="btn btn-primary paybtn" onClick={this.saveOrder}>Pay</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     ) : (
                         <div>No order</div>

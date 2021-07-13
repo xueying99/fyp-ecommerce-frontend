@@ -1,5 +1,6 @@
 import http from "../http-common";
 import authHeader from './auth-header';
+import fetch from 'node-fetch';
 
 class CartDataService {
   getAll() {
@@ -24,6 +25,11 @@ class CartDataService {
   
   checkout(data) {
     return http.post("/carts", data, { headers: authHeader() });
+  //   return fetch("http://localhost:8080/carts", {
+  //     method: 'post',
+  //     body: JSON.stringify(data),
+  //     headers: authHeader()
+  //   });
   }
 }
 

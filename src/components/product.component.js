@@ -185,7 +185,7 @@ export default class Product extends Component {
                     <div className='edit-form'>
                         <h4>Product</h4>
                         <div className=' mt-4 mb-4 text-center'>
-                            <img src={'http://localhost:8080/api/files/' + currentProduct.title + '-1.jpg'}></img>
+                            <img src={'http://localhost:8080/api/files/' + currentProduct.title + '.jpg'}></img>
                         </div>
                         <div className='single-div'>
                             <form>
@@ -228,15 +228,18 @@ export default class Product extends Component {
 
                                     <div className='form-group'>
                                         <label htmlfor='size'>Size</label>
-                                        <input size='15'
-                                            type='text'
-                                            className='form-control'
-                                            id='size'
-                                            required
+                                        <select
+                                            list="size"
+                                            className="form-control"
+                                            name="size"
                                             value={currentProduct.size}
                                             onChange={this.onChangeSize}
-                                            name='size'
-                                        />
+                                            required >
+                                            <option value="S">S</option>
+                                            <option value="M">M</option>
+                                            <option value="L">L</option>
+                                            <option value="XL">XL</option>
+                                        </select>
                                     </div>
                                     <div className='form-group'>
                                         <label htmlfor='price'>Price</label>

@@ -18,7 +18,7 @@ export default class ProductManagement extends Component {
         this.setActiveProduct = this.setActiveProduct.bind(this);
         this.removeAllProducts = this.removeAllProducts.bind(this);
         this.saveProduct = this.saveProduct.bind(this);
-        this.newProduct = this.newProduct.bind(this);
+        this.clearProduct = this.clearProduct.bind(this);
 
         this.state = {
             products: [],
@@ -161,7 +161,7 @@ export default class ProductManagement extends Component {
             });
     }
 
-    newProduct() {
+    clearProduct() {
         this.setState({
             id: null,
             title: "",
@@ -225,7 +225,7 @@ export default class ProductManagement extends Component {
                                 <div className='event-mgt-detail'>
                                     <h4>Product</h4>
                                     <div className='product-mgt-detail-img'>
-                                        <img src={'http://localhost:8080/api/files/' + currentProduct.title + '-1.jpg'} className="mgt-img"></img>
+                                        <img src={'http://localhost:8080/api/files/' + currentProduct.title + '.jpg'} className="mgt-img"></img>
                                     </div>
                                     <div className='product-mgt-detail-info '>
                                         <label>
@@ -245,25 +245,25 @@ export default class ProductManagement extends Component {
                                         </label> {" "}
                                         {currentProduct.description}
                                     </div>
-                                    <div className='product-mgt-detail-info '>
+                                    <div className='product-mgt-detail-info'>
                                         <label>
                                             <strong>Size:</strong>
                                         </label> {" "}
                                         {currentProduct.size}
                                     </div>
-                                    <div className='product-mgt-detail-info '>
+                                    <div className='product-mgt-detail-info'>
                                         <label>
                                             <strong>Price:</strong>
                                         </label> {" "}
                                         {currentProduct.price}
                                     </div>
-                                    <div className='product-mgt-detail-info '>
+                                    <div className='product-mgt-detail-info'>
                                         <label>
                                             <strong>Quantity:</strong>
                                         </label> {" "}
                                         {currentProduct.quantity}
                                     </div>
-                                    <div className='product-mgt-detail-info '>
+                                    <div className='product-mgt-detail-info'>
                                         <label>
                                             <strong>Status:</strong>
                                         </label> {" "}
@@ -426,6 +426,7 @@ export default class ProductManagement extends Component {
                                         min='10'
                                     />
                                 </div>
+                                <button className='btn btn-danger float-left' onClick={this.clearProduct}>Clear All</button>
                                 <button onClick={this.saveProduct} href='#' className='btn btn-success float-right'>Submit</button>
                             </div>
                             <div>{this.state.message}</div>

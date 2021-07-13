@@ -55,10 +55,10 @@
     text-align: center;
 }
 
-.nav {
+/* .nav {
     padding-left: 3px;
     padding-right: 3px;
-}
+} */
 .nav-home-btn {
     margin-top: 7px;
     margin-right: -5px;
@@ -88,7 +88,7 @@
     color: #fff;
 }
 .nav-link {
-    color: #fff !important;
+    color: #fff ;
 }
 .navbar .navbar-nav:not(:last-child) {
     border-right: 2px solid #fff;

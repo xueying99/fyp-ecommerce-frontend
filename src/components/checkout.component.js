@@ -115,9 +115,6 @@ export default class Checkout extends Component {
                 if (this.state.orders[i].id === this.state.orderItem[j].orderId) {
                     id = this.state.orders[i].id
                 }
-                console.log(id)
-                console.log(this.state.orders[i].id)
-                console.log(this.state.orderItem[j].orderId)
             }
         }
 
@@ -135,6 +132,7 @@ export default class Checkout extends Component {
             <div className="">
                 <header className="jumbotron">
                     <h3>CHECKOUT FORM</h3>
+                    <p>(PLEASE DON'T LEAVE THIS PAGE BEFORE SUBMIT)</p>
                 </header>
                 <div className='mainContainer'>
                     <div className='checkout-detail-div'>
@@ -168,7 +166,7 @@ export default class Checkout extends Component {
                                                             <td>
                                                                 <div className='checkout-td-item'>
                                                                     <div className="checkout-item-div">
-                                                                        <img src={'http://localhost:8080/api/files/' + (p.title) + '-1.jpg'}></img>
+                                                                        <img src={'http://localhost:8080/api/files/' + (p.title) + '.jpg'}></img>
                                                                     </div>
                                                                     <div>
                                                                         {p.productname}

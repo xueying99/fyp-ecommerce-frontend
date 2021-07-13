@@ -345,7 +345,7 @@ export default class Register extends Component {
 
                   <div className='signup-form-row'>
                     <div className="form-group signup-form-group">
-                      <label htmlFor="poscode">Poscode</label>
+                      <label htmlFor="poscode">Postcode</label>
                       <Input
                         type="text"
                         className="form-control"
@@ -365,6 +365,7 @@ export default class Register extends Component {
                         value={this.state.state}
                         onChange={this.onChangeState}
                         validations={[required]} >
+                        <option value="" disabled selected hidden>Choose a State</option>
                         <option value="Johor">Johor</option>
                         <option value="Kedah">Kedah</option>
                         <option value="Kelantan">Kelantan</option>

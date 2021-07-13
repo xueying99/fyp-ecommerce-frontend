@@ -201,7 +201,8 @@ strong, b{
     color: #7202bb
 }
 .gradient-bg{
-    background-image: linear-gradient(to left, #3264f5, #4a54e8, #5b42db, #682ccb, #7202bb) !important;
+    background-image: linear-gradient(to left, #87a1ec, #8d91db, #bdb5e7, #ad87e9, #c585f0) !important;
+    /* background-image: linear-gradient(to left, #3264f5, #4a54e8, #5b42db, #682ccb, #7202bb) !important; */
 }
 
 .white-bg{
@@ -312,28 +313,28 @@ a:hover{
     color: #fff;
 }
 .solid-white-btn, .outline-white-btn{
-    padding: 12px 30px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
+    padding: 12px 30px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 700 !important;
 }
 .solid-white-btn{
-    background: #ffffff;
-    border-color: #ffffff;
-    color: #7202bb;
-    border-radius: 30px;
+    background: #ffffff !important;
+    border-color: #ffffff !important;
+    color: #7202bb !important;
+    border-radius: 30px !important;
 }
 .solid-white-btn:hover{
-    background: transparent;
-    color: #ffffff;
+    background: transparent !important;
+    color: #ffffff !important;
 }
 .outline-white-btn{
-    border-radius: 30px;
-    color: #ffffff;
-    border-color: #ffffff;
+    border-radius: 30px !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
 }
 .outline-white-btn:hover{
-    background: #ffffff;
-    color: #7202bb;
+    background: #ffffff !important;
+    color: #7202bb !important;
 }
 
 /*icon size*/
@@ -437,7 +438,8 @@ select.form-control.has-value{
 }
 
 .bg-transparent.affix {
-    background-image: linear-gradient(to left, #3264f5, #4a54e8, #5b42db, #682ccb, #7202bb) !important;
+    background-image: linear-gradient(to left, #87a1ec, #8d91db, #bdb5e7, #ad87e9, #c585f0) !important;
+    /* background-image: linear-gradient(to left, #3264f5, #4a54e8, #5b42db, #682ccb, #7202bb) !important; */
 }
 
 .navbar-toggler{
@@ -617,7 +619,8 @@ select.form-control.has-value{
 
 @media (min-width: 320px) and (max-width: 992px) {
     .navbar {
-        background-image: linear-gradient(to left, #3264f5, #305be4, #3b4fe2, #4740de, #7202bb) !important;
+        background-image: linear-gradient(to left, #87a1ec, #8d91db, #bdb5e7, #ad87e9, #c585f0) !important;
+        /* background-image: linear-gradient(to left, #3264f5, #305be4, #3b4fe2, #4740de, #7202bb) !important; */
         padding: .85rem 1rem !important;
     }
     .menu li{
@@ -838,7 +841,8 @@ select.form-control.has-value{
 .gradient-overlay:before{
     position: absolute;
     content: '';
-    background-image: linear-gradient(to left, rgba(50, 100, 245, 0.90), rgba(74, 84, 232, 0.88), rgba(91, 66, 219, 0.85), rgba(104, 44, 203, 0.88), rgba(114, 2, 187, 0.90));
+    background-image: linear-gradient(to left, #87a1ec, #8d91db, #bdb5e7, #ad87e9, #c585f0) !important;
+    /* background-image: linear-gradient(to left, rgba(50, 100, 245, 0.90), rgba(74, 84, 232, 0.88), rgba(91, 66, 219, 0.85), rgba(104, 44, 203, 0.88), rgba(114, 2, 187, 0.90)); */
     width: 100%;
     height: 100%;
     top: 0;

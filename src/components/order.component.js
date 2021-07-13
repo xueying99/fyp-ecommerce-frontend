@@ -8,6 +8,9 @@ export default class Product extends Component {
         super(props);
         this.getOrder = this.getOrder.bind(this);
         this.updateStatus = this.updateStatus.bind(this);
+        this.updateOrder = this.updateOrder.bind(this);
+        this.onChangeCourier = this.onChangeCourier.bind(this);
+        this.onChangeTracking = this.onChangeTracking.bind(this);
 
         this.state = {
             orderItem: [],
@@ -23,8 +26,10 @@ export default class Product extends Component {
                 shippingname: '',
                 shippingaddress: '',
                 shippingcontact: '',
-                accepted: true,
-                completed: false
+                accepted: false,
+                courier: '',
+                tracking: '',
+                completed: false,
             },
 
             message: ""
@@ -33,6 +38,30 @@ export default class Product extends Component {
 
     componentDidMount() {
         this.getOrder(this.props.match.params.id);
+    }
+    onChangeCourier(e) {
+        const courier = e.target.value;
+
+        this.setState(function (prevState) {
+            return {
+                currentOrder: {
+                    ...prevState.currentOrder,
+                    courier: courier
+                }
+            };
+        });
+    }
+    onChangeTracking(e) {
+        const tracking = e.target.value;
+
+        this.setState(function (prevState) {
+            return {
+                currentOrder: {
+                    ...prevState.currentOrder,
+                    tracking: tracking
+                }
+            };
+        });
     }
     getOrder(id) {
         OrderDataService.get(id)
@@ -59,6 +88,8 @@ export default class Product extends Component {
             bankname: this.state.currentOrder.bankname,
             bankacc: this.state.currentOrder.bankacc,
             accepted: this.state.currentOrder.accepted,
+            courier: this.state.currentOrder.courier,
+            tracking: this.state.currentOrder.tracking,
             completed: status
         };
 
@@ -79,6 +110,22 @@ export default class Product extends Component {
             });
     }
 
+    updateOrder() {
+        OrderDataService.update(
+            this.state.currentOrder.id,
+            this.state.currentOrder
+        )
+            .then(response => {
+                console.log(response.data);
+                this.setState({
+                    message: "The order was updated successsfully!"
+                });
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
+
     render() {
         const { currentOrder } = this.state;
 
@@ -89,69 +136,109 @@ export default class Product extends Component {
                         <h4>Order ID {currentOrder.id}</h4>
                         <div className='single-div'>
                             <div className='order-table-div'>
-                            <h6>Billing Information</h6>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td>Date: </td>
-                                        <td>{currentOrder.date}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total Paid:</td>
-                                        <td>RM {currentOrder.payment}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Bank Name:</td>
-                                        <td>{currentOrder.bankname}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Bank Account: </td>
-                                        <td>{currentOrder.bankacc}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                <h6>Billing Information</h6>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>Date: </td>
+                                            <td>{currentOrder.date}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Paid:</td>
+                                            <td>RM {currentOrder.payment} ( {currentOrder.accepted ? "Accepted" : "Pending"} )</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bank Name:</td>
+                                            <td>{currentOrder.bankname}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bank Account: </td>
+                                            <td>{currentOrder.bankacc}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
                             </div>
                             <div className='order-table-div'>
-                            <h6>Shipping Information</h6>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td>Receiver Name: </td>
-                                        <td>{currentOrder.shippingname}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Receiver Contact:</td>
-                                        <td>{currentOrder.shippingcontact}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Receiver Address</td>
-                                        <td>{currentOrder.shippingaddress}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Bank Account: </td>
-                                        <td>{currentOrder.bankacc}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                <h6>Shipping Information</h6>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>Receiver Name: </td>
+                                            <td>{currentOrder.shippingname}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Receiver Contact:</td>
+                                            <td>{currentOrder.shippingcontact}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Receiver Address</td>
+                                            <td>{currentOrder.shippingaddress}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Courier Service</td>
+                                            <td>
+                                                <select
+                                                    list="courier"
+                                                    className="form-control"
+                                                    name="courier"
+                                                    value={currentOrder.courier}
+                                                    onChange={this.onChangeCourier}
+                                                    required >
+                                                    <option value="" disabled selected hidden>Choose a Courier service</option>
+                                                    <option value="Pos Laju">Poslaju</option>
+                                                    <option value="GDex">GDex</option>
+                                                    <option value="J&T Express">J&T Express</option>
+                                                    <option value="Skynet Express">Skynet Express</option>
+                                                    <option value="DHL Express">DHL Express</option>
+                                                    <option value="ABX Express">ABX Express</option>
+                                                    <option value="Pgeon">Pgeon</option>
+                                                    <option value="Easy Parcel">Easy Parcel</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tracking Number</td>
+                                            <td><input size='30'
+                                                type='text'
+                                                className='form-control'
+                                                id='tracking'
+                                                required
+                                                value={currentOrder.tracking}
+                                                onChange={this.onChangeTracking}
+                                                name='tracking'
+                                            /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div className='pl-4 pr-2 row justify-content-between'>
-                                <div className=''>
-                                    <label>
-                                        <strong>Status: </strong>
-                                    </label>{" "}
-                                    {currentOrder.completed ? "Completed" : "In Progress"}
+                            <div className='col'>
+                                <div className='row pl-4 pr-2 justify-content-between'>
+                                    <div className=''>
+                                        <label>
+                                            <strong>Status: </strong>
+                                        </label>{" "}
+                                        {currentOrder.completed ? "Completed" : "In Progress"}
+                                    </div>
+
+                                    {currentOrder.completed ? (
+                                        <button className='btn btn-danger mr-4' onClick={() => this.updateStatus(false)}>
+                                            In Progress
+                                        </button>
+                                    ) : (
+                                        <button className='btn btn-warning mr-4' onClick={() => this.updateStatus(true)}>
+                                            Completed
+                                        </button>
+                                    )}
                                 </div>
-                                
-                                {currentOrder.completed ? (
-                                    <button className='btn btn-danger mr-4' onClick={() => this.updateStatus(false)}>
-                                        In Progress
+                                <div className='row pl-4 pr-2 pt-3 justify-content-between'>
+                                    <div className=''>
+                                        <p>{this.state.message}</p>
+                                    </div>
+                                    <button type='submit' className='btn btn-success float-right mr-4' onClick={this.updateOrder}>
+                                        Update
                                     </button>
-                                ) : (
-                                    <button className='btn btn-success mr-4' onClick={() => this.updateStatus(true)}>
-                                        Completed
-                                    </button>
-                                )}
+                                </div>
                             </div>
                         </div>
                     </div>

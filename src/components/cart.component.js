@@ -73,6 +73,7 @@ export default class Cart extends Component {
                     totalitem: 0
                 })
                 console.log(response.data);
+                alert("All items DELETED!");
                 this.refreshList();
             })
             .catch(e => {
@@ -81,15 +82,13 @@ export default class Cart extends Component {
     }
 
     checkout() {
+        console.log("checkout")
         CartDataService.checkout({
             payment: this.state.payment
-        })
-            .then(response => {
-                this.setState({
-                    cart: response.data
-                });
-                console.log(response.data);
+        }).then(response => {
                 alert("Order submitted!");
+                console.log(response)
+                // this.props.history.push('/cart/checkout')
             })
             .catch(e => {
                 console.log(e);
@@ -103,8 +102,7 @@ export default class Cart extends Component {
         for (let i = 0; i < this.state.cart.length; i++) {
             totalprice = totalprice + this.state.cart[i].productPrice
         }
-        this.state.payment = totalprice
-        console.log(this.state.payment)
+        this.state.payment = totalprice + 10
 
         let totalitem = 0
         for (let i = 0; i < this.state.cart.length; i++) {
@@ -133,7 +131,7 @@ export default class Cart extends Component {
                                                 <div className="cart-div" key={c.id}>
                                                     <div className="cart-item-div" key={c.id}>
                                                         <div className="item-img">
-                                                            <img src={'http://localhost:8080/api/files/' + (p.title) + '-1.jpg'}></img>
+                                                            <img src={'http://localhost:8080/api/files/' + (p.title) + '.jpg'}></img>
                                                         </div>
                                                         <div className="cart-item-info">
                                                             <div className='item-info'>
@@ -141,7 +139,7 @@ export default class Cart extends Component {
                                                             </div>
                                                             <div className='item-info'>
                                                                 RM: {c.productPrice.toFixed(2)}<br></br>
-                                                                rm: {p.price.toFixed(2)} (single price)
+                                                                rm: {p.price.toFixed(2)} (Single price)
                                                             </div>
                                                             <div className='quantity-group'>
                                                                 <button className='btn btn-danger qty-btn ti-minus' disabled></button>
@@ -170,7 +168,8 @@ export default class Cart extends Component {
                                     <div>RM {totalprice.toFixed(2)}</div>
                                 </div>
                                 <div className='cart-btn-div'>
-                                    <a className="btn btn-primary" href='/cart/checkout' onClick={this.checkout}>Checkout</a>
+                                    <a className="btn btn-primary" href='/cart/checkout' onClick={this.checkout}>Checkout</a> 
+                                    {/* href='/cart/checkout' */}
                                     <div className="btn btn-danger" onClick={this.removeAllCartItems}>Clear All</div>
                                 </div>
                             </div>

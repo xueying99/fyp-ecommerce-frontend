@@ -1,12 +1,19 @@
 .jumbotron {
-    background-image: linear-gradient(to left, #3264f5, #4a54e8, #5b42db, #682ccb, #7202bb) !important;
+    /* background-color: #FFFACD !important; */
+    background-image: linear-gradient(to left, #87a1ec, #8d91db, #bdb5e7, #ad87e9, #c585f0) !important;
     text-align: center;
     color: #fff;
     border-radius: 0 !important;
+    margin-bottom: 2px !important;
 }
 .jumbotron h3 {
     color: #fff;
     text-align: center;
+}
+.jumbotron p {
+    color: red;
+    text-align: center;
+    font-weight: bold;
 }
 
 /* Sign In Page */
@@ -440,7 +447,7 @@ th, td {
     text-decoration: none;
 }
 .list-group li p {
-    margin: auto;
+    margin-left: 15px;
 }
 .list-group li:hover {
     text-decoration: none;
@@ -459,9 +466,12 @@ th, td {
     color:#000 !important;
 }
 .carousel-caption {
-    color:#000 !important;
+    color:rgb(233, 230, 49) !important;
     font-weight: bold !important;
     top: 300px;
+}
+.carousel-caption h1{
+    color:rgb(233, 230, 49) !important;
 }
 
 /* Single Product Page */
@@ -545,7 +555,7 @@ li button:hover{
 li a:hover, .dropdown:hover .dropbtn {
     color: #000;
     text-decoration: none;
-    background-color: rgb(130, 70, 226);
+    background-color: transparent;
 }  
 li.dropdown {
     display: inline-block;
@@ -586,7 +596,7 @@ li.dropdown {
 }  
 .modal-dialog .modal-content {
     margin: auto;
-    background-color: #9f96ee;
+    background-color: #fff;
     position: relative;
     padding: 20px;
     outline: 0;
@@ -606,7 +616,7 @@ li.dropdown {
     float: right;
     font-size: 35px;
     font-weight: bold;
-    color: #fff;
+    color: #000;
     margin-top: -15px;
 }  
 .closebtn:hover,
@@ -638,6 +648,6 @@ li.dropdown {
     margin: auto;
 }
 .modal-order-item-table th, td {
-    border: 1px solid lightgrey;
+    border: 1px solid #000;
     padding: 8px;
 }

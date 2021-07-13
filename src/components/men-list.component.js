@@ -42,12 +42,12 @@ class ReactImageGallery extends Component {
         thumbnailClass: 'featured-thumb',
         description: 'Men Shirts 01',
       },
-      {
-        original: `${PREFIX_URL}01-1.jpg`,
-        thumbnail: `${PREFIX_URL}01-1.jpg`,
-        originalClass: 'featured-slide',
-        thumbnailClass: 'featured-thumb',
-      },
+      // {
+      //   original: `${PREFIX_URL}01-1.jpg`,
+      //   thumbnail: `${PREFIX_URL}01-1.jpg`,
+      //   originalClass: 'featured-slide',
+      //   thumbnailClass: 'featured-thumb',
+      // },
       {
         original: `${PREFIX_URL}02.jpg`,
         thumbnail: `${PREFIX_URL}02.jpg`,
@@ -55,24 +55,24 @@ class ReactImageGallery extends Component {
         thumbnailClass: 'featured-thumb',
         description: 'Men Shirts 02'
       },
-      {
-        original: `${PREFIX_URL}02-1.jpg`,
-        thumbnail: `${PREFIX_URL}02-1.jpg`,
-        originalClass: 'featured-slide',
-        thumbnailClass: 'featured-thumb',
-      },
-      {
-        original: `${PREFIX_URL}03.jpg`,
-        thumbnail: `${PREFIX_URL}03.jpg`,
-        originalClass: 'featured-slide',
-        thumbnailClass: 'featured-thumb',
-      },
-      {
-        original: `${PREFIX_URL}03-1.jpg`,
-        thumbnail: `${PREFIX_URL}03-1.jpg`,
-        originalClass: 'featured-slide',
-        thumbnailClass: 'featured-thumb',
-      },
+      // {
+      //   original: `${PREFIX_URL}02-1.jpg`,
+      //   thumbnail: `${PREFIX_URL}02-1.jpg`,
+      //   originalClass: 'featured-slide',
+      //   thumbnailClass: 'featured-thumb',
+      // },
+      // {
+      //   original: `${PREFIX_URL}03.jpg`,
+      //   thumbnail: `${PREFIX_URL}03.jpg`,
+      //   originalClass: 'featured-slide',
+      //   thumbnailClass: 'featured-thumb',
+      // },
+      // {
+      //   original: `${PREFIX_URL}03-1.jpg`,
+      //   thumbnail: `${PREFIX_URL}03-1.jpg`,
+      //   originalClass: 'featured-slide',
+      //   thumbnailClass: 'featured-thumb',
+      // },
     ].concat(this._getStaticImages());
   }
 
@@ -273,6 +273,63 @@ export default class Men extends Component {
                             </label> {" "}
                             <p>{currentProduct.description}</p>
                           </div>
+                          <div>
+                            <table>
+                              <thead>
+                                <tr>
+                                  <td>Size</td>
+                                  <td>Shoulder</td>
+                                  <td>Bust</td>
+                                  <td>Length</td>
+                                  <td>Sleeve</td>
+                                  <td>Cuff</td>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>S</td>
+                                  <td>44.5</td>
+                                  <td>103</td>
+                                  <td>72</td>
+                                  <td>22.4</td>
+                                  <td>33.8</td>
+                                </tr>
+                                <tr>
+                                  <td>M</td>
+                                  <td>46</td>
+                                  <td>107</td>
+                                  <td>74</td>
+                                  <td>23</td>
+                                  <td>35</td>
+                                </tr>
+                                <tr>
+                                  <td>L</td>
+                                  <td>47.8</td>
+                                  <td>112</td>
+                                  <td>76</td>
+                                  <td>23.6</td>
+                                  <td>36.2</td>
+                                </tr>
+                                <tr>
+                                  <td>XL</td>
+                                  <td>49.6</td>
+                                  <td>117</td>
+                                  <td>78</td>
+                                  <td>24.2</td>
+                                  <td>37.4</td>
+                                </tr>
+                                <tr>
+                                  <td>XXL</td>
+                                  <td>51.4</td>
+                                  <td>122</td>
+                                  <td>80</td>
+                                  <td>24.8</td>
+                                  <td>38.6</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <p>This data was obtained from manually measuring the product, it may be off by 1-2CM.</p>
+                          </div>
                           <div className='product-info-div'>
                             <label>
                               <strong>Size: </strong>
@@ -291,7 +348,8 @@ export default class Men extends Component {
                             </label> {" "}
                             <input type='number'
                               value={this.state.quantity}
-                              onChange={this.onChangeQuantity}>
+                              onChange={this.onChangeQuantity}
+                              min='1' max='20' >
                             </input>
                           </div>
                           <div className="cartbtn" onClick={this.addToCart}>Add to Cart</div>

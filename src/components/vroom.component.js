@@ -90,6 +90,10 @@ Review.defaultProps = {
 
 class Vroom extends Component {
 
+    componentDidMount(){
+        alert("Welcome to Virtual Fitting Room service! Our Chatbot Assistant (bottom-right corner) is waiting to serve you 😍🙂")
+    }
+
     render() {
         // all available config props
         const config = {
