@@ -158,14 +158,6 @@ export default class EventManagement extends Component {
     render() {
         const { events, currentEvent, currentIndex } = this.state;
 
-        // function validateForm() {
-        //     let x = document.forms["newProduct"]["title"]["eventname"]["description"]["startdate"]["enddate"].value;
-        //     if (x == "") {
-        //       alert("This field cannot be empty.");
-        //       return false;
-        //     }
-        //   }
-
         return (
             <div className=''>
                 <header className="jumbotron">
@@ -175,7 +167,6 @@ export default class EventManagement extends Component {
                     <div className="submit-form mt-5 mb-5 mr-3 ml-3">
                         {this.state.submitted ? (
                             <div>
-                                {/* <h4>You submitted successfully!</h4> */}
                                 <a className='btn btn-success' href='#event01'>Add New Event / Promotion</a>
                             </div>
                         ) : (

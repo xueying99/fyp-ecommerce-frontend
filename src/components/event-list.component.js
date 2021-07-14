@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import '../css/layouts.css';
 import '../css/component.css';
 

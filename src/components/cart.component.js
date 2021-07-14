@@ -33,7 +33,6 @@ export default class Cart extends Component {
     retrieveProducts() {
         ProductDataService.getAll()
             .then(response => {
-                // console.log(response)               
                 this.setState({
                     products: response.data
                 });
@@ -86,10 +85,10 @@ export default class Cart extends Component {
         CartDataService.checkout({
             payment: this.state.payment
         }).then(response => {
-                alert("Order submitted!");
-                console.log(response)
-                // this.props.history.push('/cart/checkout')
-            })
+            alert("Order submitted!");
+            console.log(response)
+            // this.props.history.push('/cart/checkout')
+        })
             .catch(e => {
                 console.log(e);
             });
@@ -168,8 +167,7 @@ export default class Cart extends Component {
                                     <div>RM {totalprice.toFixed(2)}</div>
                                 </div>
                                 <div className='cart-btn-div'>
-                                    <a className="btn btn-primary" href='/cart/checkout' onClick={this.checkout}>Checkout</a> 
-                                    {/* href='/cart/checkout' */}
+                                    <a className="btn btn-primary" href='/cart/checkout' onClick={this.checkout}>Checkout</a>
                                     <div className="btn btn-danger" onClick={this.removeAllCartItems}>Clear All</div>
                                 </div>
                             </div>

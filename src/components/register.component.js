@@ -180,7 +180,6 @@ export default class Register extends Component {
             message: response.data.message,
             successful: true,
           });
-          // this.props.history.push('/login')
         },
         error => {
           const resMessage =
@@ -219,13 +218,8 @@ export default class Register extends Component {
 
         <div className="col-12 col-md-11 col-lg-6 col-xl-6 px-lg-6 mt-3 mb-3">
           <div className="login-signup-wrap px-4 px-lg-2">
-            {/* <!-- Heading --> */}
             <h1 className="text-center mb-1">Signup</h1>
-
-            {/* <!-- Subheading --> */}
             <p className="text-muted text-center mb-5">Free access to our dashboard.</p>
-
-            {/* <!-- Form --> */}
             <Form onSubmit={this.handleRegister}
               ref={c => { this.form = c; }}
             >
@@ -324,7 +318,7 @@ export default class Register extends Component {
                         value={this.state.dob}
                         onChange={this.onChangeDOB}
                         validations={[required, dob]}
-                        min="1900-01-01"  max="2021-07-01"
+                        min="1900-01-01" max="2021-07-01"
                       />
                     </div>
                   </div>
@@ -382,13 +376,9 @@ export default class Register extends Component {
                       </select>
                     </div>
                   </div>
-
-                  {/* <!-- Submit --> */}
                   <div className="form-group signupbtn">
                     <button className="btn btn-block solid-btn border-radius mt-4 mb-3">SIGN UP</button>
                   </div>
-
-                  {/* <!-- Link --> */}
                   <div className="text-center">
                     <small className="text-muted text-center">
                       Already have an account? <a href="/login">Log in</a>.

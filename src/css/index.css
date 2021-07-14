@@ -651,3 +651,9 @@ li.dropdown {
     border: 1px solid #000;
     padding: 8px;
 }
+.modal-product {
+    width: 70% !important;
+}
+.size-guide-table {
+    margin: 10px auto 15px auto;
+}

@@ -17,7 +17,7 @@ export default class MainPage extends Component {
                         <div className="row align-items-center justify-content-around">
                             <div className="">
                                 <div className="hero-content-left position-relative z-index text-center text-white">
-                                    <h1 className="text-white">Welcome to FORTRY Virtual Fitting Room</h1>
+                                    <h1 className="text-white">Welcome to FORTRY E-COMMERCE SYSTEM</h1>
                                     <p className="lead">
                                         Our design projects are fresh and simple and will benefit your business greatly. Learn more
                                         about our work! Here is Final Year Project by <span className='font-italic'>KHOOXUEYING</span>
@@ -50,7 +50,7 @@ export default class MainPage extends Component {
                         </div>
                         <div className='category'>
                             <img src='./images/fitting-room.jpg' alt='Virtual Fitting Room icon' />
-                            <Link to="/v-fitting-room"><p>VIRTUAL FITTING ROOM SERVICE</p></Link>
+                            <Link to="/v-fitting-room"><p>SIZE GUIDANCE</p></Link>
                         </div>
                     </div>
                 </div>

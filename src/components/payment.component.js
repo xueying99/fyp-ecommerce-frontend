@@ -319,7 +319,7 @@ export default class Payment extends Component {
                                                     name="bankname"
                                                     onChange={this.onChangeBank}
                                                     required >
-                                                    <option value="" disabled selected hidden>Choose a Bank</option>
+                                                    <option value="Bank" disabled selected hidden>Choose a Bank</option>
                                                     <option value="Affin Bank">Affin Bank</option>
                                                     <option value="AmBank">AmBank</option>
                                                     <option value="Bank Rakyat">Bank Rakyat</option>

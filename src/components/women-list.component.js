@@ -1,144 +1,13 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import ImageGallery from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css";
-import '../css/images-gallery.css';
 import '../css/layouts.css';
 import '../css/component.css';
 import Grid from "@material-ui/core/Grid";
+import { GlassMagnifier } from "react-image-magnifiers";
 
-import ImageMagnify from "../layouts/image-magnify";
 import ProductDataService from "../services/product.service";
 import CartDataService from "../services/cart.service";
 import UploadService from "../services/file-upload.service";
 
-const PREFIX_URL = "http://localhost:8080/api/files/women";
-
-class ReactImageGallery extends Component {
-  myRenderItem() {
-    return <ImageMagnify {...this.props} />;
-  }
-
-  constructor() {
-    super();
-
-    this.state = {
-      showIndex: false,
-      showBullets: true,
-      infinite: true,
-      showThumbnails: true,
-      showFullscreenButton: true,
-      showGalleryFullscreenButton: true,
-      thumbnailPosition: 'bottom',
-      showVideo: {},
-      imageInfos: [],
-    };
-
-    this.images = [
-      {
-        thumbnail: `${PREFIX_URL}01.jpg`,
-        original: `${PREFIX_URL}01.jpg`,
-        originalClass: 'featured-slide',
-        thumbnailClass: 'featured-thumb',
-        description: 'Women Shirts 01',
-        renderItem: this.myRenderItem.bind(this)
-      },
-      // {
-      //   original: `${PREFIX_URL}01-1.jpg`,
-      //   thumbnail: `${PREFIX_URL}01-1.jpg`,
-      //   originalClass: 'featured-slide',
-      //   thumbnailClass: 'featured-thumb',
-      // },
-      {
-        original: `${PREFIX_URL}02.jpg`,
-        thumbnail: `${PREFIX_URL}02.jpg`,
-        originalClass: 'featured-slide',
-        thumbnailClass: 'featured-thumb',
-        description: 'Women Shirts 02'
-      },
-      // {
-      //   original: `${PREFIX_URL}02-1.jpg`,
-      //   thumbnail: `${PREFIX_URL}02-1.jpg`,
-      //   originalClass: 'featured-slide',
-      //   thumbnailClass: 'featured-thumb',
-      // },
-      {
-        original: `${PREFIX_URL}03.jpg`,
-        thumbnail: `${PREFIX_URL}03.jpg`,
-        originalClass: 'featured-slide',
-        thumbnailClass: 'featured-thumb',
-        description: 'Women Shirts 03'
-      },
-      // {
-      //   original: `${PREFIX_URL}03-1.jpg`,
-      //   thumbnail: `${PREFIX_URL}03-1.jpg`,
-      //   originalClass: 'featured-slide',
-      //   thumbnailClass: 'featured-thumb',
-      // },
-    ].concat(this._getStaticImages());
-  }
-
-  _onImageClick(event) {
-    console.debug('clicked on image', event.target, 'at index', this._imageGallery.getCurrentIndex());
-  }
-
-  _onImageLoad(event) {
-    console.debug('loaded image', event.target.src);
-  }
-
-  _onScreenChange(fullScreenElement) {
-    console.debug('isFullScreen?', !!fullScreenElement);
-  }
-
-  _getStaticImages() {
-    let images = [];
-    for (let i = 2; i < images.length; i++) {
-      images.push({
-        original: `${PREFIX_URL}${i}.jpg`,
-        thumbnail: `${PREFIX_URL}${i}.jpg`,
-      });
-    }
-    return images;
-  }
-
-  _resetVideo() {
-    this.setState({ showVideo: {} });
-
-    if (this.state.showFullscreenButton) {
-      this.setState({ showGalleryFullscreenButton: true });
-    }
-  }
-
-  componentDidMount() {
-    UploadService.getFiles().then((response) => {
-      this.setState({
-        imageInfos: response.data,
-      });
-    });
-  }
-
-  render() {
-
-    return (
-
-      <section className='app-gallery'>
-        <ImageGallery
-          ref={i => this._imageGallery = i}
-          items={this.images}
-          lazyLoad={false}
-          onClick={this._onImageClick.bind(this)}
-          onImageLoad={this._onImageLoad}
-          onScreenChange={this._onScreenChange.bind(this)}
-          infinite={this.state.infinite}
-          showBullets={this.state.showBullets}
-          showFullscreenButton={this.state.showFullscreenButton && this.state.showGalleryFullscreenButton}
-          showThumbnails={this.state.showThumbnails}
-          additionalClass="app-image-gallery"
-        />
-      </section>
-    );
-  }
-}
 
 export default class Women extends Component {
   constructor(props) {
@@ -231,11 +100,11 @@ export default class Women extends Component {
         </header>
         <div className='mainContainer'>
           <div className='component-div'>
-            <ul className='product-view flex-wrap'>
+            <div className='product-view flex-wrap'>
               {products &&
-                products.filter(i=> i.category === "women").map((product, index) => (
-                  <li className={'product-div' + (index === currentIndex ? ' active' : '')}
-                    onClick={() => this.setActiveProduct(product, index)}
+                products.filter(i => i.category === "women").map((product, index) => (
+                  <a className={'product-div' + (index === currentIndex ? ' active' : '')}
+                    onClick={() => this.setActiveProduct(product, index)} href='#women-product'
                     key={index}>
                     <img src={'http://localhost:8080/api/files/' + (product.title) + '.jpg'} className="component-img"></img>
                     <div className="d-flex col justify-content-between pt-3">
@@ -246,126 +115,149 @@ export default class Women extends Component {
                       </div>
                       <div className="carticonbtn ti-shopping-cart" onClick={this.setActiveProduct}></div>
                     </div>
-                  </li>
+                  </a>
                 ))}
-            </ul>
+            </div>
           </div>
-          <div className='col-md-auto'>
-            {currentProduct ? (
-              <form className=''>
-                <div className="product-detail">
-                  <Grid container spacing={4}>
-                    <Grid item xs={6}>
-                      <ReactImageGallery />
-                    </Grid>
-                    <Grid container spacing={2} item xs={6} direction="column">
-                      <Grid item>
-                        <div id="myPortal" />
-
-                        <div className="product-info">
-                          <div className='product-info-div'>
-                            <label>
-                              <strong>Product Name:</strong>
-                            </label>
-                            <p>{currentProduct.productname.toUpperCase()}</p>
-                          </div>
-                          <div className='product-info-div'>
-                            <label>
-                              <strong>Description:</strong>
-                            </label> {" "}
-                            <p>{currentProduct.description}</p>
-                          </div>
-                          <div>
-                            <table>
-                              <thead>
-                                <tr>
-                                  <td>Size</td>
-                                  <td>Shoulder</td>
-                                  <td>Waist</td>
-                                  <td>Hip</td>
-                                  <td>Top Length</td>
-                                  <td>Pants Length</td>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>S</td>
-                                  <td>37.5</td>
-                                  <td>62 - 98</td>
-                                  <td>104</td>
-                                  <td>39 / 49</td>
-                                  <td>94</td>
-                                </tr>
-                                <tr>
-                                  <td>M</td>
-                                  <td>38.5</td>
-                                  <td>66 - 102</td>
-                                  <td>108</td>
-                                  <td>40 / 50</td>
-                                  <td>95</td>
-                                </tr>
-                                <tr>
-                                  <td>L</td>
-                                  <td>40</td>
-                                  <td>72 - 108</td>
-                                  <td>114</td>
-                                  <td>41.5 / 51.5</td>
-                                  <td>96.5</td>
-                                </tr>
-                                <tr>
-                                  <td>XL</td>
-                                  <td>41.5</td>
-                                  <td>78 - 114</td>
-                                  <td>120</td>
-                                  <td>43 / 53</td>
-                                  <td>98</td>
-                                </tr>
-                                <tr>
-                                  <td>XXL</td>
-                                  <td>43</td>
-                                  <td>82 - 120</td>
-                                  <td>126</td>
-                                  <td>44.5 / 54.5</td>
-                                  <td>98</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                            <p>This data was obtained from manually measuring the product, it may be off by 1-2CM.</p>
-                          </div>
-                          <div className='product-info-div'>
-                            <label>
-                              <strong>Size: </strong>
-                            </label> {" "}
-                            <button className="sizebtn"><b>{currentProduct.size.toUpperCase()}</b></button>
-                          </div>
-                          <div className='product-info-div'>
-                            <label>
-                              <strong>Price:</strong>
-                            </label> {" "}
-                            RM {currentProduct.price.toFixed(2)}
-                          </div>
-                          <div className='product-info-div'>
-                            <label>
-                              <strong>Quantity:</strong>
-                            </label> {" "}
-                            <input type='number'
-                              value={this.state.quantity}
-                              onChange={this.onChangeQuantity} 
-                              min='1' max='20'>
-                            </input>
-                          </div>
-                          <div className="cartbtn ti-shopping-cart" onClick={this.addToCart}>Add to Cart</div>
-                        </div>
-                      </Grid>
-                    </Grid>
-                  </Grid>
+          <div className="modal" id="size-guide">
+            <div className='modal-dialog'>
+              <div className='modal-content modal-product'>
+                <header className="modal-container">
+                  <a href="#women-product" className="closebtn">×</a>
+                  <h4>Size Guide for Women Products</h4>
+                </header>
+                <div className='mr-auto ml-auto'>
+                  <table className='size-guide-table'>
+                    <thead>
+                      <tr>
+                        <td>Size</td>
+                        <td>Shoulder</td>
+                        <td>Waist</td>
+                        <td>Hip</td>
+                        <td>Top Length</td>
+                        <td>Pants Length</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>S</td>
+                        <td>37.5</td>
+                        <td>62 - 98</td>
+                        <td>104</td>
+                        <td>39 / 49</td>
+                        <td>94</td>
+                      </tr>
+                      <tr>
+                        <td>M</td>
+                        <td>38.5</td>
+                        <td>66 - 102</td>
+                        <td>108</td>
+                        <td>40 / 50</td>
+                        <td>95</td>
+                      </tr>
+                      <tr>
+                        <td>L</td>
+                        <td>40</td>
+                        <td>72 - 108</td>
+                        <td>114</td>
+                        <td>41.5 / 51.5</td>
+                        <td>96.5</td>
+                      </tr>
+                      <tr>
+                        <td>XL</td>
+                        <td>41.5</td>
+                        <td>78 - 114</td>
+                        <td>120</td>
+                        <td>43 / 53</td>
+                        <td>98</td>
+                      </tr>
+                      <tr>
+                        <td>XXL</td>
+                        <td>43</td>
+                        <td>82 - 120</td>
+                        <td>126</td>
+                        <td>44.5 / 54.5</td>
+                        <td>98</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p>This data was obtained from manually measuring the product, it may be off by 1-2CM.</p>
                 </div>
-              </form>
-            ) : (
-              <div></div>
-            )
-            }
+              </div>
+            </div>
           </div>
+          {currentProduct ? (
+            <div className="modal" id="women-product">
+              <div className='modal-dialog'>
+                <div className='modal-content modal-product'>
+                  <header className="modal-container">
+                    <a href="#" className="closebtn">×</a>
+                  </header>
+                  <form className=''>
+                    <div className="product-detail">
+                      <Grid container spacing={4}>
+                        <Grid item xs={6}>
+                          <GlassMagnifier
+                            imageSrc={"http://localhost:8080/api/files/" + currentProduct.title + ".jpg"}
+                            imageAlt="Example"
+                            largeImageSrc=""
+                            magnifierSize='40%'
+                          />
+                        </Grid>
+                        <Grid container spacing={2} item xs={6} direction="column">
+                          <Grid item>
+                            <div id="myPortal" />
+
+                            <div className="product-info">
+                              <div className='product-info-div'>
+                                <label>
+                                  <strong>Product Name:</strong>
+                                </label>
+                                <p>{currentProduct.productname.toUpperCase()}</p>
+                              </div>
+                              <div className='product-info-div'>
+                                <label>
+                                  <strong>Description:</strong>
+                                </label> {" "}
+                                <p>{currentProduct.description}</p>
+                              </div>
+                              <a href='#size-guide'>Size Guide?</a>
+                              <div className='product-info-div'>
+                                <label>
+                                  <strong>Size: </strong>
+                                </label> {" "}
+                                <button className="sizebtn"><b>{currentProduct.size.toUpperCase()}</b></button>
+                              </div>
+                              <div className='product-info-div'>
+                                <label>
+                                  <strong>Price:</strong>
+                                </label> {" "}
+                                RM {currentProduct.price.toFixed(2)}
+                              </div>
+                              <div className='product-info-div'>
+                                <label>
+                                  <strong>Quantity:</strong>
+                                </label> {" "}
+                                <input type='number'
+                                  value={this.state.quantity}
+                                  onChange={this.onChangeQuantity}
+                                  min='1' max='20'>
+                                </input>
+                              </div>
+                              <div className="cartbtn" onClick={this.addToCart}><i className='ti-shopping-cart'></i>Add to Cart</div>
+                            </div>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div></div>
+          )
+          }
         </div>
       </div>
     );

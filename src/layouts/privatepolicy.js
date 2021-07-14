@@ -19,7 +19,7 @@ export default class PrivatePolicy extends React.Component {
             </div>
         <div className='mr-5 ml-5 text-justify'>
         <p align="center">
-    <strong>Builders’ Bid ‘N’ Buy (BB&amp;B)</strong>
+    <strong>FORTRY E-COMMERCE SYSTEM</strong>
 </p>
 <p>
     <strong>Private Policy Draft only</strong>
@@ -28,7 +28,7 @@ export default class PrivatePolicy extends React.Component {
     <strong><em>Privacy and Credit Reporting Policy</em></strong>
 </p>
 <p>
-    BB&amp;B’s Privacy Policy complies with the provisions relating to privacy
+    FORTRY’s Privacy Policy complies with the provisions relating to privacy
     and to the collection, use, disclosure, and storage of your information
     contained in the:
 </p>

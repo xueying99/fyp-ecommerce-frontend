@@ -20,13 +20,13 @@ export default class TermsAndCondition extends React.Component {
             </div>
         <div className='mr-5 ml-5 text-justify'>
         <p align="center">
-    <strong>(Builders)’ Bid ‘N’ Buy (BB&amp;B)</strong>
+    <strong>FORTRY</strong>
 </p>
 <p align="center">
     <strong>Auction Website</strong>
 </p>
 <p>
-    <strong>Terms &amp; Conditions – Version 5 Re-checked 12 July 2019</strong>
+    <strong>Terms &amp; Conditions – Version 5 Re-checked 14 July 2021</strong>
 </p>
 <p>
     <strong>1. </strong>
@@ -34,7 +34,7 @@ export default class TermsAndCondition extends React.Component {
     <strong></strong>
 </p>
 <p className='pl-2'>
-    Before using the services of BB&B, you must read and accept all of the terms in, and linked to, this User Agreement ("Agreement"). By accepting this User Agreement, you agree that this User Agreement and Privacy Notice will apply whenever you use BB&B or when you use the tools BB&B makes available to interact with the BB&B services.
+    Before using the services of FORTRY, you must read and accept all of the terms in, and linked to, this User Agreement ("Agreement"). By accepting this User Agreement, you agree that this User Agreement and Privacy Notice will apply whenever you use BB&B or when you use the tools BB&B makes available to interact with the BB&B services.
 </p>
 <p>
     <strong></strong>

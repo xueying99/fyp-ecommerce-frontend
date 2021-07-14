@@ -238,11 +238,6 @@ export default class Profile extends Component {
                     </div>
                   </div>
                 </div>
-                {/* <div className="profile-btn">
-                  <div className="profile-btn-div">
-                    <button className="btn btn-primary profile-button" disabled>Update</button>
-                  </div>
-                </div> */}
               </div>
             </TabPanel>
 

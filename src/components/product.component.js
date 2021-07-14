@@ -181,7 +181,7 @@ export default class Product extends Component {
 
         return (
             <div className='single-view'>
-                { currentProduct ? (
+                {currentProduct ? (
                     <div className='edit-form'>
                         <h4>Product</h4>
                         <div className=' mt-4 mb-4 text-center'>

@@ -74,7 +74,7 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
+    const { currentUser, showAdminBoard } = this.state;
 
     return (
       <div>
@@ -102,11 +102,6 @@ class App extends Component {
               </Nav>
             )}
             
-            {/* {currentUser && ( 
-               <Nav className="mr-auto">
-                 <UserHeader /> 
-               </Nav>
-             )} */}
             {currentUser ? (
               <Nav className="home-nav">
                 <Nav.Link className='nav-link fa fa-user-circle-o' aria-hidden="true" href="/profile"></Nav.Link>

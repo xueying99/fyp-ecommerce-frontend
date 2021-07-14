@@ -16,12 +16,8 @@ export default class AboutUs extends React.Component {
                     <h3>ABOUT US</h3>
                 </header>
                 <div>
-                    {/* <!--body content wrap start--> */}
                     <div className="main">
-
-                        {/* <!--hero section start--> */}
                         <section className="hero-equal-height ptb-100 gradient-overlay">
-                            {/* style="background: url('img/hero-bg-2.jpg')no-repeat center center / cover" */}
                             <div className="container">
                                 <div className="row align-items-center justify-content-between">
                                     <div className="col-md-7 col-lg-6">
@@ -35,15 +31,12 @@ export default class AboutUs extends React.Component {
                                     </div>
                                     <div className="col-md-4 col-lg-4">
                                         <div className="video-promo-content mt-4 text-center">
-                                            {/* <a href="https://www.youtube.com/watch?v=9No-FiEInLA" className="popup-youtube video-play-icon"><span className="ti-control-play"></span> </a> */}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
-                        {/* <!--hero section end--> */}
 
-                        {/* <!--promo section new start--> */}
                         <section className="promo-new mt--120">
                             <div className="container">
                                 <div className="row">
@@ -83,9 +76,7 @@ export default class AboutUs extends React.Component {
                                 </div>
                             </div>
                         </section>
-                        {/* <!--promo section new end--> */}
 
-                        {/* <!--details section start--> */}
                         <section className="ptb-100">
                             <div className="container">
                                 <div className="row justify-content-around align-items-center">
@@ -127,9 +118,7 @@ export default class AboutUs extends React.Component {
                                 </div>
                             </div>
                         </section>
-                        {/* <!--details section end--> */}
 
-                        {/* <!--feature section start--> */}
                         <section id="features" className="feature-section ptb-100 gray-light-bg">
                             <div className="container">
                                 <div className="row justify-content-center">
@@ -212,9 +201,7 @@ export default class AboutUs extends React.Component {
                                 </div>
                             </div>
                         </section>
-                        {/* <!--feature section end--> */}
 
-                        {/* <!--feature section tab style start--> */}
                         <section id="how-it-work" className="feature-tab-section ptb-100">
                             <div className="container">
                                 <div className="row">
@@ -325,9 +312,7 @@ export default class AboutUs extends React.Component {
                                 </div>
                             </div>
                         </section>
-                        {/* <!--feature section tab style end--> */}
 
-                        {/* <!--faq section start--> */}
                         <div id="faq" className="ptb-100 gray-light-bg">
                             <div className="container">
                                 <div className="row">
@@ -399,11 +384,8 @@ export default class AboutUs extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        {/* <!--faq section end--> */}
 
-                        {/* <!--download section start--> */}
                         <section className="gradient-overlay ptb-100">
-                            {/* style="background: url('img/hero-bg-1.jpg')no-repeat center center / cover fixed" */}
                             <div className="container">
                                 <div className="row justify-content-center">
                                     <div className="col-md-9 col-lg-8">
@@ -418,11 +400,8 @@ export default class AboutUs extends React.Component {
                                 </div>
                             </div>
                         </section>
-                        {/* <!--download section end--> */}
 
                     </div>
-                    {/* <!--body content wrap end--> */}
-
                 </div>
             </div>
         )

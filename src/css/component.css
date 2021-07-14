@@ -14,6 +14,10 @@
     display: flex;
     flex-direction: row;
 }
+.product-view a {
+    text-decoration: none;
+    color:#000;
+}
 .product-div {
     position: relative;
     display: block;
@@ -86,12 +90,15 @@
     line-height: 19px;
 }
 .product-detail .cartbtn {
-    font-size: 20px;
-    margin: 50px auto;
-    width: 80%;
-    padding: 10px 0;
+    font-size: 18px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 5px 0;
     display: flex;
     justify-content: space-evenly;
+}
+.product-detail .cartbtn i {
+    font-size: 28px;
 }
 .cartbtn:hover, .carticonbtn:hover{
     background-color: #FF00FF;

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import '../css/layouts.css';
 import '../css/component.css';
 import '../css/index.css';
@@ -46,7 +45,8 @@ class Review extends Component {
                 return "Hey, you are abit OVERWEIGHT recently, but no worries you are still available for apparel with L size.";
             }
             if (calculateBMI >= 30) {
-                return "OMG! you are categorized as OBESITY now, please take care of your health. FORTRY is still here with you, apparel with XL size is offer to you.";
+                return "OMG! you are categorized as OBESITY now, please take care of your health." +  
+                "FORTRY is still here with you, apparel with XL size is offer to you.";
             }
         }
 
@@ -91,11 +91,10 @@ Review.defaultProps = {
 class Vroom extends Component {
 
     componentDidMount(){
-        alert("Welcome to Virtual Fitting Room service! Our Chatbot Assistant (bottom-right corner) is waiting to serve you 😍🙂")
+        alert("Welcome to Size Guidance service! Our Chatbot Assistant (bottom-right corner) is waiting to serve you 😍🙂")
     }
 
     render() {
-        // all available config props
         const config = {
             width: "400px",
             height: "500px",
@@ -105,7 +104,8 @@ class Vroom extends Component {
         return (
             <div className="">
                 <header className="jumbotron">
-                    <h3><b>VIRTUAL FITTING ROOM</b></h3>
+                    <h3><b>SIZE GUIDANCE</b></h3>
+                    <p>Welcome to Size Guidance service! Our Chatbot Assistant (bottom-right corner) is waiting to serve you 😍🙂</p>
                 </header>
                 <div className='mainContainer'>
                     <div className="slide-container">
@@ -131,29 +131,6 @@ class Vroom extends Component {
                                     alt="Third slide"
                                 />
                             </Carousel.Item>
-                            <Carousel.Item interval={3000}>
-                                <img
-                                    className="d-block w-100"
-                                    src="/images/vroom/fitting-room-1.png"
-                                    alt="Third slide"
-                                />
-                                <Carousel.Caption>
-                                    <h1>COMING SOON !!!</h1>
-                                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                                </Carousel.Caption>
-                            </Carousel.Item>
-                            <Carousel.Item interval={3000}>
-                                <img
-                                    className="d-block w-100"
-                                    src="/images/vroom/fitting-room-3.jpg"
-                                    alt="Fourth slide"
-                                />
-
-                                <Carousel.Caption>
-                                    <h1>COMING SOON !!!</h1>
-                                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                                </Carousel.Caption>
-                            </Carousel.Item>
                         </Carousel>
                     </div>
                     <div>
@@ -161,7 +138,8 @@ class Vroom extends Component {
                             steps={[
                                 {
                                     id: '1',
-                                    message: "Hi, Welcome to Fortry Chatbot. I'm your Size Advisor and I'm here to help you calculate your BMI and the most ideal apparel size for you.",
+                                    message: "Hi, Welcome to Fortry Chatbot. I'm your Size Advisor and I'm here to help you calculate your " + 
+                                             "BMI and the most ideal apparel size for you.",
                                     trigger: '2',
                                 },
                                 {
@@ -202,9 +180,9 @@ class Vroom extends Component {
                                     trigger: '9',
                                     validator: (value) => {
                                         if (isNaN(value)) {
-                                            return 'value must be a number';
+                                            return 'Your height must be a number';
                                         } else if (value < 0) {
-                                            return 'value must be positive';
+                                            return 'Height must be positive';
                                         } else if (value > 220) {
                                             return `${value}? Come on!`;
                                         }
@@ -223,9 +201,9 @@ class Vroom extends Component {
                                     trigger: '11',
                                     validator: (value) => {
                                         if (isNaN(value)) {
-                                            return 'value must be a number';
+                                            return 'Your weight must be a number';
                                         } else if (value < 0) {
-                                            return 'value must be positive';
+                                            return 'Weight must be positive';
                                         } else if (value > 200) {
                                             return `${value}? Come on!`;
                                         }
@@ -244,10 +222,10 @@ class Vroom extends Component {
                                     trigger: '12',
                                     validator: (value) => {
                                         if (isNaN(value)) {
-                                            return 'value must be a number';
+                                            return 'Your age prefer to be a number';
                                         } else if (value < 0) {
-                                            return 'value must be positive';
-                                        } else if (value > 120) {
+                                            return 'Your age must be positive';
+                                        } else if (value > 150) {
                                             return `${value}? Come on!`;
                                         }
 

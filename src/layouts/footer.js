@@ -5,7 +5,6 @@ import '../css/layouts.css';
 export default function() {
     return (      
         <div className="footer-section">
-        {/* <!--footer top start--> */}
             <div className="footer-top gradient-bg">
                 <div className="container">
                     <div className="row">
@@ -50,24 +49,12 @@ export default function() {
                             <div className="footer-nav-wrap text-white">
                                 <h5 className="text-light footer-head">Newsletter</h5>
                                 <p>Subscribe our newsletter to get our update. We don't send span email to you.</p>
-                                {/* <form action="#" className="newsletter-form mt-3">
-                                    <div className="input-group">
-                                        <input type="email" className="form-control email-form-control" id="email" placeholder="Enter your email" required=""/>
-                                        <div className="input-group-append">
-                                            <button className="btn solid-btn subscribe-btn btn-hover" type="submit">
-                                                Subscribe
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form> */}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {/* <!--footer top end--> */}
 
-            {/* <!--footer copyright start--> */}
             <div className="footer-bottom gray-light-bg py-3">
                 <div className="container">
                     <div className="row text-center justify-content-center">
@@ -78,8 +65,6 @@ export default function() {
                     </div>
                 </div>
             </div>
-        {/* <!--footer copyright end--> */}
     </div>
-    // {/* <!--footer section end--> */}
     )
 }

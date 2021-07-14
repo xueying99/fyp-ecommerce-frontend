@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 import '../css/index.css';
 
@@ -191,6 +190,14 @@ export default class OrderManagement extends Component {
                                                                         <td>Contact:</td>
                                                                         <td>{order.shippingcontact}</td>
                                                                     </tr>
+                                                                    <tr>
+                                                                        <td>Courier Service:</td>
+                                                                        <td>{order.courier}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Tracking Number:</td>
+                                                                        <td>{order.tracking}</td>
+                                                                    </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -216,42 +223,41 @@ export default class OrderManagement extends Component {
                                     <h4>View Details of ORDER ID <b>{currentOrder.id}</b></h4>
                                 </header>
                                 <div className='modal-table-div'>
-                          
-                          <p>Order Item List</p>
-                          <table className='modal-order-item-table'>
-                            <thead>
-                              <tr>
-                                <th>No</th>
-                                <th>Product</th>
-                                <th>Quantity</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {
-                                this.state.orderItem
-                                  .filter(i => i.orderId === currentOrder.id)
-                                  .map(o => {
-                                    let p = this.state.products.filter(i => i.id === o.productId)[0]
-                                    return (
-                                      <tr>
-                                        <td>{o.id}</td>
-                                        <td className=''>
-                                          {p.productname}
-                                        </td>
-                                        <td>
-                                          {o.quantity}
-                                        </td>
-                                      </tr>
-                                    )
-                                  })
-                              }
-                            </tbody>
-                          </table>
-                        </div>
+                                    <p>Order Item List</p>
+                                    <table className='modal-order-item-table'>
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Product</th>
+                                                <th>Quantity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                this.state.orderItem
+                                                    .filter(i => i.orderId === currentOrder.id)
+                                                    .map(o => {
+                                                        let p = this.state.products.filter(i => i.id === o.productId)[0]
+                                                        return (
+                                                            <tr>
+                                                                <td>{o.id}</td>
+                                                                <td className=''>
+                                                                    {p.productname}
+                                                                </td>
+                                                                <td>
+                                                                    {o.quantity}
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <div className='d-flex justify-content-center mt-4'>
-                                <a className="btn btn-warning pr-5 pl-5" href={'orders/' + currentOrder.id}>
-                                    Edit
-                                </a>
+                                    <a className="btn btn-warning pr-5 pl-5" href={'orders/' + currentOrder.id}>
+                                        Edit
+                                    </a>
                                 </div>
                             </div>
                         </div>

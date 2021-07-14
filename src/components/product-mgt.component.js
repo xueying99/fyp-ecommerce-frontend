@@ -191,7 +191,6 @@ export default class ProductManagement extends Component {
                     <div className="submit-form mt-5 mb-5 mr-3 ml-3">
                         {this.state.submitted ? (
                             <div>
-                                {/* <h4>You submitted successfully!</h4> */}
                                 <a className='btn btn-success' href='#product01'>Add New Product</a>
                             </div>
                         ) : (
@@ -291,7 +290,7 @@ export default class ProductManagement extends Component {
                                 <h4>Add New Product</h4>
                             </header>
                             <div className='add-mgt-div'>
-                            <div className='form-group'>
+                                <div className='form-group'>
                                     <label htmlFor='title'>Image Name<span> ( Please upload image at <a href='/image-mgt'>here</a> )</span></label>
                                     <input
                                         type='text'
@@ -301,7 +300,7 @@ export default class ProductManagement extends Component {
                                         value={this.state.title}
                                         onChange={this.onChangeTitle}
                                         name='title'
-                                        placeholder='Example: dress01'
+                                        placeholder='Example: women01 / men01 (in lower case)'
                                     />
                                 </div>
                                 <div className='form-group'>

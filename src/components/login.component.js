@@ -8,7 +8,6 @@ import "../css/bootstrap.min.css";
 import "../css/index.css";
 
 import AuthService from "../services/auth.service";
-import background from "../img/hero-bg-1.jpg";
 
 const required = value => {
   if (!value) {
@@ -88,9 +87,7 @@ export default class Login extends Component {
     return (
       <div className="row align-items-center justify-content-center gray-light-bg mr-0">
         <div className="col-12 col-md-7 col-lg-6 col-xl-8 d-none d-lg-block">
-          {/* <!-- Image --> */}
-          <div className="bg-cover vh-100 ml-n3 gradient-overlay"
-            style={{ backgroundImage: `url(${background})` }}>
+          <div className="bg-cover vh-100 ml-n3 gradient-overlay">
             <div className="position-absolute login-signup-content">
               <div className="position-relative text-white col-md-12 col-lg-7">
                 <h2 className="text-white">Welcome Back !</h2>
@@ -106,7 +103,6 @@ export default class Login extends Component {
 
         <div className="col-12 col-md-6 col-lg-6 col-xl-4">
           <div className="login-signup-wrap px-4 px-lg-5">
-            {/* <!-- Heading --> */}
             <h1 className="text-center mb-1">Sign In</h1>
             <p className="text-center mb-5">Free access to our dashboard.</p>
             <Form onSubmit={this.handleLogin}
@@ -151,14 +147,11 @@ export default class Login extends Component {
                   <span>SIGN IN</span>
                 </button>
               </div>
-
-              {/* <!-- Link --> */}
               <p className="text-center">
                 <small className="text-muted text-center">
                   Don't have an account yet? <a href="/register">Sign up</a>.
                 </small>
               </p>
-
               {this.state.message && (
                 <div className="form-group">
                   <div className="alert alert-danger" role="alert">

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 import '../css/layouts.css';
 import '../css/component.css';
@@ -73,19 +72,6 @@ export default class Checkout extends Component {
             });
     }
 
-    // retrieveOrder(id) {
-    //     OrderDataService.get(id)
-    //         .then(response => {
-    //             this.setState({
-    //                 currentOrder: response.data
-    //             });
-    //             console.log(response.data);
-    //         })
-    //         .catch(e => {
-    //             console.log(e);
-    //         });
-    // }
-
     retrieveOrderItem() {
         OrderItemDataService.getAll()
             .then(res => {
@@ -126,7 +112,7 @@ export default class Checkout extends Component {
                 tempprice = tempprice + this.state.orderItem[j].price
             }
         }
-        let totalprice = tempprice + this.state.fee 
+        let totalprice = tempprice + this.state.fee
 
         return (
             <div className="">
@@ -223,10 +209,10 @@ export default class Checkout extends Component {
                             {orders &&
                                 orders.map((order, index) => (
                                     <div className=''>
-                                        <div className={'badge badge-success' + (index === currentIndex ? ' active' : '')}
+                                        <div className={'btn btn-success' + (index === currentIndex ? ' active' : '')}
                                             onClick={() => this.setActiveOrder(order, index)}
                                             key={index}>
-                                                Click me !!!
+                                            Confirm Order
                                         </div>
                                     </div>
                                 ))}
