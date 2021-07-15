@@ -90,7 +90,7 @@ class App extends Component {
                 <NavDropdown.Divider />
                 <NavDropdown.Item href="/aboutus">About Us</NavDropdown.Item>
                 <NavDropdown.Item href="/v-fitting-room">Size Guideline</NavDropdown.Item>
-                <NavDropdown.Item href="/privatepolicy">Private Policy</NavDropdown.Item>
+                <NavDropdown.Item href="/privatepolicy">Privacy Policy</NavDropdown.Item>
                 <NavDropdown.Item href="/termsandcondition">Terms and Conditions</NavDropdown.Item>
             </NavDropdown>
               <UserHeader />

@@ -113,7 +113,7 @@ export default class Women extends Component {
                         <br></br>
                         RM {product.price.toFixed(2)}
                       </div>
-                      <div className="carticonbtn ti-shopping-cart" onClick={this.setActiveProduct}></div>
+                      <a className="carticonbtn ti-shopping-cart" onClick={this.setActiveProduct} href='#women-product'></a>
                     </div>
                   </a>
                 ))}

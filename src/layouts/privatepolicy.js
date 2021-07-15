@@ -14,7 +14,7 @@ export default class PrivatePolicy extends React.Component {
       <div className="">
         <div className="">
                 <header className="jumbotron">
-                    <h3>PRIVATE POLICY</h3>
+                    <h3>PRIVACY POLICY</h3>
                 </header>
             </div>
         <div className='mr-5 ml-5 text-justify'>

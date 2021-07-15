@@ -169,7 +169,7 @@ export default class Product extends Component {
             .then(response => {
                 console.log(response.data);
                 alert("Product is DELETED sucessfully!");
-                this.props.history.push('/products')
+                this.props.history.push('/')
             })
             .catch(e => {
                 console.log(e);

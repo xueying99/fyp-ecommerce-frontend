@@ -10,7 +10,7 @@ export default function() {
                     <div className="row">
                         <div className="col-lg-4 col-12">
                             <div className="footer-nav-wrap text-white mb-0 mb-md-4 mb-lg-0">
-                                <a className="d-block" href="#"><img src="../images/fortry-logo-transparent.png" alt="footer logo" width="200" className="img-fluid mb-1"/></a>
+                                <a className="d-block" href="/home"><img src="../images/fortry-logo-transparent.png" alt="footer logo" width="200" className="img-fluid mb-1"/></a>
                                 <p>Intrinsicly matrix high standards in niches whereas intermandated niche markets. Objectively harness competitive resources.</p>
                                 <ul className="list-unstyled social-list mb-0">
                                     <li className="list-inline-item"><a href="#" className="rounded"><span className="ti-facebook white-bg color-2 shadow rounded-circle"></span></a></li>
@@ -25,10 +25,10 @@ export default function() {
                             <div className="footer-nav-wrap text-white">
                                 <h5 className="text-white">Usefull Links</h5>
                                 <ul className="list-unstyled footer-nav-list mt-3">
-                                    <li><a href="#" className="text-foot"><span className="ti-angle-double-right"></span> FAQ Section</a></li>
-                                    <li><a href="#" className="text-foot"><span className="ti-angle-double-right"></span> Return Policy</a></li>
-                                    <li><a href="#" className="text-foot"><span className="ti-angle-double-right"></span> Privacy Policy</a></li>
-                                    <li><a href="#" className="text-foot"><span className="ti-angle-double-right"></span> Terms of Services</a></li>
+                                    <li><a href="/aboutus" className="text-foot"><span className="ti-angle-double-right"></span> FAQ Section</a></li>
+                                    <li><a href="/privatepolicy" className="text-foot"><span className="ti-angle-double-right"></span> Return Policy</a></li>
+                                    <li><a href="/privatepolicy" className="text-foot"><span className="ti-angle-double-right"></span> Privacy Policy</a></li>
+                                    <li><a href="/termsandcondition" className="text-foot"><span className="ti-angle-double-right"></span> Terms of Services</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -37,10 +37,10 @@ export default function() {
                             <div className="footer-nav-wrap text-white">
                                 <h5 className="text-white">Company</h5>
                                 <ul className="list-unstyled footer-nav-list mt-3">
-                                    <li><a href="#" className="text-foot"><span className="ti-angle-double-right"></span> About Us</a></li>
-                                    <li><a href="#" className="text-foot"><span className="ti-angle-double-right"></span> Size Guideline</a></li>
-                                    <li><a href="#" className="text-foot"><span className="ti-angle-double-right"></span> Offers & Events</a></li>
-                                    <li><a href="#" className="text-foot"><span className="ti-angle-double-right"></span> Contact Us</a></li>
+                                    <li><a href="/aboutus" className="text-foot"><span className="ti-angle-double-right"></span> About Us</a></li>
+                                    <li><a href="/v-fitting-room" className="text-foot"><span className="ti-angle-double-right"></span> Size Guideline</a></li>
+                                    <li><a href="/events" className="text-foot"><span className="ti-angle-double-right"></span> Offers & Events</a></li>
+                                    <li><a href="/home" className="text-foot"><span className="ti-angle-double-right"></span> Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>

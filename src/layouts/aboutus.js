@@ -43,7 +43,7 @@ export default class AboutUs extends React.Component {
                                     <div className="col-md-4 col-lg-4">
                                         <div className="new-single-promo rounded py-5 px-4 border-top-0 mt-4 white-bg text-center">
                                             <div className="promo-img-wrap mb-4">
-                                                <img src="img/promo-1.svg" width="80" alt="promo" className="img-fluid" />
+                                                <img src="img/promo-3.svg" width="80" alt="promo" className="img-fluid" />
                                             </div>
                                             <div className="promo-content-wrap">
                                                 <h5>Low Fees</h5>
@@ -82,7 +82,7 @@ export default class AboutUs extends React.Component {
                                 <div className="row justify-content-around align-items-center">
                                     <div className="col-md-5 col-lg-5">
                                         <div className="z-index text-center">
-                                            <img alt="iphone" src="img/image-16.png" className="img-fluid" />
+                                            <img alt="iphone" src="img/image-16s.png" className="img-fluid" />
                                         </div>
                                         <div className="bg-shape d-none d-sm-none d-md-block d-lg-block">
                                             <img src="img/shape-image-bg.svg" alt="shape" />
@@ -196,7 +196,7 @@ export default class AboutUs extends React.Component {
                                     </div>
 
                                     <div className="col-lg-4 col-md-4 col-12">
-                                        <img src="img/image-10.png" className="img-fluid mx-auto d-lg-block d-none" alt="app screen" />
+                                        <img src="img/image-10s.png" className="img-fluid mx-auto d-lg-block d-none" alt="app screen" />
                                     </div>
                                 </div>
                             </div>
@@ -247,7 +247,7 @@ export default class AboutUs extends React.Component {
                                                         </div>
                                                         <div className="col-md-6 col-lg-7">
                                                             <div className="img-wrap">
-                                                                <img src="img/dasboard-screen-1.png" alt="feature" className="img-fluid rounded" />
+                                                                <img src="img/dasboard-screen-1s.png" alt="feature" className="img-fluid rounded" />
                                                             </div>
                                                         </div>
                                                     </div>

@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import "react-image-gallery/styles/css/image-gallery.css";
-import '../css/images-gallery.css';
 import '../css/layouts.css';
 import '../css/component.css';
 import Grid from "@material-ui/core/Grid";
@@ -116,7 +113,7 @@ export default class Men extends Component {
                         <br></br>
                         RM {product.price.toFixed(2)}
                       </div>
-                      <div className="carticonbtn ti-shopping-cart" onClick={this.addToCart}></div>
+                      <div className="carticonbtn ti-shopping-cart" onClick={this.setActiveProduct} href='#men-product'></div>
                     </div>
                   </a>
                 ))}

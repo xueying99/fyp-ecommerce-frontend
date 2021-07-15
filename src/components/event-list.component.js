@@ -86,48 +86,56 @@ export default class EventList extends Component {
             <ul className='event-view flex-wrap'>
               {events &&
                 events.map((event, index) => (
-                  <li className={'event-div' + (index === currentIndex ? ' active' : '')}
-                    onClick={() => this.setActiveEvent(event, index)}
+                  <a className={'event-div' + (index === currentIndex ? ' active' : '')}
+                    onClick={() => this.setActiveEvent(event, index)} href='#event01'
                     key={index}>
                     <img src={'http://localhost:8080/api/files/' + event.title.toLowerCase() + '.png'}></img>
                     <div className="justify-content-center p-2">
                       <p className='text-center'><b>{event.eventname.toUpperCase()}</b></p>
                     </div>
-                  </li>
+                  </a>
                 ))}
             </ul>
           </div>
-          <div className='col-md-auto'>
             {currentEvent ? (
-              <form>
-                <div className="event-detail">
-                  <img src={'http://localhost:8080/api/files/' + currentEvent.title.toLowerCase() + '.png'}></img>
-                  <div className="event-info">
-                    <div className='event-info-div'>
-                      <label>
-                        <strong>Event Name:</strong>
-                      </label> {" "}
-                      {currentEvent.eventname}
-                    </div>
-                    <div className='event-info-div'>
-                      <label>
-                        <strong>Description:</strong>
-                      </label> {" "}
-                      {currentEvent.description}
-                    </div>
-                    <div className='event-info-div'>
-                      <label>
-                        <strong>Date:</strong>
-                      </label> {" "}
-                      {currentEvent.startdate} - {currentEvent.enddate}
-                    </div>
+              <div className="modal" id="event01">
+                <div className='modal-dialog'>
+                  <div className='modal-content modal-product'>
+                    <header className="modal-container">
+                      <a href="#" className="closebtn">×</a>
+                      <h4>{currentEvent.eventname}</h4>
+                    </header>
+                    <form>
+                      <div className="event-detail">
+                        <img src={'http://localhost:8080/api/files/' + currentEvent.title.toLowerCase() + '.png'}></img>
+                        <div className="event-info">
+                          {/* <div className='event-info-div'>
+                            <label>
+                              <strong>Event Name:</strong>
+                            </label> {" "}
+                            {currentEvent.eventname}
+                          </div> */}
+                          <div className='event-info-div'>
+                            <label>
+                              <strong>Description:</strong>
+                            </label> {" "}
+                            {currentEvent.description}
+                          </div>
+                          <div className='event-info-div'>
+                            <label>
+                              <strong>Date:</strong>
+                            </label> {" "}
+                            {currentEvent.startdate} - {currentEvent.enddate}
+                          </div>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </div>
-              </form>
+              </div>
             ) : (
               <div></div>
             )}
-          </div>
         </div>
       </div>
     );

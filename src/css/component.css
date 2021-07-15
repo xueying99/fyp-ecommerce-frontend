@@ -142,12 +142,16 @@ h4 {
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 60%;
+    width: 80%;
     padding: 15px 25px;
     background-color: #fff;
     border: 1px solid rgba(0,0,0,.125);
     justify-content: center;
     margin: auto;
+}
+.event-view a {
+    text-decoration: none;
+    color: #000;
 }
 .event-detail img {
     width: 750px;
